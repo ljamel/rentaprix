@@ -6,15 +6,18 @@ body {
 #navbar-right {
     position:fixed;
     top: 0;
+    background-color: blue;
 }
 
 #navbar-head {
     display: flex;
     justify-content: space-evenly;
     margin-left: 100px;
+    background-color: red;
 }
 
 .content-member {
     margin-left: 250px;
+    background-color: beige;
 }
 
