@@ -2,3 +2,19 @@ body {
     margin: 0;
 }
 
+/* member */
+#navbar-right {
+    position:fixed;
+    top: 0;
+}
+
+#navbar-head {
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 100px;
+}
+
+.content-member {
+    margin-left: 250px;
+}
+

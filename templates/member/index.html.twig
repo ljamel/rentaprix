@@ -1,18 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-membre.html.twig' %}
 
-{% block title %}Hello MemberController!{% endblock %}
+{% block title %}admin member!{% endblock %}
 
 {% block body %}
 
 <div class="example-wrapper">
-    {% include 'member/_menu.html.twig' %}
+    
 
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class='content-member'>
+        <h1>Administration membre</h1>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/lamri/Desktop/rentaprix/rentaprix/src/Controller/MemberController.php'|file_link(0) }}">src/Controller/MemberController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/lamri/Desktop/rentaprix/rentaprix/templates/member/index.html.twig'|file_link(0) }}">templates/member/index.html.twig</a></code></li>
-    </ul>
 </div>
 {% endblock %}
