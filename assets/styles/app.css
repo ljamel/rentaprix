@@ -1,23 +1,15 @@
 body {
     margin: 0;
 }
-
-/* member */
-#navbar-right {
-    position:fixed;
-    top: 0;
-    background-color: blue;
+ul {
+    list-style: none;
+}
+a{
+    text-decoration: none;
 }
 
-#navbar-head {
+/* index */
+#navbar-index-head {
     display: flex;
-    justify-content: space-evenly;
-    margin-left: 100px;
-    background-color: red;
+    justify-content: space-around;
 }
-
-.content-member {
-    margin-left: 250px;
-    background-color: beige;
-}
-

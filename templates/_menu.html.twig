@@ -1,0 +1,10 @@
+<ul id="navbar-index-head">
+    <li><a href="{{ path('app_index') }}" /> Accueil </a> </li>
+    <li><a href="{{ path('app_about') }}" />A propos </a> </li>
+    {% if app.user %}
+        <li><a href="{{ path('app_logout') }}" />Ce déconnecter </a> </li>
+    {% else %}
+        <li><a href="{{ path('app_login') }}" />Ce connecter </a> </li>
+    {% endif %}
+    
+</ul>

@@ -12,6 +12,15 @@ class BlogPostTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Hello IndexController!');
+        $this->assertSelectorTextContains('h1', 'Rentaprix');
     }
+
+    public function testIndex(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/');
+        $this->assertSame(1, $crawler->filter('h1')->count());
+    }
+
+
 }

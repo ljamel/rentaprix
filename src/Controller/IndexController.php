@@ -11,8 +11,18 @@ class IndexController extends AbstractController
     #[Route('/', name: 'app_index')]
     public function index(): Response
     {
+
         return $this->render('index/index.html.twig', [
-            'controller_name' => 'IndexController',
+            'controller_name' => 'Rentaprix',
+        ]);
+    }
+
+    #[Route('/', name: 'app_about')]
+    public function about(): Response
+    {
+
+        return $this->render('index/about.html.twig', [
+            'controller_name' => 'About',
         ]);
     }
 }
