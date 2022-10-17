@@ -1,6 +1,8 @@
 <ul id="navbar-index-head">
+    <a class='title'> Rentaprix </a>
     <li><a href="{{ path('app_index') }}" /> Accueil </a> </li>
     <li><a href="{{ path('app_about') }}" />A propos </a> </li>
+    <li><a href="{{ path('app_article_index') }}" /> Actualités </a> </li>
     {% if app.user %}
         <li><a href="{{ path('app_logout') }}" />Ce déconnecter </a> </li>
     {% else %}

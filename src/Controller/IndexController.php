@@ -17,7 +17,7 @@ class IndexController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'app_about')]
+    #[Route('/about', name: 'app_about')]
     public function about(): Response
     {
 

@@ -3,7 +3,8 @@
 #navbar-right {
     position:fixed;
     top: 0;
-    background-color: blue;
+    background-color: rgb(241, 255, 44);
+    width: 189px;
 }
 #navbar-head {
     display: flex;
