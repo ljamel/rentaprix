@@ -1,0 +1,11 @@
+{% extends 'base-membre.html.twig' %}
+
+{% block title %}New VariableFee{% endblock %}
+
+{% block body %}
+    <h1>Create new VariableFee</h1>
+
+    {{ include('variable_fee/_form.html.twig') }}
+
+    <a href="{{ path('app_variable_fee_index') }}">back to list</a>
+{% endblock %}

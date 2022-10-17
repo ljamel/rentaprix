@@ -1,0 +1,39 @@
+{% extends 'base-membre.html.twig' %}
+
+{% block title %}FixedFee index{% endblock %}
+
+{% block body %}
+    <h1>FixedFee index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Unit</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fixed_fee in fixed_fees %}
+            <tr>
+                <td>{{ fixed_fee.id }}</td>
+                <td>{{ fixed_fee.title }}</td>
+                <td>{{ fixed_fee.price }}</td>
+                <td>{{ fixed_fee.unit }}</td>
+                <td>
+                    <a href="{{ path('app_fixed_fee_show', {'id': fixed_fee.id}) }}">show</a>
+                    <a href="{{ path('app_fixed_fee_edit', {'id': fixed_fee.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_fixed_fee_new') }}">Create new</a>
+{% endblock %}

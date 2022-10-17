@@ -1,0 +1,11 @@
+{% extends 'base-membre.html.twig' %}
+
+{% block title %}New FixedFee{% endblock %}
+
+{% block body %}
+    <h1>Create new FixedFee</h1>
+
+    {{ include('fixed_fee/_form.html.twig') }}
+
+    <a href="{{ path('app_fixed_fee_index') }}">back to list</a>
+{% endblock %}

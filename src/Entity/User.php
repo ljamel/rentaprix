@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -28,6 +30,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\ManyToMany(targetEntity: Calcul::class, mappedBy: 'user')]
+    private Collection $calculs;
+
+    public function __construct()
+    {
+        $this->calculs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -97,5 +107,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Calcul>
+     */
+    public function getCalculs(): Collection
+    {
+        return $this->calculs;
+    }
+
+    public function addCalcul(Calcul $calcul): self
+    {
+        if (!$this->calculs->contains($calcul)) {
+            $this->calculs->add($calcul);
+            $calcul->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalcul(Calcul $calcul): self
+    {
+        if ($this->calculs->removeElement($calcul)) {
+            $calcul->removeUser($this);
+        }
+
+        return $this;
     }
 }

@@ -14,4 +14,8 @@ yarn encore dev-server or yarn encore dev
 
 # add new fonction crud (new update delete)
 # create or choice entity for CRUD
-symfony console make:crud
+# php bin/console make:entity 
+# symfony console make:crud
+
+# make authenticator in 30 secondes
+# php bin/console make:auth

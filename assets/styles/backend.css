@@ -5,6 +5,7 @@
     top: 0;
     background-color: rgb(241, 255, 44);
     width: 189px;
+    height: 100%;
 }
 #navbar-head {
     display: flex;
@@ -15,4 +16,7 @@
 .content-member {
     margin-left: 250px;
     background-color: beige;
+}
+.contentDashboard {
+    margin-left: 250px;
 }

@@ -1,0 +1,34 @@
+{% extends 'base-membre.html.twig' %}
+
+{% block title %}FixedFee{% endblock %}
+
+{% block body %}
+    <h1>FixedFee</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ fixed_fee.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ fixed_fee.title }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ fixed_fee.price }}</td>
+            </tr>
+            <tr>
+                <th>Unit</th>
+                <td>{{ fixed_fee.unit }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_fixed_fee_index') }}">back to list</a>
+
+    <a href="{{ path('app_fixed_fee_edit', {'id': fixed_fee.id}) }}">edit</a>
+
+    {{ include('fixed_fee/_delete_form.html.twig') }}
+{% endblock %}

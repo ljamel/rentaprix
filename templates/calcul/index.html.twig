@@ -1,0 +1,41 @@
+{% extends 'base-membre.html.twig' %}
+
+{% block title %}Calcul index{% endblock %}
+
+{% block body %}
+    <h1>Votre devis</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Devis</th>
+                <th>DurationMonth</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for calcul in calculs %}
+            <tr>
+                <td>{{ calcul.id }}</td>
+                <td>{{ calcul.title }}</td>
+                <td>{{ calcul.date ? calcul.date|date('Y-m-d') : '' }}</td>
+                <td>{{ calcul.devis }}</td>
+                <td>{{ calcul.durationMonth }}</td>
+                <td>
+                    <a href="{{ path('app_calcul_show', {'id': calcul.id}) }}">show</a>
+                    <a href="{{ path('app_calcul_edit', {'id': calcul.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_calcul_new') }}">Create new</a>
+{% endblock %}

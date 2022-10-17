@@ -1,0 +1,11 @@
+{% extends 'base-membre.html.twig' %}
+
+{% block title %}New Calcul{% endblock %}
+
+{% block body %}
+    <h1>Create new Calcul</h1>
+
+    {{ include('calcul/_form.html.twig') }}
+
+    <a href="{{ path('app_calcul_index') }}">back to list</a>
+{% endblock %}

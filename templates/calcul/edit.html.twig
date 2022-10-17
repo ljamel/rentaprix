@@ -1,0 +1,13 @@
+{% extends 'base-membre.html.twig' %}
+
+{% block title %}Edit Calcul{% endblock %}
+
+{% block body %}
+    <h1>Edit Calcul</h1>
+
+    {{ include('calcul/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_calcul_index') }}">back to list</a>
+
+    {{ include('calcul/_delete_form.html.twig') }}
+{% endblock %}

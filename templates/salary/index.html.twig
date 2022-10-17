@@ -1,0 +1,39 @@
+{% extends 'base-membre.html.twig' %}
+
+{% block title %}Salary index{% endblock %}
+
+{% block body %}
+    <h1>Salary index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>FullName</th>
+                <th>Post</th>
+                <th>Pay</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for salary in salaries %}
+            <tr>
+                <td>{{ salary.id }}</td>
+                <td>{{ salary.FullName }}</td>
+                <td>{{ salary.post }}</td>
+                <td>{{ salary.pay }}</td>
+                <td>
+                    <a href="{{ path('app_salary_show', {'id': salary.id}) }}">show</a>
+                    <a href="{{ path('app_salary_edit', {'id': salary.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_salary_new') }}">Create new</a>
+{% endblock %}
