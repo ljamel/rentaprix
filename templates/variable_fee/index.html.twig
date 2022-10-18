@@ -31,11 +31,13 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Aucune donnée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_variable_fee_new') }}">Create new</a>
+    <a href="{{ path('app_variable_fee_new') }}">Créer un nouveau frais variable</a>
+
+    <a href="{{ path('app_fixed_fee_index') }}" />Ajouter des Frais fixe </a> 
 {% endblock %}

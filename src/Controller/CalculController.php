@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\User;
+use Doctrine\Persistence\ManagerRegistry;
 
 #[Route('/dashboard/calcul')]
 class CalculController extends AbstractController
@@ -22,13 +24,17 @@ class CalculController extends AbstractController
     }
 
     #[Route('/new', name: 'app_calcul_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CalculRepository $calculRepository): Response
+    public function new(Request $request, CalculRepository $calculRepository, ManagerRegistry $doctrine): Response
     {
         $calcul = new Calcul();
         $form = $this->createForm(CalculType::class, $calcul);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // add current user relation in the table calcul
+            $calcul->addUser($this->getUser());
+            
             $calculRepository->save($calcul, true);
 
             return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
