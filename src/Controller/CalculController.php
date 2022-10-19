@@ -17,10 +17,12 @@ use Doctrine\Persistence\ManagerRegistry;
 class CalculController extends AbstractController
 {
     #[Route('/', name: 'app_calcul_index', methods: ['GET'])]
-    public function index(CalculRepository $calculRepository): Response
+    public function index(CalculRepository $calculRepository, UserRepository $userRepository): Response
     {
+        // show information calcul relation with current user
+        $userCalculs = $userRepository->findByFeeUser($this->getUser()->getId());
         return $this->render('calcul/index.html.twig', [
-            'calculs' => $calculRepository->findAll(),
+            'userCalculs' => $userCalculs,
         ]);
     }
 

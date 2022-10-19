@@ -16,22 +16,22 @@
             </tr>
         </thead>
         <tbody>
-        {% for fixed_fee in fixed_fees %}
-            <tr>
-                <td>{{ fixed_fee.id }}</td>
-                <td>{{ fixed_fee.title }}</td>
-                <td>{{ fixed_fee.price }}</td>
-                <td>{{ fixed_fee.unit }}</td>
-                <td>
-                    <a href="{{ path('app_fixed_fee_show', {'id': fixed_fee.id}) }}">show</a>
-                    <a href="{{ path('app_fixed_fee_edit', {'id': fixed_fee.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for userCalcul in userCalculs %}
+                {% for fixed_fee in userCalcul.calculs %}
+                    {% for fixed_fee in fixed_fee.FixedFees %}
+                        <tr>
+                            <td>{{ fixed_fee.id }}</td>
+                            <td>{{ fixed_fee.title }}</td>
+                            <td>{{ fixed_fee.price }}</td>
+                            <td>{{ fixed_fee.unit }}</td>
+                            <td>
+                                <a href="{{ path('app_fixed_fee_show', {'id': fixed_fee.id}) }}">show</a>
+                                <a href="{{ path('app_fixed_fee_edit', {'id': fixed_fee.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 

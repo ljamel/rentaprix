@@ -59,7 +59,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         /**
      * @return Calcul[] Returns an array of Calcul objects
      */
-    public function findByUser($idUser): array
+    public function findByFeeUser($idUser): array
     {
         // join calcul with user
         return $this->createQueryBuilder('c')
@@ -70,6 +70,42 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult()
         ;
+    }
+
+            /**
+     * @return Calcul[] Returns an array of Calcul objects
+     */
+    public function findByUserOne($idUser, $idFeevrariable): array
+    {
+        // join calcul with user
+        return $this->createQueryBuilder('c')
+            ->from(\App\Entity\VariableFee::class, 'u')
+            ->andWhere('c.id = :valUser')
+            ->setParameter('valUser', $idUser)
+            ->andWhere('u.id = :valFee')
+            ->setParameter('valFee', $idFeevrariable)
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getSingleResult()
+        ;
+    }
+
+    /**
+     * @return Product[]
+     */
+    public function findAllGreaterThanPrice(int $price): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p
+            FROM App\Entity\Product p
+            WHERE p.price > :price
+            ORDER BY p.price ASC'
+        )->setParameter('price', $price);
+
+        // returns an array of Product objects
+        return $query->getResult();
     }
 
 //    /**

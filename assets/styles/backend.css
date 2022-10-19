@@ -6,12 +6,14 @@
     background-color: rgb(241, 255, 44);
     width: 189px;
     height: 100%;
+    margin-top: 0;
 }
 #navbar-head {
     display: flex;
     justify-content: space-evenly;
     margin-left: 100px;
     background-color: red;
+    margin-top: 0;
 }
 .content-member {
     margin-left: 250px;

@@ -16,22 +16,22 @@
             </tr>
         </thead>
         <tbody>
-        {% for salary in salaries %}
-            <tr>
-                <td>{{ salary.id }}</td>
-                <td>{{ salary.FullName }}</td>
-                <td>{{ salary.post }}</td>
-                <td>{{ salary.pay }}</td>
-                <td>
-                    <a href="{{ path('app_salary_show', {'id': salary.id}) }}">show</a>
-                    <a href="{{ path('app_salary_edit', {'id': salary.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for userCalcul in userCalculs %}
+                {% for salary in userCalcul.calculs %}
+                    {% for salary in salary.FixedFees %}
+                    <tr>
+                        <td>{{ salary.id }}</td>
+                        <td>{{ salary.FullName }}</td>
+                        <td>{{ salary.post }}</td>
+                        <td>{{ salary.pay }}</td>
+                        <td>
+                            <a href="{{ path('app_salary_show', {'id': salary.id}) }}">show</a>
+                            <a href="{{ path('app_salary_edit', {'id': salary.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 

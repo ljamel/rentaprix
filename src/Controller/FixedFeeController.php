@@ -9,15 +9,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
 
 #[Route('/dashboard/fixed/fee')]
 class FixedFeeController extends AbstractController
 {
     #[Route('/', name: 'app_fixed_fee_index', methods: ['GET'])]
-    public function index(FixedFeeRepository $fixedFeeRepository): Response
+    public function index(FixedFeeRepository $fixedFeeRepository, UserRepository $userRepository): Response
     {
+        // show information calcul relation with current user
+        $userCalculs = $userRepository->findByFeeUser($this->getUser()->getId());
+
         return $this->render('fixed_fee/index.html.twig', [
-            'fixed_fees' => $fixedFeeRepository->findAll(),
+            'userCalculs' => $userCalculs,
         ]);
     }
 

@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 #[Route('/dashboard/variable/fee')]
 class VariableFeeController extends AbstractController
@@ -18,7 +19,7 @@ class VariableFeeController extends AbstractController
     public function index(VariableFeeRepository $variableFeeRepository, UserRepository $userRepository): Response
     {
         // show information calcul relation with current user
-        $userCalculs = $userRepository->findByUser($this->getUser()->getId());
+        $userCalculs = $userRepository->findByFeeUser($this->getUser()->getId());
 
         return $this->render('variable_fee/index.html.twig', [
             'variable_fees' => $variableFeeRepository->findAll(),
@@ -46,7 +47,7 @@ class VariableFeeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_variable_fee_show', methods: ['GET'])]
-    public function show(VariableFee $variableFee): Response
+    public function show(VariableFee $variableFee, UserRepository $userRepository, int $id): Response
     {
         return $this->render('variable_fee/show.html.twig', [
             'variable_fee' => $variableFee,

@@ -9,15 +9,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
 
 #[Route('/dashboard/salary')]
 class SalaryController extends AbstractController
 {
     #[Route('/', name: 'app_salary_index', methods: ['GET'])]
-    public function index(SalaryRepository $salaryRepository): Response
+    public function index(SalaryRepository $salaryRepository, UserRepository $userRepository): Response
     {
+        // show information calcul relation with current user
+        $userCalculs = $userRepository->findByFeeUser($this->getUser()->getId());
         return $this->render('salary/index.html.twig', [
-            'salaries' => $salaryRepository->findAll(),
+            'userCalculs' => $userCalculs,
         ]);
     }
 
