@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Calcul;
 use App\Form\CalculType;
 use App\Repository\CalculRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +35,7 @@ class CalculController extends AbstractController
 
             // add current user relation in the table calcul
             $calcul->addUser($this->getUser());
-            
+
             $calculRepository->save($calcul, true);
 
             return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
@@ -47,7 +48,7 @@ class CalculController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_calcul_show', methods: ['GET'])]
-    public function show(Calcul $calcul): Response
+    public function show(Calcul $calcul, CalculRepository $calculRepository): Response
     {
         return $this->render('calcul/show.html.twig', [
             'calcul' => $calcul,

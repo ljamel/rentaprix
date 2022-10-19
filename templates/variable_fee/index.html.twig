@@ -17,23 +17,31 @@
             </tr>
         </thead>
         <tbody>
-        {% for variable_fee in variable_fees %}
-            <tr>
-                <td>{{ variable_fee.id }}</td>
-                <td>{{ variable_fee.title }}</td>
-                <td>{{ variable_fee.price }}</td>
-                <td>{{ variable_fee.unit }}</td>
-                <td>{{ variable_fee.type }}</td>
-                <td>
-                    <a href="{{ path('app_variable_fee_show', {'id': variable_fee.id}) }}">show</a>
-                    <a href="{{ path('app_variable_fee_edit', {'id': variable_fee.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
+        {% set feeDefined = 0 %}
+        {% for userCalcul in userCalculs %}
+            {% for variable_fee in userCalcul.calculs %}
+                    {% for variable_fee in variable_fee.VariableFees %}
+                        {% set feeDefined = 1 %}
+                        <tr>
+                            <td>{{ variable_fee.id }}</td>
+                            <td>{{ variable_fee.title }}</td>
+                            <td>{{ variable_fee.price }}</td>
+                            <td>{{ variable_fee.unit }}</td>
+                            <td>{{ variable_fee.type }}</td>
+                            <td>
+                                <a href="{{ path('app_variable_fee_show', {'id': variable_fee.id}) }}">show</a>
+                                <a href="{{ path('app_variable_fee_edit', {'id': variable_fee.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+            {% endfor %}
+        {% endfor %}
+
+        {% if feeDefined == 0 %}
+            <tr>{{ feeDefined }}
                 <td colspan="6">Aucune donnée</td>
             </tr>
-        {% endfor %}
+        {% endif %}
         </tbody>
     </table>
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\VariableFee;
 use App\Form\VariableFeeType;
 use App\Repository\VariableFeeRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class VariableFeeController extends AbstractController
 {
     #[Route('/', name: 'app_variable_fee_index', methods: ['GET'])]
-    public function index(VariableFeeRepository $variableFeeRepository): Response
+    public function index(VariableFeeRepository $variableFeeRepository, UserRepository $userRepository): Response
     {
+        // show information calcul relation with current user
+        $userCalculs = $userRepository->findByUser($this->getUser()->getId());
+
         return $this->render('variable_fee/index.html.twig', [
             'variable_fees' => $variableFeeRepository->findAll(),
+            'userCalculs' => $userCalculs,
         ]);
     }
 

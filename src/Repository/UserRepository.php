@@ -56,6 +56,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
+        /**
+     * @return Calcul[] Returns an array of Calcul objects
+     */
+    public function findByUser($idUser): array
+    {
+        // join calcul with user
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.id = :val')
+            ->setParameter('val', $idUser)
+            ->orderBy('c.id', 'ASC')
+            ->setMaxResults(100)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
