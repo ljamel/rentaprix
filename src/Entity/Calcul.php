@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\CalculRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CalculRepository::class)]
 class Calcul
@@ -31,13 +34,13 @@ class Calcul
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'calculs')]
     private Collection $user;
 
-    #[ORM\ManyToMany(targetEntity: FixedFee::class, mappedBy: 'calcul')]
+    #[ORM\ManyToMany(targetEntity: FixedFee::class, mappedBy: 'calcul', cascade: ['persist'])]
     private Collection $fixedFees;
 
-    #[ORM\ManyToMany(targetEntity: VariableFee::class, mappedBy: 'calcul')]
+    #[ORM\ManyToMany(targetEntity: VariableFee::class, mappedBy: 'calcul', cascade: ['persist'])]
     private Collection $variableFees;
 
-    #[ORM\ManyToMany(targetEntity: Salary::class, mappedBy: 'calcul')]
+    #[ORM\ManyToMany(targetEntity: Salary::class, mappedBy: 'calcul', cascade: ['persist'])]
     private Collection $salaries;
 
     public function __construct()
@@ -46,6 +49,7 @@ class Calcul
         $this->fixedFees = new ArrayCollection();
         $this->variableFees = new ArrayCollection();
         $this->salaries = new ArrayCollection();
+        $this->date = new DateTime('now');
     }
 
     public function getId(): ?int

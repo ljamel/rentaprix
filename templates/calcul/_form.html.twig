@@ -1,4 +1,74 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div>
+    <div>
+        {{ form_start(form)}}
+        <div>			
+            {{ form_row(form.title)}}
+        </div>
+        <div>
+            {{ form_row(form.devis)}}
+        </div>
+        <div>
+            {{ form_row(form.durationMonth) }}
+        </div>
+        
+        <h3 class="fixedFees">Frais fixes</h3>
+
+        <div class="fixed" data-prototype="{{ _self.fixed_prototype(form.fixedFees.vars.prototype)|e }}">
+        
+        <a class="add_item_fixed" data-collection-holder-class="fixed">add a new fixed fee</a>
+
+            {% for fixedFee in form.fixedFees %}
+                {{ _self.fixed_prototype(fixedFee) }}
+            {% endfor %}
+
+            {% macro fixed_prototype(fixedFee) %}
+                <div class="prototype">
+                    <div>
+                        {{ form_row(fixedFee.title) }}
+                    </div>
+                    <div>
+                        {{ form_row(fixedFee.price) }}
+                    </div>
+                    <div>
+                        {{ form_row(fixedFee.unit) }}
+                    </div>
+                </div>
+            {% endmacro %}
+        </div>
+
+        <h3 class="fixedFees">Frais variables</h3>
+        <div class="variable" data-prototype="{{ _self.variable_prototype(form.variableFees.vars.prototype)|e }}">
+        
+        <a class="add_item_variable" data-collection-holder-class="variable">add a new variable fee</a>
+
+            {% for variableFee in form.variableFees %}
+                {{ _self.variable_prototype(variableFee) }}
+            {% endfor %}
+
+            {% macro variable_prototype(variableFee) %}
+                <div class="prototype">
+                    <div>
+                        {{ form_row(variableFee.title) }}
+                    </div>
+                    <div>
+                        {{ form_row(variableFee.price) }}
+                    </div>
+                    <div>
+                        {{ form_row(variableFee.unit) }}
+                    </div>
+                    <div>
+                        {{ form_row(variableFee.type) }}
+                    </div>
+                </div>
+            {% endmacro %}
+        </div>
+
+        {{form_widget(form)}}
+        <h3 class="fixedFees">Salariés</h3>
+        <div>
+            <button class="btn btn-success">Valider</button>
+        </div>
+
+        {{ form_end(form, {'render_rest': false})}}
+    </div>
+</div>

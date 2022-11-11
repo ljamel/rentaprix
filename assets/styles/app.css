@@ -30,3 +30,18 @@ a.title {
     text-transform: uppercase;
     text-align: right;
 }
+
+.add_item_fixed, .add_item_variable {
+    color: blue;
+    cursor: pointer;
+}
+
+.fixedFees {
+    font-size: 20px;
+    color: blueviolet;
+}
+
+.prototype {
+    margin-top: 20px;
+    display: flex;
+}

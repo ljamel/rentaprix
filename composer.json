@@ -85,7 +85,9 @@
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "6.1.*",
         "symfony/css-selector": "6.1.*",
+        "symfony/debug-bundle": "6.1.*",
         "symfony/maker-bundle": "^1.47",
-        "symfony/phpunit-bridge": "^6.1"
+        "symfony/phpunit-bridge": "^6.1",
+        "symfony/var-dumper": "6.1.*"
     }
 }

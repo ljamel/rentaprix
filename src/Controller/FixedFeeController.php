@@ -18,7 +18,8 @@ class FixedFeeController extends AbstractController
     public function index(FixedFeeRepository $fixedFeeRepository, UserRepository $userRepository): Response
     {
         // show information calcul relation with current user
-        $userCalculs = $userRepository->findByFeeUser($this->getUser()->getId());
+        //$userCalculs = $userRepository->findByFeeUser($this->getUser()->getId());
+        $userCalculs = $this->getUser()->getCalculs();
 
         return $this->render('fixed_fee/index.html.twig', [
             'userCalculs' => $userCalculs,
