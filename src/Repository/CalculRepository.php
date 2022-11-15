@@ -3,8 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\Calcul;
+use App\Entity\FixedFee;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join as ExprJoin;
 
 /**
  * @extends ServiceEntityRepository<Calcul>
@@ -37,6 +41,22 @@ class CalculRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @return FixedFee[] Returns an array of FixedFee objects
+    */
+    public function findByUserId($userId): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('f') // string 'u' is converted to array internally
+            ->from(FixedFee::class, 'f')
+            ->innerJoin(User::class, 'u')
+            ->andwhere('u.id = :val')
+            ->setParameter('val', $userId)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**

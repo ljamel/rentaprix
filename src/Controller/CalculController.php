@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\User;
+use App\Repository\FixedFeeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 #[Route('/dashboard/calcul')]
@@ -27,17 +27,41 @@ class CalculController extends AbstractController
     }
 
     #[Route('/new', name: 'app_calcul_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CalculRepository $calculRepository, ManagerRegistry $doctrine): Response
+    public function new(Request $request, CalculRepository $calculRepository,ManagerRegistry $doctrine, UserRepository $userRepository): Response
     {
         $calcul = new Calcul();
-        $form = $this->createForm(CalculType::class, $calcul);
+
+        $userCalculs = $this->getUser()->getCalculs();
+
+        //check the method in the repository to retreive only fixedfees for this user
+        $otherfixedFees = $userRepository->findFixedFeesByUser(2);
+        
+        //$otherfixedFees = [];
+        
+        /*foreach ($userCalculs as $userCalcul){ 
+            foreach ($userCalcul->getFixedFees() as $fixedFee) {
+                array_push($otherfixedFees, $fixedFee);
+            }
+        }*/
+
+        $form = $this->createForm(CalculType::class, $calcul, ['choices' => $otherfixedFees]);
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //1....add the checked existant fixedFees to the calcul
+            //we have to check if the var is not empty
+            $data = $form->get('otherFees')->getData();
 
-            // add current user relation in the table calcul
+            foreach($data as $fixedFee) {
+                $calcul->addFixedFee($fixedFee);           
+            }
+
+            //2.....if ther's no new fixedfee created we must check at least one of existant fixedfees
+
+            //add current user relation in the table calcul
             $calcul->addUser($this->getUser());
-
+            
             $calculRepository->save($calcul, true);
 
             return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
@@ -45,6 +69,7 @@ class CalculController extends AbstractController
 
         return $this->renderForm('calcul/new.html.twig', [
             'calcul' => $calcul,
+            'userCalculs' => $userCalculs,
             'form' => $form,
         ]);
     }

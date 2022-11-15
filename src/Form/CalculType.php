@@ -5,16 +5,18 @@ namespace App\Form;
 use App\Entity\Calcul;
 use App\Entity\FixedFee;
 use App\Entity\VariableFee;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class CalculType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $choices = $options['choices'];
+        
         $builder
             ->add('title')
             ->add('devis')
@@ -39,6 +41,24 @@ class CalculType extends AbstractType
                     'data' => [new VariableFee()]
                 ]
             )
+            ->add('otherFees', EntityType::class, 
+            [
+                'class' => FixedFee::class,
+                'multiple' => true,
+                'mapped' => false,
+                'expanded' => true,
+                'choices' => $choices,
+                'choice_label' => function (FixedFee $fixedFee) {
+                    $data = [
+                        'Title' => $fixedFee->getTitle(),
+                        'Price' => $fixedFee->getPrice(),
+                        'Unit' => $fixedFee->getUnit(),
+                    ];
+        
+                    return json_encode($data);
+                },
+            ]
+            )
         ;
     }
 
@@ -46,6 +66,7 @@ class CalculType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Calcul::class,
+            'choices' => []
         ]);
     }
 }

@@ -34,7 +34,7 @@ class Calcul
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'calculs')]
     private Collection $user;
 
-    #[ORM\ManyToMany(targetEntity: FixedFee::class, mappedBy: 'calcul', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: FixedFee::class, mappedBy: 'calcul', cascade: ['persist'], indexBy: 'id', fetch: "EXTRA_LAZY")]
     private Collection $fixedFees;
 
     #[ORM\ManyToMany(targetEntity: VariableFee::class, mappedBy: 'calcul', cascade: ['persist'])]

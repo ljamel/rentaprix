@@ -41,14 +41,14 @@ class FixedFeeRepository extends ServiceEntityRepository
 
 //    /**
 //     * @return FixedFee[] Returns an array of FixedFee objects
-//     */
-//    public function findByExampleField($value): array
+//    */
+//    public function findByUserId($userId): array
 //    {
 //        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('f.id', 'ASC')
-//            ->setMaxResults(10)
+//            ->innerJoin(Calcul::class, 'c')
+//            ->innerJoin(User::class, 'u')
+//            ->andwhere('u.id = :val')
+//            ->setParameter('val', $userId)
 //            ->getQuery()
 //            ->getResult()
 //        ;

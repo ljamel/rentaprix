@@ -39,7 +39,7 @@ class FixedFeeController extends AbstractController
             return $this->redirectToRoute('app_fixed_fee_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('fixed_fee/new.html.twig', [
+        return $this->render('fixed_fee/new.html.twig', [
             'fixed_fee' => $fixedFee,
             'form' => $form,
         ]);

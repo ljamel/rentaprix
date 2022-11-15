@@ -12,6 +12,33 @@
         </div>
         
         <h3 class="fixedFees">Frais fixes</h3>
+    
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Unit</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>    
+                    {% for child in form.otherFees.vars.choices %}
+                            <tr>
+                                <td>{{ child.data.getId() }}</td>
+                                <td>{{ child.data.getTitle() }}</td>
+                                <td>{{ child.data.getPrice() }}</td>
+                                <td>{{ child.data.getUnit() }}</td>
+                                <td>
+                                    {{ form_widget(form.otherFees[child.data.getId()])}}
+                                </td>
+                            </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
         <div class="fixed" data-prototype="{{ _self.fixed_prototype(form.fixedFees.vars.prototype)|e }}">
         
@@ -63,12 +90,13 @@
             {% endmacro %}
         </div>
 
-        {{form_widget(form)}}
+        
         <h3 class="fixedFees">Salariés</h3>
         <div>
             <button class="btn btn-success">Valider</button>
         </div>
+        
 
-        {{ form_end(form, {'render_rest': false})}}
+        {{ form_end(form) }}
     </div>
 </div>

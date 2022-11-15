@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Calcul;
+use App\Entity\FixedFee;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -106,6 +109,23 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         // returns an array of Product objects
         return $query->getResult();
+    }
+
+        /**
+     * @return FixedFee[] Returns an array of Calcul objects
+     */
+    public function findFixedFeesByUser($idUser): array
+    {
+        // join calcul with user
+        return $this->createQueryBuilder('u')
+            ->select('f')
+            ->from(FixedFee::class, 'f')
+            ->innerJoin(Calcul::class, 'c')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $idUser)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**
