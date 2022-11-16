@@ -1,11 +1,17 @@
 <ul id="navbar-right">
     <p><strong>{{ app.user.email }}</strong></p>
     <li><a href="{{ path('app_dashboard') }}" /> Dashboard </a> </li>
-    <li><a href="{{ path('app_question_index') }}" /> Calcul de rentabilité </a> </li>
-    <li><a href="{{ path('app_calcul_index') }}" /> Vos devis </a> </li>
-    <li><a href="{{ path('app_fixed_fee_index') }}" /> Frais fixe </a> </li>
-    <li><a href="{{ path('app_variable_fee_index') }}" /> Frais variable </a> </li>
-    <li><a href="{{ path('app_salary_index') }}" /> Salariés </a> </li>
+    <li>
+        <button type="button" class="collapsible">Calcul de rentabilité</button>
+        <div class="content">
+            <ul>
+                <li><a href="{{ path('app_calcul_index') }}" /> Vos devis </a> </li>
+                <li><a href="{{ path('app_fixed_fee_index') }}" /> Frais fixe </a> </li>
+                <li><a href="{{ path('app_variable_fee_index') }}" /> Frais variable </a> </li>
+                <li><a href="{{ path('app_salary_index') }}" /> Salariés </a> </li>
+            </ul>
+        </div>
+    </li>
 </ul>
 
 <ul id="navbar-head">
