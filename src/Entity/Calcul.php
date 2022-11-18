@@ -223,6 +223,18 @@ class Calcul
         return $this;
     }
 
+    public function addSalaries($checkedSalaries, $salaries) {   
+        foreach($checkedSalaries as $sx) {
+            $this->addSalary($sx);
+        }
+
+        if($salaries[0]->getFullName()== null) {
+            $this->setSalaries($checkedSalaries);
+        }
+
+        return $this;
+    }
+
     public function removeSalary(Salary $salary): self
     {
         if ($this->salaries->removeElement($salary)) {

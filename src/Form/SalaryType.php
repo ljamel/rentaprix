@@ -14,7 +14,7 @@ class SalaryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('FullName', TextType::class, [
+            ->add('fullName', TextType::class, [
                 'label' => 'Nom et Prénom'
             ])
             ->add('post', TextType::class, [

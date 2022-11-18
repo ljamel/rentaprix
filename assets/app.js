@@ -23,7 +23,7 @@ const addFormToCollection = (e) => {
 };
 
 document
-.querySelectorAll('.add_item_fixed, .add_item_variable')
+.querySelectorAll('.add_item_fixed, .add_item_variable, .add_item_salary')
 .forEach(btn => {
     btn.addEventListener("click", addFormToCollection)
 });

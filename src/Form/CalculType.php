@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Calcul;
 use App\Entity\FixedFee;
+use App\Entity\Salary;
 use App\Entity\VariableFee;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -26,6 +27,7 @@ class CalculType extends AbstractType
     {
         $fixedFeesChoices = $options['fixedFeesChoices'];
         $variableFeesChoices = $options['variableFeesChoices'];
+        $salariesChoices= $options['salariesChoices'];
         
         $builder
             ->add('title', TextType::class, 
@@ -94,6 +96,17 @@ class CalculType extends AbstractType
                     'required' => false
                 ]
             )
+            ->add( 'salaries', CollectionType::class,
+                [
+                    'entry_type' => SalaryType::class, // le formulaire enfant qui doit être répété
+                    'allow_add' => true, // true si tu veux que l'utilisateur puisse en ajouter
+                    'allow_delete' => false, // true si tu veux que l'utilisateur puisse en supprimer
+                    'label' => 'Salariés',
+                    'by_reference' => false, // voir  https://symfony.com/doc/current/reference/forms/types/collection.html#by-reference
+                    'data' => [new Salary()],
+                    'required' => false
+                ]
+            )
             ->add('checkedFixedFees', EntityType::class, 
                 [
                     'class' => FixedFee::class,
@@ -135,6 +148,26 @@ class CalculType extends AbstractType
                     ],
                 ]
             )
+            ->add('checkedSalaries', EntityType::class, 
+                [
+                    'class' => Salary::class,
+                    'multiple' => true,
+                    'mapped' => false,
+                    'expanded' => true,
+                    'choices' => $salariesChoices,
+                    'choice_label' => function (Salary $salary) {
+                        $data = [
+                            'Nom et Prénom' => $salary->getFullName(),
+                            'Poste' => $salary->getPost(),
+                            'Rémunération' => $salary->getPay(),
+                        ];
+                        return json_encode($data);
+                    },
+                    'constraints' => [
+                        new ConstraintsCallback([$this, 'validateSalaries']),
+                    ],
+                ]
+            )
         ;
     }
 
@@ -143,7 +176,8 @@ class CalculType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Calcul::class,
             'fixedFeesChoices' => [],
-            'variableFeesChoices' => []
+            'variableFeesChoices' => [],
+            'salariesChoices' => []
         ]);
     }
 
@@ -166,6 +200,18 @@ class CalculType extends AbstractType
 
         if($variableFees[0]->getTitle() === null && count($checkedVariableFees) === 0) {
             $context->buildViolation('Select at least one variable Fee')
+                    ->addViolation();
+        }
+    }
+
+    public function validateSalaries($data, ExecutionContextInterface $context): void
+    {
+        $salaries = $context->getRoot()->get('salaries')->getData();
+        $checkedSalaries = $context->getRoot()->get('checkedSalaries')->getData();
+
+
+        if($salaries[0]->getFullName() === null && count($checkedSalaries) === 0) {
+            $context->buildViolation('Select at least one salary')
                     ->addViolation();
         }
     }

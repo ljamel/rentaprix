@@ -35,10 +35,12 @@ class CalculController extends AbstractController
         //check the method in the repository to retreive only fixedfees for this user
         $oldFixedFees = $userRepository->findFixedFeesByUser($this->getUser()->getId());
         $oldVariableFees = $userRepository->findVariableFeesByUser($this->getUser()->getId());
+        $oldSalaries = $userRepository->findSalariesByUser($this->getUser()->getId());
 
         $form = $this->createForm(CalculType::class, $calcul, [
             'fixedFeesChoices' => $oldFixedFees,
             'variableFeesChoices' => $oldVariableFees,
+            'salariesChoices' => $oldSalaries,
         ]);
         
         $form->handleRequest($request);
@@ -49,9 +51,13 @@ class CalculController extends AbstractController
 
             $checkedVariableFees = $form->get('checkedVariableFees')->getData();
             $createdVariableFees = $form->get('variableFees')->getData();
+
+            $checkedSalaries = $form->get('checkedSalaries')->getData();
+            $createdSalaries = $form->get('salaries')->getData();
             
             $calcul->addFixedFees($checkedFixedFees, $createdFixedFees);
             $calcul->addVariableFees($checkedVariableFees, $createdVariableFees);
+            $calcul->addSalaries($checkedSalaries, $createdSalaries);
 
             $calcul->addUser($this->getUser());
             

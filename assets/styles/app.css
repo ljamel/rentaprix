@@ -31,7 +31,7 @@ a.title {
     text-align: right;
 }
 
-.add_item_fixed, .add_item_variable {
+.add_item_fixed, .add_item_variable, .add_item_salary {
     color: blue;
     cursor: pointer;
 }
