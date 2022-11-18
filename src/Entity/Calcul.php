@@ -35,10 +35,10 @@ class Calcul
     #[ORM\ManyToMany(targetEntity: FixedFee::class, mappedBy: 'calcul', cascade: ['persist'], indexBy: 'id', fetch: "EXTRA_LAZY")]
     private Collection $fixedFees;
 
-    #[ORM\ManyToMany(targetEntity: VariableFee::class, mappedBy: 'calcul', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: VariableFee::class, mappedBy: 'calcul', cascade: ['persist'], indexBy: 'id', fetch: "EXTRA_LAZY")]
     private Collection $variableFees;
 
-    #[ORM\ManyToMany(targetEntity: Salary::class, mappedBy: 'calcul', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Salary::class, mappedBy: 'calcul', cascade: ['persist'], indexBy: 'id', fetch: "EXTRA_LAZY")]
     private Collection $salaries;
 
     public function __construct()
@@ -193,6 +193,18 @@ class Calcul
         return $this;
     }
 
+    public function addVariableFees($checkedVariableFees, $variableFees) {   
+        foreach($checkedVariableFees as $vx) {
+            $this->addVariableFee($vx);
+        }
+
+        if($variableFees[0]->getTitle()== null) {
+            $this->setVariableFees($checkedVariableFees);
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Salary>
      */
@@ -230,6 +242,30 @@ class Calcul
     public function setFixedFees($fixedFees)
     {
         $this->fixedFees = $fixedFees;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of variableFees
+     *
+     * @return  self
+     */ 
+    public function setVariableFees($variableFees)
+    {
+        $this->variableFees = $variableFees;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of salaries
+     *
+     * @return  self
+     */ 
+    public function setSalaries($salaries)
+    {
+        $this->salaries = $salaries;
 
         return $this;
     }

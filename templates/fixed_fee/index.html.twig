@@ -8,18 +8,16 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Unit</th>
-                <th>actions</th>
+                <th>Titre</th>
+                <th>Prix</th>
+                <th>Unité</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>       
             {% for userCalcul in userCalculs %}
                 {% for fixed_fee in userCalcul.fixedFees %}
                         <tr>
-                            <td>{{ fixed_fee.id }}</td>
                             <td>{{ fixed_fee.title }}</td>
                             <td>{{ fixed_fee.price }}</td>
                             <td>{{ fixed_fee.unit }}</td>

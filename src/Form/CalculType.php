@@ -24,7 +24,8 @@ class CalculType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $choices = $options['choices'];
+        $fixedFeesChoices = $options['fixedFeesChoices'];
+        $variableFeesChoices = $options['variableFeesChoices'];
         
         $builder
             ->add('title', TextType::class, 
@@ -88,29 +89,51 @@ class CalculType extends AbstractType
                     'allow_add' => true, // true si tu veux que l'utilisateur puisse en ajouter
                     'allow_delete' => false, // true si tu veux que l'utilisateur puisse en supprimer
                     'label' => 'Frais variables',
-                    'by_reference' => true, // voir  https://symfony.com/doc/current/reference/forms/types/collection.html#by-reference
-                    'data' => [new VariableFee()]
+                    'by_reference' => false, // voir  https://symfony.com/doc/current/reference/forms/types/collection.html#by-reference
+                    'data' => [new VariableFee()],
+                    'required' => false
                 ]
             )
             ->add('checkedFixedFees', EntityType::class, 
-            [
-                'class' => FixedFee::class,
-                'multiple' => true,
-                'mapped' => false,
-                'expanded' => true,
-                'choices' => $choices,
-                'choice_label' => function (FixedFee $fixedFee) {
-                    $data = [
-                        'Title' => $fixedFee->getTitle(),
-                        'Price' => $fixedFee->getPrice(),
-                        'Unit' => $fixedFee->getUnit(),
-                    ];
-                    return json_encode($data);
-                },
-                'constraints' => [
-                    new ConstraintsCallback([$this, 'validate']),
-                ],
-            ]
+                [
+                    'class' => FixedFee::class,
+                    'multiple' => true,
+                    'mapped' => false,
+                    'expanded' => true,
+                    'choices' => $fixedFeesChoices,
+                    'choice_label' => function (FixedFee $fixedFee) {
+                        $data = [
+                            'Title' => $fixedFee->getTitle(),
+                            'Price' => $fixedFee->getPrice(),
+                            'Unit' => $fixedFee->getUnit(),
+                        ];
+                        return json_encode($data);
+                    },
+                    'constraints' => [
+                        new ConstraintsCallback([$this, 'validateFixedFees']),
+                    ],
+                ]
+            )
+            ->add('checkedVariableFees', EntityType::class, 
+                [
+                    'class' => VariableFee::class,
+                    'multiple' => true,
+                    'mapped' => false,
+                    'expanded' => true,
+                    'choices' => $variableFeesChoices ,
+                    'choice_label' => function (VariableFee $variableFee) {
+                        $data = [
+                            'Title' => $variableFee->getTitle(),
+                            'Price' => $variableFee->getPrice(),
+                            'Unit' => $variableFee->getUnit(),
+                            'Type' => $variableFee->getType(),
+                        ];
+                        return json_encode($data);
+                    },
+                    'constraints' => [
+                        new ConstraintsCallback([$this, 'validateVariableFees']),
+                    ],
+                ]
             )
         ;
     }
@@ -119,17 +142,30 @@ class CalculType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Calcul::class,
-            'choices' => []
+            'fixedFeesChoices' => [],
+            'variableFeesChoices' => []
         ]);
     }
 
-    public function validate($data, ExecutionContextInterface $context): void
+    public function validateFixedFees($data, ExecutionContextInterface $context): void
     {
         $fixedFees = $context->getRoot()->get('fixedFees')->getData();
         $checkedFixedFees = $context->getRoot()->get('checkedFixedFees')->getData();
 
         if($fixedFees[0]->getTitle() === null && count($checkedFixedFees) === 0) {
             $context->buildViolation('Select at least one fixed Fee')
+                    ->addViolation();
+        }
+    }
+
+    public function validateVariableFees($data, ExecutionContextInterface $context): void
+    {
+        $variableFees = $context->getRoot()->get('variableFees')->getData();
+        $checkedVariableFees = $context->getRoot()->get('checkedVariableFees')->getData();
+
+
+        if($variableFees[0]->getTitle() === null && count($checkedVariableFees) === 0) {
+            $context->buildViolation('Select at least one variable Fee')
                     ->addViolation();
         }
     }

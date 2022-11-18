@@ -19,45 +19,17 @@ class VariableFeeType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a title',
-                    ]),
-                    new Length([
-                        'min' => 3,
-                        'minMessage' => 'Your title should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 256,
-                    ]),
-                    new Regex([
-                            'pattern'=> '/^[a-z_ -]+$/i',
-                            'htmlPattern'=> '^[a-zA-Z]+$',
-                            'message' => 'Title must contains only letters'
-                    ])
-                ],
                 'label'=> 'Titre'
             ])
             ->add('price', MoneyType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a Price',
-                    ]),
-                    new Positive([
-                        'message' => 'Price must be grater than 0'
-                    ]),
-                ],
-            'divisor' => 100,
             'label'=> 'Prix'
             ])
             ->add('unit', TextType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a unit',
-                    ]),
-                ],
                 'label'=> 'Unité'
             ])
-            ->add('type')
+            ->add('type', TextType::class, [
+                'label' => 'Type'
+            ])
         ;
     }
 

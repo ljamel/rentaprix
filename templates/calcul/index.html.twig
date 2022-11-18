@@ -3,6 +3,9 @@
 {% block title %}Calcul index{% endblock %}
 
 {% block body %}
+{% for message in app.flashes('success') %}
+			<div class="alert-success" role="alert">{{ message }}</div>
+{% endfor %}
     <h1>Votre devis</h1>
 
     <table class="table">

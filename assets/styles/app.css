@@ -83,3 +83,10 @@ a.title {
 .active:after {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
 }
+
+.alert-success {
+    background-color: green;
+    height: 50px;
+    width: 500px;
+    margin: 10px;
+}

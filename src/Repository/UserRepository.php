@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Calcul;
 use App\Entity\FixedFee;
 use App\Entity\User;
+use App\Entity\VariableFee;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\Persistence\ManagerRegistry;
@@ -120,6 +121,23 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->createQueryBuilder('u')
             ->select('f')
             ->from(FixedFee::class, 'f')
+            ->innerJoin(Calcul::class, 'c')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $idUser)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+        /**
+     * @return FixedFee[] Returns an array of Calcul objects
+     */
+    public function findVariableFeesByUser($idUser): array
+    {
+        // join calcul with user
+        return $this->createQueryBuilder('u')
+            ->select('f')
+            ->from(VariableFee::class, 'f')
             ->innerJoin(Calcul::class, 'c')
             ->andWhere('u.id = :val')
             ->setParameter('val', $idUser)

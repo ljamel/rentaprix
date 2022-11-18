@@ -33,20 +33,31 @@ class CalculController extends AbstractController
         $userCalculs = $this->getUser()->getCalculs();
 
         //check the method in the repository to retreive only fixedfees for this user
-        $oldfixedFees = $userRepository->findFixedFeesByUser($this->getUser()->getId());
+        $oldFixedFees = $userRepository->findFixedFeesByUser($this->getUser()->getId());
+        $oldVariableFees = $userRepository->findVariableFeesByUser($this->getUser()->getId());
 
-        $form = $this->createForm(CalculType::class, $calcul, ['choices' => $oldfixedFees]);
+        $form = $this->createForm(CalculType::class, $calcul, [
+            'fixedFeesChoices' => $oldFixedFees,
+            'variableFeesChoices' => $oldVariableFees,
+        ]);
+        
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {         
             $checkedFixedFees = $form->get('checkedFixedFees')->getData();
             $createdFixedFees = $form->get('fixedFees')->getData();
+
+            $checkedVariableFees = $form->get('checkedVariableFees')->getData();
+            $createdVariableFees = $form->get('variableFees')->getData();
             
             $calcul->addFixedFees($checkedFixedFees, $createdFixedFees);
+            $calcul->addVariableFees($checkedVariableFees, $createdVariableFees);
 
             $calcul->addUser($this->getUser());
             
             $calculRepository->save($calcul, true);
+            
+            $this->addFlash('sucess', 'Le calcul a été crée avec succées');
 
             return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER); 
         }

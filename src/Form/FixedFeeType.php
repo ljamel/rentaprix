@@ -18,20 +18,11 @@ class FixedFeeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, [
-                
+            ->add('title', TextType::class, [    
                 'label'=> 'Titre',
             ])
             ->add('price', MoneyType::class, [
-                /*'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a Price',
-                    ]),
-                    new Positive([
-                        'message' => 'Price must be grater than 0'
-                    ]),
-                ],*/
-            'label'=> 'Prix'
+                'label'=> 'Prix'
             ])
             ->add('unit', TextType::class, [
                 'label'=> 'Unité'
