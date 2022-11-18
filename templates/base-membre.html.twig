@@ -16,6 +16,9 @@
     </head>
     <body>
         {% include '_menuBack.html.twig' %}
-        <div class='contentDashboard'>{% block body %}{% endblock %}</div>
+        <div class='contentDashboard'>
+        {% include "_toasts.html.twig" %}
+        {% block body %}
+        {% endblock %}</div>
     </body>
 </html>
