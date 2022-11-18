@@ -33,39 +33,24 @@ class CalculController extends AbstractController
         $userCalculs = $this->getUser()->getCalculs();
 
         //check the method in the repository to retreive only fixedfees for this user
-        $otherfixedFees = $userRepository->findFixedFeesByUser($this->getUser()->getId());
-        
-        //$otherfixedFees = [];
-        
-        /*foreach ($userCalculs as $userCalcul){ 
-            foreach ($userCalcul->getFixedFees() as $fixedFee) {
-                array_push($otherfixedFees, $fixedFee);
-            }
-        }*/
+        $oldfixedFees = $userRepository->findFixedFeesByUser($this->getUser()->getId());
 
-        $form = $this->createForm(CalculType::class, $calcul, ['choices' => $otherfixedFees]);
+        $form = $this->createForm(CalculType::class, $calcul, ['choices' => $oldfixedFees]);
         $form->handleRequest($request);
         
+        if ($form->isSubmitted() && $form->isValid()) {         
+            $checkedFixedFees = $form->get('checkedFixedFees')->getData();
+            $createdFixedFees = $form->get('fixedFees')->getData();
+            
+            $calcul->addFixedFees($checkedFixedFees, $createdFixedFees);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            //1....add the checked existant fixedFees to the calcul
-            //we have to check if the var is not empty
-            $data = $form->get('otherFees')->getData();
-
-            foreach($data as $fixedFee) {
-                $calcul->addFixedFee($fixedFee);           
-            }
-
-            //2.....if ther's no new fixedfee created we must check at least one of existant fixedfees
-
-            //add current user relation in the table calcul
             $calcul->addUser($this->getUser());
             
             $calculRepository->save($calcul, true);
 
-            return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER); 
         }
-
+        
         return $this->renderForm('calcul/new.html.twig', [
             'calcul' => $calcul,
             'userCalculs' => $userCalculs,

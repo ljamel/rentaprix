@@ -4,12 +4,10 @@ namespace App\Entity;
 
 use App\Repository\CalculRepository;
 use DateTime;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CalculRepository::class)]
 class Calcul
@@ -147,6 +145,18 @@ class Calcul
         return $this;
     }
 
+    public function addFixedFees($checkedFixedFees, $fixedFees) {   
+        foreach($checkedFixedFees as $fx) {
+            $this->addFixedFee($fx);
+        }
+
+        if($fixedFees[0]->getTitle()== null) {
+            $this->setFixedFees($checkedFixedFees);
+        }
+
+        return $this;
+    }
+
     public function removeFixedFee(FixedFee $fixedFee): self
     {
         if ($this->fixedFees->removeElement($fixedFee)) {
@@ -206,6 +216,20 @@ class Calcul
         if ($this->salaries->removeElement($salary)) {
             $salary->removeCalcul($this);
         }
+
+        return $this;
+    }
+
+    
+
+    /**
+     * Set the value of fixedFees
+     *
+     * @return  self
+     */ 
+    public function setFixedFees($fixedFees)
+    {
+        $this->fixedFees = $fixedFees;
 
         return $this;
     }

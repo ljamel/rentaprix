@@ -1,14 +1,26 @@
 <div>
     <div>
-        {{ form_start(form)}}
-        <div>			
-            {{ form_row(form.title)}}
+        {{ form_start(form)}}    
+        <div>
+            {{ form_label(form.title) }}
+            <div class="">{{ form_widget(form.title) }}</div>
+            <div class="error-message">
+                {{ form_errors(form.title) }}
+            </div>
         </div>
         <div>
-            {{ form_row(form.devis)}}
-        </div>
+            {{ form_label(form.devis) }}
+            <div class="">{{ form_widget(form.devis) }}</div>
+            <div class="error-message">
+                {{ form_errors(form.devis) }}
+            </div>
+        </div>        
         <div>
-            {{ form_row(form.durationMonth) }}
+            {{ form_label(form.durationMonth) }}
+            <div class="">{{ form_widget(form.durationMonth) }}</div>
+            <div class="error-message">
+                {{ form_errors(form.durationMonth) }}
+            </div>
         </div>
         
         <h3 class="fixedFees">Frais fixes</h3>
@@ -25,19 +37,22 @@
                 </tr>
             </thead>
             <tbody>    
-                    {% for child in form.otherFees.vars.choices %}
+                    {% for child in form.checkedFixedFees.vars.choices %}
                             <tr>
                                 <td>{{ child.data.getId() }}</td>
                                 <td>{{ child.data.getTitle() }}</td>
                                 <td>{{ child.data.getPrice() }}</td>
                                 <td>{{ child.data.getUnit() }}</td>
                                 <td>
-                                    {{ form_widget(form.otherFees[child.data.getId()])}}
+                                    {{ form_widget(form.checkedFixedFees[child.data.getId()])}}
                                 </td>
                             </tr>
                     {% endfor %}
             </tbody>
         </table>
+            <div class="error-message">
+                    {{  form_errors(form.checkedFixedFees) }}
+            </div>
     </div>
 
         <div class="fixed" data-prototype="{{ _self.fixed_prototype(form.fixedFees.vars.prototype)|e }}">
@@ -51,13 +66,25 @@
             {% macro fixed_prototype(fixedFee) %}
                 <div class="prototype">
                     <div>
-                        {{ form_row(fixedFee.title) }}
+                        {{ form_label(fixedFee.title) }}
+                        <div class="">{{ form_widget(fixedFee.title) }}</div>
+                        <div class="error-message">
+                            {{ form_errors(fixedFee.title) }}
+                        </div>
                     </div>
                     <div>
-                        {{ form_row(fixedFee.price) }}
+                        {{ form_label(fixedFee.price) }}
+                        <div class="">{{ form_widget(fixedFee.price) }}</div>
+                        <div class="error-message">
+                            {{ form_errors(fixedFee.price) }}
+                        </div>
                     </div>
                     <div>
-                        {{ form_row(fixedFee.unit) }}
+                        {{ form_label(fixedFee.unit) }}
+                        <div class="">{{ form_widget(fixedFee.unit) }}</div>
+                        <div class="error-message">
+                            {{ form_errors(fixedFee.unit) }}
+                        </div>
                     </div>
                 </div>
             {% endmacro %}
@@ -75,16 +102,32 @@
             {% macro variable_prototype(variableFee) %}
                 <div class="prototype">
                     <div>
-                        {{ form_row(variableFee.title) }}
+                        {{ form_label(variableFee.title) }}
+                        <div class="">{{ form_widget(variableFee.title) }}</div>
+                        <div class="error-message">
+                            {{ form_errors(variableFee.title) }}
+                        </div>
                     </div>
                     <div>
-                        {{ form_row(variableFee.price) }}
+                        {{ form_label(variableFee.price) }}
+                        <div class="">{{ form_widget(variableFee.price) }}</div>
+                        <div class="error-message">
+                            {{ form_errors(variableFee.price) }}
+                        </div>
                     </div>
                     <div>
-                        {{ form_row(variableFee.unit) }}
+                        {{ form_label(variableFee.unit) }}
+                        <div class="">{{ form_widget(variableFee.unit) }}</div>
+                        <div class="error-message">
+                            {{ form_errors(variableFee.unit) }}
+                        </div>
                     </div>
                     <div>
-                        {{ form_row(variableFee.type) }}
+                        {{ form_label(variableFee.type) }}
+                        <div class="">{{ form_widget(variableFee.type) }}</div>
+                        <div class="error-message">
+                            {{ form_errors(variableFee.type) }}
+                        </div>
                     </div>
                 </div>
             {% endmacro %}

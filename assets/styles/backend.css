@@ -22,3 +22,7 @@
 .contentDashboard {
     margin-left: 250px;
 }
+
+.error-message {
+    color: red;
+}
