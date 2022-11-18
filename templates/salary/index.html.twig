@@ -17,8 +17,8 @@
         </thead>
         <tbody>
             {% for userCalcul in userCalculs %}
-                {% for salary in userCalcul.calculs %}
-                    {% for salary in salary.FixedFees %}
+                {% for calcul in userCalcul.calculs %}
+                    {% for salary in calcul.salaries %}
                     <tr>
                         <td>{{ salary.id }}</td>
                         <td>{{ salary.FullName }}</td>
