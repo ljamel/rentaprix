@@ -17,7 +17,7 @@
                                 <td>{{ child.data.getPrice() }}</td>
                                 <td>{{ child.data.getUnit() }}</td>
                                 <td>
-                                    {{ form_widget(form.checkedFixedFees[child.data.getId()])}}
+                                    {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
                                 </td>
                             </tr>
                     {% endfor %}
@@ -41,21 +41,21 @@
         <div class="prototype">
             <div>
                 {{ form_label(fixedFee.title) }}
-                <div class="">{{ form_widget(fixedFee.title) }}</div>
+                <div class="">{{ form_widget(fixedFee.title, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
                 <div class="error-message">
                     {{ form_errors(fixedFee.title) }}
                 </div>
             </div>
             <div>
                 {{ form_label(fixedFee.price) }}
-                <div class="">{{ form_widget(fixedFee.price) }}</div>
+                <div class="">{{ form_widget(fixedFee.price, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
                 <div class="error-message">
                     {{ form_errors(fixedFee.price) }}
                 </div>
             </div>
             <div>
                 {{ form_label(fixedFee.unit) }}
-                <div class="">{{ form_widget(fixedFee.unit) }}</div>
+                <div class="">{{ form_widget(fixedFee.unit, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
                 <div class="error-message">
                     {{ form_errors(fixedFee.unit) }}
                 </div>

@@ -17,7 +17,7 @@
                                 <td>{{ child.data.getPost() }}</td>
                                 <td>{{ child.data.getPay() }}</td>
                                 <td>
-                                    {{ form_widget(form.checkedSalaries[child.data.getId()])}}
+                                    {{ form_widget(form.checkedSalaries[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
                                 </td>
                             </tr>
                     {% endfor %}
@@ -41,21 +41,21 @@
         <div class="prototype">
             <div>
                 {{ form_label(salary.fullName) }}
-                <div class="">{{ form_widget(salary.fullName) }}</div>
+                <div class="">{{ form_widget(salary.fullName, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
                 <div class="error-message">
                     {{ form_errors(salary.fullName) }}
                 </div>
             </div>
             <div>
                 {{ form_label(salary.post) }}
-                <div class="">{{ form_widget(salary.post) }}</div>
+                <div class="">{{ form_widget(salary.post, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
                 <div class="error-message">
                     {{ form_errors(salary.post) }}
                 </div>
             </div>
             <div>
                 {{ form_label(salary.pay) }}
-                <div class="">{{ form_widget(salary.pay) }}</div>
+                <div class="">{{ form_widget(salary.pay, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
                 <div class="error-message">
                     {{ form_errors(salary.pay) }}
                 </div>

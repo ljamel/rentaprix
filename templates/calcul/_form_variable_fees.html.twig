@@ -19,7 +19,7 @@
                                 <td>{{ child.data.getUnit() }}</td>
                                 <td>{{ child.data.getType() }}</td>
                                 <td>
-                                    {{ form_widget(form.checkedVariableFees[child.data.getId()])}}
+                                    {{ form_widget(form.checkedVariableFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
                                 </td>
                             </tr>
                     {% endfor %}
@@ -42,28 +42,28 @@
         <div class="prototype">
             <div>
                 {{ form_label(variableFee.title) }}
-                <div class="">{{ form_widget(variableFee.title) }}</div>
+                <div class="">{{ form_widget(variableFee.title, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
                 <div class="error-message">
                     {{ form_errors(variableFee.title) }}
                 </div>
             </div>
             <div>
                 {{ form_label(variableFee.price) }}
-                <div class="">{{ form_widget(variableFee.price) }}</div>
+                <div class="">{{ form_widget(variableFee.price, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
                 <div class="error-message">
                     {{ form_errors(variableFee.price) }}
                 </div>
             </div>
             <div>
                 {{ form_label(variableFee.unit) }}
-                <div class="">{{ form_widget(variableFee.unit) }}</div>
+                <div class="">{{ form_widget(variableFee.unit, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
                 <div class="error-message">
                     {{ form_errors(variableFee.unit) }}
                 </div>
             </div>
             <div>
                 {{ form_label(variableFee.type) }}
-                <div class="">{{ form_widget(variableFee.type) }}</div>
+                <div class="">{{ form_widget(variableFee.type, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
                 <div class="error-message">
                     {{ form_errors(variableFee.type) }}
                 </div>

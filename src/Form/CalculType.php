@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType as TypeIntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Callback as ConstraintsCallback;
 use Symfony\Component\Validator\Constraints\Length;
@@ -168,6 +169,9 @@ class CalculType extends AbstractType
                     ],
                 ]
             )
+            ->add('save', SubmitType::class, [
+                'attr' => ['class' => 'save'],
+            ]);
         ;
     }
 
