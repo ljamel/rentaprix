@@ -1,0 +1,65 @@
+<div>
+    {% if form.checkedFixedFees|default is empty %}
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Prix</th>
+                    <th>Unité</th>
+                    <th>Selectionner</th>
+                </tr>
+            </thead>
+            <tbody>    
+                    {% for child in form.checkedFixedFees.vars.choices %}
+                            <tr>
+                                <td>{{ child.data.getTitle() }}</td>
+                                <td>{{ child.data.getPrice() }}</td>
+                                <td>{{ child.data.getUnit() }}</td>
+                                <td>
+                                    {{ form_widget(form.checkedFixedFees[child.data.getId()])}}
+                                </td>
+                            </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+        <div class="error-message">
+                {{  form_errors(form.checkedFixedFees) }}
+        </div>
+    {% endif %}
+    </div>
+
+    <div class="fixed" data-prototype="{{ _self.fixed_prototype(form.fixedFees.vars.prototype)|e }}">
+    
+    <a class="add_item_fixed" data-collection-holder-class="fixed">add a new fixed fee</a>
+
+    {% for fixedFee in form.fixedFees %}
+        {{ _self.fixed_prototype(fixedFee) }}
+    {% endfor %}
+
+    {% macro fixed_prototype(fixedFee) %}
+        <div class="prototype">
+            <div>
+                {{ form_label(fixedFee.title) }}
+                <div class="">{{ form_widget(fixedFee.title) }}</div>
+                <div class="error-message">
+                    {{ form_errors(fixedFee.title) }}
+                </div>
+            </div>
+            <div>
+                {{ form_label(fixedFee.price) }}
+                <div class="">{{ form_widget(fixedFee.price) }}</div>
+                <div class="error-message">
+                    {{ form_errors(fixedFee.price) }}
+                </div>
+            </div>
+            <div>
+                {{ form_label(fixedFee.unit) }}
+                <div class="">{{ form_widget(fixedFee.unit) }}</div>
+                <div class="error-message">
+                    {{ form_errors(fixedFee.unit) }}
+                </div>
+            </div>
+        </div>
+    {% endmacro %}
+</div>

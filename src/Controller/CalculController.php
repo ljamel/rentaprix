@@ -10,29 +10,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
 
 #[Route('/dashboard/calcul')]
 class CalculController extends AbstractController
 {
     #[Route('/', name: 'app_calcul_index', methods: ['GET'])]
-    public function index(CalculRepository $calculRepository, UserRepository $userRepository): Response
+    public function index(): Response
     {
-        // show information calcul relation with current user
-        $userCalculs = $userRepository->findByFeeUser($this->getUser()->getId());
+        $userCalculs = $this->getUser()->getCalculs();
+        
         return $this->render('calcul/index.html.twig', [
             'userCalculs' => $userCalculs,
         ]);
     }
 
     #[Route('/new', name: 'app_calcul_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CalculRepository $calculRepository,ManagerRegistry $doctrine, UserRepository $userRepository): Response
+    public function new(Request $request, CalculRepository $calculRepository, UserRepository $userRepository): Response
     {
         $calcul = new Calcul();
 
-        $userCalculs = $this->getUser()->getCalculs();
-
-        //check the method in the repository to retreive only fixedfees for this user
         $oldFixedFees = $userRepository->findFixedFeesByUser($this->getUser()->getId());
         $oldVariableFees = $userRepository->findVariableFeesByUser($this->getUser()->getId());
         $oldSalaries = $userRepository->findSalariesByUser($this->getUser()->getId());
@@ -70,13 +66,12 @@ class CalculController extends AbstractController
         
         return $this->renderForm('calcul/new.html.twig', [
             'calcul' => $calcul,
-            'userCalculs' => $userCalculs,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'app_calcul_show', methods: ['GET'])]
-    public function show(Calcul $calcul, CalculRepository $calculRepository): Response
+    public function show(Calcul $calcul): Response
     {
         return $this->render('calcul/show.html.twig', [
             'calcul' => $calcul,

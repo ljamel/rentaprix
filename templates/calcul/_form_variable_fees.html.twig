@@ -1,0 +1,73 @@
+<div>
+    {% if form.checkedVariableFees|default is empty %}
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Prix</th>
+                    <th>Unité</th>
+                    <th>Type</th>
+                    <th>Selectionner</th>
+                </tr>
+            </thead>
+            <tbody>    
+                    {% for child in form.checkedVariableFees.vars.choices %}
+                            <tr>
+                                <td>{{ child.data.getTitle() }}</td>
+                                <td>{{ child.data.getPrice() }}</td>
+                                <td>{{ child.data.getUnit() }}</td>
+                                <td>{{ child.data.getType() }}</td>
+                                <td>
+                                    {{ form_widget(form.checkedVariableFees[child.data.getId()])}}
+                                </td>
+                            </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+        <div class="error-message">
+            {{  form_errors(form.checkedVariableFees) }}
+        </div>
+    {% endif %}
+</div>
+
+<div class="variable" data-prototype="{{ _self.variable_prototype(form.variableFees.vars.prototype)|e }}">
+    <a class="add_item_variable" data-collection-holder-class="variable">add a new variable fee</a>
+
+    {% for variableFee in form.variableFees %}
+        {{ _self.variable_prototype(variableFee) }}
+    {% endfor %}
+
+    {% macro variable_prototype(variableFee) %}
+        <div class="prototype">
+            <div>
+                {{ form_label(variableFee.title) }}
+                <div class="">{{ form_widget(variableFee.title) }}</div>
+                <div class="error-message">
+                    {{ form_errors(variableFee.title) }}
+                </div>
+            </div>
+            <div>
+                {{ form_label(variableFee.price) }}
+                <div class="">{{ form_widget(variableFee.price) }}</div>
+                <div class="error-message">
+                    {{ form_errors(variableFee.price) }}
+                </div>
+            </div>
+            <div>
+                {{ form_label(variableFee.unit) }}
+                <div class="">{{ form_widget(variableFee.unit) }}</div>
+                <div class="error-message">
+                    {{ form_errors(variableFee.unit) }}
+                </div>
+            </div>
+            <div>
+                {{ form_label(variableFee.type) }}
+                <div class="">{{ form_widget(variableFee.type) }}</div>
+                <div class="error-message">
+                    {{ form_errors(variableFee.type) }}
+                </div>
+            </div>
+        </div>
+    {% endmacro %}
+</div>

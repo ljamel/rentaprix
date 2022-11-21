@@ -15,12 +15,11 @@ use App\Repository\UserRepository;
 class SalaryController extends AbstractController
 {
     #[Route('/', name: 'app_salary_index', methods: ['GET'])]
-    public function index(SalaryRepository $salaryRepository, UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository): Response
     {
-        // show information calcul relation with current user
-        $userCalculs = $userRepository->findByFeeUser($this->getUser()->getId());
+        $salaries = $userRepository->findSalariesByUser($this->getUser()->getId());
         return $this->render('salary/index.html.twig', [
-            'userCalculs' => $userCalculs,
+            'salaries' => $salaries,
         ]);
     }
 

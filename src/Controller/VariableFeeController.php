@@ -16,14 +16,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class VariableFeeController extends AbstractController
 {
     #[Route('/', name: 'app_variable_fee_index', methods: ['GET'])]
-    public function index(VariableFeeRepository $variableFeeRepository, UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository): Response
     {
         // show information calcul relation with current user
-        $userCalculs = $userRepository->findByFeeUser($this->getUser()->getId());
+        $variableFees = $userRepository->findVariableFeesByUser($this->getUser()->getId());
 
         return $this->render('variable_fee/index.html.twig', [
-            'variable_fees' => $variableFeeRepository->findAll(),
-            'userCalculs' => $userCalculs,
+            'variableFees' => $variableFees,
         ]);
     }
 

@@ -3,35 +3,33 @@
 {% block title %}Salary index{% endblock %}
 
 {% block body %}
-    <h1>Salary index</h1>
-
+    <h1>Liste des salariés</h1>
+    
+    {% if salaries|default is empty %}
+        <P>Aucune donnée à afficher<p/>
+    {% else %}
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>FullName</th>
-                <th>Post</th>
-                <th>Pay</th>
-                <th>actions</th>
+                <th>Nom et Prénom</th>
+                <th>Poste</th>
+                <th>Rémunération</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for userCalcul in userCalculs %}
-                {% for calcul in userCalcul.calculs %}
-                    {% for salary in calcul.salaries %}
-                    <tr>
-                        <td>{{ salary.id }}</td>
-                        <td>{{ salary.FullName }}</td>
-                        <td>{{ salary.post }}</td>
-                        <td>{{ salary.pay }}</td>
-                        <td>
-                            <a href="{{ path('app_salary_show', {'id': salary.id}) }}">show</a>
-                            <a href="{{ path('app_salary_edit', {'id': salary.id}) }}">edit</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                {% endfor %}
+            {% for salary in salaries %}
+            <tr>
+                <td>{{ salary.FullName }}</td>
+                <td>{{ salary.post }}</td>
+                <td>{{ salary.pay }}</td>
+                <td>
+                    <a href="{{ path('app_salary_show', {'id': salary.id}) }}">Afficher</a>
+                    <a href="{{ path('app_salary_edit', {'id': salary.id}) }}">Editer</a>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
+    {% endif %}
 {% endblock %}

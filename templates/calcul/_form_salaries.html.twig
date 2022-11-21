@@ -1,0 +1,65 @@
+<div>
+    {% if form.checkedSalaries|default is empty %}
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom et Prénom</th>
+                    <th>Poste</th>
+                    <th>Rémunération</th>
+                    <th>Selectionner</th>
+                </tr>
+            </thead>
+            <tbody>    
+                    {% for child in form.checkedSalaries.vars.choices %}
+                            <tr>
+                                <td>{{ child.data.getFullName() }}</td>
+                                <td>{{ child.data.getPost() }}</td>
+                                <td>{{ child.data.getPay() }}</td>
+                                <td>
+                                    {{ form_widget(form.checkedSalaries[child.data.getId()])}}
+                                </td>
+                            </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+        <div class="error-message">
+                {{  form_errors(form.checkedSalaries) }}
+        </div>
+    {% endif %}
+</div>
+
+<div class="salary" data-prototype="{{ _self.salary_prototype(form.salaries.vars.prototype)|e }}">
+
+    <a class="add_item_salary" data-collection-holder-class="salary">Nouveau salarié</a>
+
+    {% for salary in form.salaries %}
+        {{ _self.salary_prototype(salary) }}
+    {% endfor %}
+
+    {% macro salary_prototype(salary) %}
+        <div class="prototype">
+            <div>
+                {{ form_label(salary.fullName) }}
+                <div class="">{{ form_widget(salary.fullName) }}</div>
+                <div class="error-message">
+                    {{ form_errors(salary.fullName) }}
+                </div>
+            </div>
+            <div>
+                {{ form_label(salary.post) }}
+                <div class="">{{ form_widget(salary.post) }}</div>
+                <div class="error-message">
+                    {{ form_errors(salary.post) }}
+                </div>
+            </div>
+            <div>
+                {{ form_label(salary.pay) }}
+                <div class="">{{ form_widget(salary.pay) }}</div>
+                <div class="error-message">
+                    {{ form_errors(salary.pay) }}
+                </div>
+            </div>
+        </div>
+    {% endmacro %}
+</div>

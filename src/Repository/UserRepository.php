@@ -61,40 +61,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
-        /**
-     * @return Calcul[] Returns an array of Calcul objects
-     */
-    public function findByFeeUser($idUser): array
-    {
-        // join calcul with user
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.id = :val')
-            ->setParameter('val', $idUser)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(100)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-            /**
-     * @return Calcul[] Returns an array of Calcul objects
-     */
-    public function findByUserOne($idUser, $idFeevrariable): array
-    {
-        // join calcul with user
-        return $this->createQueryBuilder('c')
-            ->from(\App\Entity\VariableFee::class, 'u')
-            ->andWhere('c.id = :valUser')
-            ->setParameter('valUser', $idUser)
-            ->andWhere('u.id = :valFee')
-            ->setParameter('valFee', $idFeevrariable)
-            ->orderBy('c.id', 'ASC')
-            ->getQuery()
-            ->getSingleResult()
-        ;
-    }
-
     /**
      * @return Product[]
      */
@@ -114,78 +80,59 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
         /**
-     * @return FixedFee[] Returns an array of Calcul objects
+     * @return FixedFee[] Returns an array of FixedFee objects
      */
     public function findFixedFeesByUser($idUser): array
     {
-        // join calcul with user
-        return $this->createQueryBuilder('u')
-            ->select('f')
-            ->from(FixedFee::class, 'f')
-            ->innerJoin(Calcul::class, 'c')
-            ->andWhere('u.id = :val')
-            ->setParameter('val', $idUser)
-            ->getQuery()
-            ->getResult()
-        ;
+            $entityManager = $this->getEntityManager();
+
+            $query = $entityManager->createQuery(
+                'SELECT f
+                FROM App\Entity\FixedFee f
+                INNER JOIN f.calcul c
+                INNER JOIN c.user u
+                WHERE u.id = :id'
+                
+            )->setParameter('id', $idUser);
+            
+            return $query->getResult();
     }
 
         /**
-     * @return FixedFee[] Returns an array of Calcul objects
+     * @return FixedFee[] Returns an array of VariableFee objects
      */
     public function findVariableFeesByUser($idUser): array
     {
-        // join calcul with user
-        return $this->createQueryBuilder('u')
-            ->select('f')
-            ->from(VariableFee::class, 'f')
-            ->innerJoin(Calcul::class, 'c')
-            ->andWhere('u.id = :val')
-            ->setParameter('val', $idUser)
-            ->getQuery()
-            ->getResult()
-        ;
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT v
+            FROM App\Entity\VariableFee v
+            INNER JOIN v.calcul c
+            INNER JOIN c.user u
+            WHERE u.id = :id'
+            
+        )->setParameter('id', $idUser);
+        
+        return $query->getResult();
     }
 
         /**
-     * @return Salary[] Returns an array of Calcul objects
+     * @return Salary[] Returns an array of Salary objects
      */
     public function findSalariesByUser($idUser): array
     {
-        // join calcul with user
-        return $this->createQueryBuilder('u')
-            ->select('f')
-            ->from(Salary::class, 'f')
-            ->innerJoin(Calcul::class, 'c')
-            ->andWhere('u.id = :val')
-            ->setParameter('val', $idUser)
-            ->getQuery()
-            ->getResult()
-        ;
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Salary s
+            INNER JOIN s.calcul c
+            INNER JOIN c.user u
+            WHERE u.id = :id'
+            
+        )->setParameter('id', $idUser);
+        
+        return $query->getResult();
     }
-
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

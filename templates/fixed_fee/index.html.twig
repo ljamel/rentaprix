@@ -3,8 +3,11 @@
 {% block title %}FixedFee index{% endblock %}
 
 {% block body %}
-    <h1>FixedFee index</h1>
+    <h1>Liste des frais fixes</h1>
 
+    {% if fixedFees|default is empty %}
+        <P>Aucune donnée à afficher<p/>
+    {% else %}
     <table class="table">
         <thead>
             <tr>
@@ -14,20 +17,19 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>       
-            {% for userCalcul in userCalculs %}
-                {% for fixed_fee in userCalcul.fixedFees %}
-                        <tr>
-                            <td>{{ fixed_fee.title }}</td>
-                            <td>{{ fixed_fee.price }}</td>
-                            <td>{{ fixed_fee.unit }}</td>
-                            <td>
-                                <a href="{{ path('app_fixed_fee_show', {'id': fixed_fee.id}) }}">show</a>
-                                <a href="{{ path('app_fixed_fee_edit', {'id': fixed_fee.id}) }}">edit</a>
-                            </td>
-                        </tr>
-                {% endfor %}
+        <tbody>     
+            {% for fixedFee in fixedFees %}
+                <tr>
+                    <td>{{ fixedFee.title }}</td>
+                    <td>{{ fixedFee.price }}</td>
+                    <td>{{ fixedFee.unit }}</td>
+                    <td>
+                        <a href="{{ path('app_fixed_fee_show', {'id': fixedFee.id}) }}">Afficher</a>
+                        <a href="{{ path('app_fixed_fee_edit', {'id': fixedFee.id}) }}">Editer</a>
+                    </td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
+    {% endif %}
 {% endblock %}

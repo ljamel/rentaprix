@@ -1,5 +1,4 @@
 <div>
-    <div>
         {{ form_start(form)}}    
         <div>
             {{ form_label(form.title) }}
@@ -23,215 +22,20 @@
             </div>
         </div>
         
-        <h3 class="fixedFees">Frais fixes</h3>
+    <h3 class="fixedFees">Frais fixes</h3>
     
+    {{ include('calcul/_form_fixed_fees.html.twig') }}
+
+    <h3 class="fixedFees">Frais variables</h3>
+        
+    {{ include('calcul/_form_variable_fees.html.twig') }}
+        
+    <h3 class="fixedFees">Salariés</h3>
+    
+    {{ include('calcul/_form_salaries.html.twig') }}
     <div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Prix</th>
-                    <th>Unité</th>
-                    <th>Selectionner</th>
-                </tr>
-            </thead>
-            <tbody>    
-                    {% for child in form.checkedFixedFees.vars.choices %}
-                            <tr>
-                                <td>{{ child.data.getTitle() }}</td>
-                                <td>{{ child.data.getPrice() }}</td>
-                                <td>{{ child.data.getUnit() }}</td>
-                                <td>
-                                    {{ form_widget(form.checkedFixedFees[child.data.getId()])}}
-                                </td>
-                            </tr>
-                    {% endfor %}
-            </tbody>
-        </table>
-            <div class="error-message">
-                    {{  form_errors(form.checkedFixedFees) }}
-            </div>
-    </div>
+        <button class="btn btn-success">Valider</button>
+    </div>    
 
-        <div class="fixed" data-prototype="{{ _self.fixed_prototype(form.fixedFees.vars.prototype)|e }}">
-        
-        <a class="add_item_fixed" data-collection-holder-class="fixed">add a new fixed fee</a>
-
-            {% for fixedFee in form.fixedFees %}
-                {{ _self.fixed_prototype(fixedFee) }}
-            {% endfor %}
-
-            {% macro fixed_prototype(fixedFee) %}
-                <div class="prototype">
-                    <div>
-                        {{ form_label(fixedFee.title) }}
-                        <div class="">{{ form_widget(fixedFee.title) }}</div>
-                        <div class="error-message">
-                            {{ form_errors(fixedFee.title) }}
-                        </div>
-                    </div>
-                    <div>
-                        {{ form_label(fixedFee.price) }}
-                        <div class="">{{ form_widget(fixedFee.price) }}</div>
-                        <div class="error-message">
-                            {{ form_errors(fixedFee.price) }}
-                        </div>
-                    </div>
-                    <div>
-                        {{ form_label(fixedFee.unit) }}
-                        <div class="">{{ form_widget(fixedFee.unit) }}</div>
-                        <div class="error-message">
-                            {{ form_errors(fixedFee.unit) }}
-                        </div>
-                    </div>
-                </div>
-            {% endmacro %}
-        </div>
-
-        <h3 class="fixedFees">Frais variables</h3>
-        
-        <div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Prix</th>
-                        <th>Unité</th>
-                        <th>Type</th>
-                        <th>Selectionner</th>
-                    </tr>
-                </thead>
-                <tbody>    
-                        {% for child in form.checkedVariableFees.vars.choices %}
-                                <tr>
-                                    <td>{{ child.data.getTitle() }}</td>
-                                    <td>{{ child.data.getPrice() }}</td>
-                                    <td>{{ child.data.getUnit() }}</td>
-                                    <td>{{ child.data.getType() }}</td>
-                                    <td>
-                                        {{ form_widget(form.checkedVariableFees[child.data.getId()])}}
-                                    </td>
-                                </tr>
-                        {% endfor %}
-                </tbody>
-            </table>
-            <div class="error-message">
-                    {{  form_errors(form.checkedVariableFees) }}
-            </div>
-    </div>
-
-        <div class="variable" data-prototype="{{ _self.variable_prototype(form.variableFees.vars.prototype)|e }}">
-        
-        <a class="add_item_variable" data-collection-holder-class="variable">add a new variable fee</a>
-
-            {% for variableFee in form.variableFees %}
-                {{ _self.variable_prototype(variableFee) }}
-            {% endfor %}
-
-            {% macro variable_prototype(variableFee) %}
-                <div class="prototype">
-                    <div>
-                        {{ form_label(variableFee.title) }}
-                        <div class="">{{ form_widget(variableFee.title) }}</div>
-                        <div class="error-message">
-                            {{ form_errors(variableFee.title) }}
-                        </div>
-                    </div>
-                    <div>
-                        {{ form_label(variableFee.price) }}
-                        <div class="">{{ form_widget(variableFee.price) }}</div>
-                        <div class="error-message">
-                            {{ form_errors(variableFee.price) }}
-                        </div>
-                    </div>
-                    <div>
-                        {{ form_label(variableFee.unit) }}
-                        <div class="">{{ form_widget(variableFee.unit) }}</div>
-                        <div class="error-message">
-                            {{ form_errors(variableFee.unit) }}
-                        </div>
-                    </div>
-                    <div>
-                        {{ form_label(variableFee.type) }}
-                        <div class="">{{ form_widget(variableFee.type) }}</div>
-                        <div class="error-message">
-                            {{ form_errors(variableFee.type) }}
-                        </div>
-                    </div>
-                </div>
-            {% endmacro %}
-        </div>
-
-        
-        <h3 class="fixedFees">Salariés</h3>
-        
-        <div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nom et Prénom</th>
-                        <th>Poste</th>
-                        <th>Rémunération</th>
-                        <th>Selectionner</th>
-                    </tr>
-                </thead>
-                <tbody>    
-                        {% for child in form.checkedSalaries.vars.choices %}
-                                <tr>
-                                    <td>{{ child.data.getFullName() }}</td>
-                                    <td>{{ child.data.getPost() }}</td>
-                                    <td>{{ child.data.getPay() }}</td>
-                                    <td>
-                                        {{ form_widget(form.checkedSalaries[child.data.getId()])}}
-                                    </td>
-                                </tr>
-                        {% endfor %}
-                </tbody>
-            </table>
-            <div class="error-message">
-                    {{  form_errors(form.checkedSalaries) }}
-            </div>
-    </div>
-
-        <div class="salary" data-prototype="{{ _self.salary_prototype(form.salaries.vars.prototype)|e }}">
-        
-        <a class="add_item_salary" data-collection-holder-class="salary">Nouveau salarié</a>
-
-            {% for salary in form.salaries %}
-                {{ _self.salary_prototype(salary) }}
-            {% endfor %}
-
-            {% macro salary_prototype(salary) %}
-                <div class="prototype">
-                    <div>
-                        {{ form_label(salary.fullName) }}
-                        <div class="">{{ form_widget(salary.fullName) }}</div>
-                        <div class="error-message">
-                            {{ form_errors(salary.fullName) }}
-                        </div>
-                    </div>
-                    <div>
-                        {{ form_label(salary.post) }}
-                        <div class="">{{ form_widget(salary.post) }}</div>
-                        <div class="error-message">
-                            {{ form_errors(salary.post) }}
-                        </div>
-                    </div>
-                    <div>
-                        {{ form_label(salary.pay) }}
-                        <div class="">{{ form_widget(salary.pay) }}</div>
-                        <div class="error-message">
-                            {{ form_errors(salary.pay) }}
-                        </div>
-                    </div>
-                </div>
-            {% endmacro %}
-        </div>
-        <div>
-            <button class="btn btn-success">Valider</button>
-        </div>
-        
-
-        {{ form_end(form) }}
-    </div>
+    {{ form_end(form, {'render_rest': false})}}
 </div>

@@ -12,7 +12,7 @@
                 <td>{{ calcul.id }}</td>
             </tr>
             <tr>
-                <th>Title</th>
+                <th>Titre</th>
                 <td>{{ calcul.title }}</td>
             </tr>
             <tr>
@@ -24,15 +24,88 @@
                 <td>{{ calcul.devis }}</td>
             </tr>
             <tr>
-                <th>DurationMonth</th>
+                <th>Durée en mois</th>
                 <td>{{ calcul.durationMonth }}</td>
             </tr>
         </tbody>
     </table>
+    <h3 class="fixedFees">Frais Fixes</h3>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Titre</th>
+                    <th>Prix</th>
+                    <th>Unité</th>
+                </tr>
+            </thead>
+            <tbody>    
+                    {% for fixedFee in calcul.fixedFees %}
+                            <tr>
+                                <td>{{ fixedFee.id }}</td>
+                                <td>{{ fixedFee.title }}</td>
+                                <td>{{ fixedFee.price }}</td>
+                                <td>{{ fixedFee.unit }}</td>
+                            </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h3 class="fixedFees">Frais Variables</h3>
+    <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Titre</th>
+                        <th>Prix</th>
+                        <th>Unité</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>    
+                        {% for variableFee in calcul.variableFees %}
+                                <tr>
+                                    <td>{{ variableFee.id }}</td>
+                                    <td>{{ variableFee.title }}</td>
+                                    <td>{{ variableFee.price }}</td>
+                                    <td>{{ variableFee.unit }}</td>
+                                    <td>{{ variableFee.type }}</td>
+                                </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <h3 class="fixedFees">Salariés</h3>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom et Prénom</th>
+                    <th>Poste</th>
+                    <th>Rémunération</th>
+                </tr>
+            </thead>
+            <tbody>    
+                    {% for salary in calcul.salaries %}
+                            <tr>
+                                <td>{{ salary.id }}</td>
+                                <td>{{ salary.fullName }}</td>
+                                <td>{{ salary.post }}</td>
+                                <td>{{ salary.pay }}</td>
+                            </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{{ path('app_calcul_index') }}">back to list</a>
+    <a href="{{ path('app_calcul_index') }}" class="add_item_fixed">Retour à la liste</a>
 
-    <a href="{{ path('app_calcul_edit', {'id': calcul.id}) }}">edit</a>
-
-    {{ include('calcul/_delete_form.html.twig') }}
+    <a href="{{ path('app_calcul_edit', {'id': calcul.id}) }}" class="add_item_fixed">Editer</a>
+    
+    <div>
+        {{ include('calcul/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

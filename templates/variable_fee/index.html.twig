@@ -3,45 +3,36 @@
 {% block title %}VariableFee index{% endblock %}
 
 {% block body %}
-    <h1>VariableFee index</h1>
+    <h1>Liste des frais variables</h1>
+    
+    {% if variableFees|default is empty %}
+        <P>Aucune donnée à afficher<p/>
+    {% else %}
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Unit</th>
+                <th>Titre</th>
+                <th>Prix</th>
+                <th>Unité</th>
                 <th>Type</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% set feeDefined = 0 %}
-        {% for userCalcul in userCalculs %}
-            {% for variable_fee in userCalcul.calculs %}
-                    {% for variable_fee in variable_fee.VariableFees %}
-                        {% set feeDefined = 1 %}
-                        <tr>
-                            <td>{{ variable_fee.id }}</td>
-                            <td>{{ variable_fee.title }}</td>
-                            <td>{{ variable_fee.price }}</td>
-                            <td>{{ variable_fee.unit }}</td>
-                            <td>{{ variable_fee.type }}</td>
-                            <td>
-                                <a href="{{ path('app_variable_fee_show', {'id': variable_fee.id}) }}">show</a>
-                                <a href="{{ path('app_variable_fee_edit', {'id': variable_fee.id}) }}">edit</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
+            {% for variableFee in variableFees %}
+                <tr>
+                    <td>{{ variableFee.title }}</td>
+                    <td>{{ variableFee.price }}</td>
+                    <td>{{ variableFee.unit }}</td>
+                    <td>{{ variableFee.type }}</td>
+                    <td>
+                        <a href="{{ path('app_variable_fee_show', {'id': variableFee.id}) }}">Afficher</a>
+                        <a href="{{ path('app_variable_fee_edit', {'id': variableFee.id}) }}">Editer</a>
+                    </td>
+                </tr>
             {% endfor %}
-        {% endfor %}
-
-        {% if feeDefined == 0 %}
-            <tr>{{ feeDefined }}
-                <td colspan="6">Aucune donnée</td>
-            </tr>
-        {% endif %}
         </tbody>
     </table>
+    {% endif %}
 {% endblock %}

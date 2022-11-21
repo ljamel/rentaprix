@@ -15,14 +15,12 @@ use App\Repository\UserRepository;
 class FixedFeeController extends AbstractController
 {
     #[Route('/', name: 'app_fixed_fee_index', methods: ['GET'])]
-    public function index(FixedFeeRepository $fixedFeeRepository, UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository): Response
     {
-        // show information calcul relation with current user
-        //$userCalculs = $userRepository->findByFeeUser($this->getUser()->getId());
-        $userCalculs = $this->getUser()->getCalculs();
+        $fixedFees = $userRepository->findFixedFeesByUser($this->getUser()->getId());
 
         return $this->render('fixed_fee/index.html.twig', [
-            'userCalculs' => $userCalculs,
+            'fixedFees' => $fixedFees,
         ]);
     }
 

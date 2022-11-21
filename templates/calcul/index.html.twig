@@ -6,37 +6,36 @@
 {% for message in app.flashes('success') %}
 			<div class="alert-success" role="alert">{{ message }}</div>
 {% endfor %}
-    <h1>Votre devis</h1>
+    <h1>Vos devis</h1>
 
+    {% if userCalculs|default is empty %}
+        <P>Aucune donnée à afficher<p/>
+    {% else %}
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
+                <th>Titre</th>
                 <th>Date</th>
                 <th>Devis</th>
-                <th>DurationMonth</th>
-                <th>actions</th>
+                <th>Durée en Mois</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for userCalcul in userCalculs %}
-            {% for calcul in userCalcul.calculs %}
+        {% for calcul in userCalculs %}
                 <tr>
-                    <td>{{ calcul.id }}</td>
                     <td>{{ calcul.title }}</td>
                     <td>{{ calcul.date ? calcul.date|date('Y-m-d') : '' }}</td>
                     <td>{{ calcul.devis }}</td>
                     <td>{{ calcul.durationMonth }}</td>
                     <td>
-                        <a href="{{ path('app_calcul_show', {'id': calcul.id}) }}">show</a>
-                        <a href="{{ path('app_calcul_edit', {'id': calcul.id}) }}">edit</a>
+                        <a href="{{ path('app_calcul_show', {'id': calcul.id}) }}">Afficher</a>
+                        <a href="{{ path('app_calcul_edit', {'id': calcul.id}) }}">Editer</a>
                     </td>
-                </tr>
-            {% endfor %}
+                </tr>      
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_calcul_new') }}">Create new</a>
+    {% endif %}
+    <a href="{{ path('app_calcul_new') }}">Nouveau calcul</a>
 {% endblock %}

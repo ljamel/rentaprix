@@ -42,23 +42,7 @@ class CalculRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-    /**
-     * @return FixedFee[] Returns an array of FixedFee objects
-    */
-    public function findByUserId($userId): array
-    {
-        return $this->createQueryBuilder('c')
-            ->select('f') // string 'u' is converted to array internally
-            ->from(FixedFee::class, 'f')
-            ->innerJoin(User::class, 'u')
-            ->andwhere('u.id = :val')
-            ->setParameter('val', $userId)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
+    
 //    /**
 //     * @return Calcul[] Returns an array of Calcul objects
 //     */
