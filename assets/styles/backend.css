@@ -34,18 +34,64 @@
     margin: 10px;
 }
 
+.add_button {
+    width: 30px;
+    height: 30px;
+    margin-top: 25px;
+    cursor: pointer;   
+}
+
+.fixedFees {
+    font-size: 20px;
+    color: blueviolet;
+}
+
+.prototype {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.prototype div input {
+    width: auto;
+}
+
+/* style for the collapsible menu */
+
+.active-link, .collapsible:hover {
+    background-color: #ccc;
+}
+
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+} 
+
+.collapsible:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.active-link:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
 
 /* the wizard form */
- /* Style the form */
 #regForm {
     background-color: #ffffff;
     margin: 100px auto;
     padding: 40px;
-    width: 70%;
+    width: 80%;
     min-width: 300px;
 }
 
-/* Style the input fields */
 input {
     padding: 10px;
     width: 100%;
@@ -54,17 +100,14 @@ input {
     border: 1px solid #aaaaaa;
 }
 
-/* Mark input boxes that gets an error on validation: */
 input.invalid {
     background-color: #ffdddd;
 }
 
-/* Hide all steps by default: */
 .tab {
     display: none;
 }
 
-/* Make circles that indicate the steps of the form: */
 .step {
     height: 15px;
     width: 15px;
@@ -76,12 +119,10 @@ input.invalid {
     opacity: 0.5;
 }
 
-/* Mark the active step: */
 .step.active {
     opacity: 1;
 }
 
-/* Mark the steps that are finished and valid: */
 .step.finish {
     background-color: #04AA6D;
 } 

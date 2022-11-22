@@ -27,12 +27,14 @@
                 {{  form_errors(form.checkedFixedFees) }}
         </div>
     {% endif %}
+</div>
+
+<div class="fixed" data-prototype="{{ _self.fixed_prototype(form.fixedFees.vars.prototype)|e }}"
+        data-index="{{ form.fixedFees|length > 0 ? form.fixedFees|last.vars.name + 1 : 0 }}">
+    <div>
+        <a class="add_item_fixed" data-collection-holder-class="fixed"><img src='/images/add.png' class="add_button"></a>
     </div>
-
-    <div class="fixed" data-prototype="{{ _self.fixed_prototype(form.fixedFees.vars.prototype)|e }}">
     
-    <a class="add_item_fixed" data-collection-holder-class="fixed">add a new fixed fee</a>
-
     {% for fixedFee in form.fixedFees %}
         {{ _self.fixed_prototype(fixedFee) }}
     {% endfor %}

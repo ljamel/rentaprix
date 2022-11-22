@@ -29,7 +29,12 @@
     {% endif %}
 </div>
 
-<div class="salary" data-prototype="{{ _self.salary_prototype(form.salaries.vars.prototype)|e }}">
+<div class="salary" data-prototype="{{ _self.salary_prototype(form.salaries.vars.prototype)|e }}"
+    data-index="{{ form.salaries|length > 0 ? form.salaries|last.vars.name + 1 : 0 }}">
+    
+    <div>
+        <a class="add_item_salary" data-collection-holder-class="salary"><img src='/images/add.png' class="add_button"></a>
+    </div>
 
     <a class="add_item_salary" data-collection-holder-class="salary">Nouveau salarié</a>
 

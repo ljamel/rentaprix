@@ -79,7 +79,7 @@ class CalculType extends AbstractType
                 [
                     'entry_type' => FixedFeeType::class, // le formulaire enfant qui doit être répété
                     'allow_add' => true, // true si tu veux que l'utilisateur puisse en ajouter
-                    'allow_delete' => false, // true si tu veux que l'utilisateur puisse en supprimer
+                    'allow_delete' => true, // true si tu veux que l'utilisateur puisse en supprimer
                     'label' => 'Frais Fixes',
                     'by_reference' => false, // voir  https://symfony.com/doc/current/reference/forms/types/collection.html#by-reference
                     'data' => [new FixedFee()],
@@ -90,7 +90,7 @@ class CalculType extends AbstractType
                 [
                     'entry_type' => VariableFeeType::class, // le formulaire enfant qui doit être répété
                     'allow_add' => true, // true si tu veux que l'utilisateur puisse en ajouter
-                    'allow_delete' => false, // true si tu veux que l'utilisateur puisse en supprimer
+                    'allow_delete' => true, // true si tu veux que l'utilisateur puisse en supprimer
                     'label' => 'Frais variables',
                     'by_reference' => false, // voir  https://symfony.com/doc/current/reference/forms/types/collection.html#by-reference
                     'data' => [new VariableFee()],
@@ -101,7 +101,7 @@ class CalculType extends AbstractType
                 [
                     'entry_type' => SalaryType::class, // le formulaire enfant qui doit être répété
                     'allow_add' => true, // true si tu veux que l'utilisateur puisse en ajouter
-                    'allow_delete' => false, // true si tu veux que l'utilisateur puisse en supprimer
+                    'allow_delete' => true, // true si tu veux que l'utilisateur puisse en supprimer
                     'label' => 'Salariés',
                     'by_reference' => false, // voir  https://symfony.com/doc/current/reference/forms/types/collection.html#by-reference
                     'data' => [new Salary()],

@@ -31,8 +31,12 @@
     {% endif %}
 </div>
 
-<div class="variable" data-prototype="{{ _self.variable_prototype(form.variableFees.vars.prototype)|e }}">
-    <a class="add_item_variable" data-collection-holder-class="variable">add a new variable fee</a>
+<div class="variable" data-prototype="{{ _self.variable_prototype(form.variableFees.vars.prototype)|e }}"
+    data-index="{{ form.variableFees|length > 0 ? form.variableFees|last.vars.name + 1 : 0 }}">
+    
+    <div>
+        <a class="add_item_variable" data-collection-holder-class="variable"><img src='/images/add.png' class="add_button"></a>
+    </div>
 
     {% for variableFee in form.variableFees %}
         {{ _self.variable_prototype(variableFee) }}
