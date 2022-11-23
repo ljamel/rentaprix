@@ -43,16 +43,24 @@ class SalaryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_salary_show', methods: ['GET'])]
-    public function show(Salary $salary): Response
+    public function show(Salary $salary, UserRepository $userRepository): Response
     {
+        if ($userRepository->findUserBySalary($salary->getId())[0] !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         return $this->render('salary/show.html.twig', [
             'salary' => $salary,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_salary_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Salary $salary, SalaryRepository $salaryRepository): Response
+    public function edit(Request $request, Salary $salary, SalaryRepository $salaryRepository, UserRepository $userRepository): Response
     {
+        if ($userRepository->findUserBySalary($salary->getId())[0] !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(SalaryType::class, $salary);
         $form->handleRequest($request);
 
@@ -69,8 +77,12 @@ class SalaryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_salary_delete', methods: ['POST'])]
-    public function delete(Request $request, Salary $salary, SalaryRepository $salaryRepository): Response
+    public function delete(Request $request, Salary $salary, SalaryRepository $salaryRepository, UserRepository $userRepository): Response
     {
+        if ($userRepository->findUserBySalary($salary->getId())[0] !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         if ($this->isCsrfTokenValid('delete'.$salary->getId(), $request->request->get('_token'))) {
             $salaryRepository->remove($salary, true);
         }

@@ -73,6 +73,10 @@ class CalculController extends AbstractController
     #[Route('/{id}', name: 'app_calcul_show', methods: ['GET'])]
     public function show(Calcul $calcul): Response
     {
+        if ($calcul->getUser()->get(0) !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+        
         return $this->render('calcul/show.html.twig', [
             'calcul' => $calcul,
         ]);
@@ -81,6 +85,10 @@ class CalculController extends AbstractController
     #[Route('/{id}/edit', name: 'app_calcul_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Calcul $calcul, CalculRepository $calculRepository): Response
     {
+        if ($calcul->getUser()->get(0) !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(CalculType::class, $calcul);
         $form->handleRequest($request);
 
@@ -99,6 +107,10 @@ class CalculController extends AbstractController
     #[Route('/{id}', name: 'app_calcul_delete', methods: ['POST'])]
     public function delete(Request $request, Calcul $calcul, CalculRepository $calculRepository): Response
     {
+        if ($calcul->getUser()->get(0) !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         if ($this->isCsrfTokenValid('delete'.$calcul->getId(), $request->request->get('_token'))) {
             $calculRepository->remove($calcul, true);
         }

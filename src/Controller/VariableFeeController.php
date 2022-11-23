@@ -48,14 +48,22 @@ class VariableFeeController extends AbstractController
     #[Route('/{id}', name: 'app_variable_fee_show', methods: ['GET'])]
     public function show(VariableFee $variableFee, UserRepository $userRepository, int $id): Response
     {
+        if ($userRepository->findUserByVariableFee($variableFee->getId())[0] !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         return $this->render('variable_fee/show.html.twig', [
             'variable_fee' => $variableFee,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_variable_fee_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, VariableFee $variableFee, VariableFeeRepository $variableFeeRepository): Response
+    public function edit(Request $request, VariableFee $variableFee, VariableFeeRepository $variableFeeRepository, UserRepository $userRepository): Response
     {
+        if ($userRepository->findUserByVariableFee($variableFee->getId())[0] !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(VariableFeeType::class, $variableFee);
         $form->handleRequest($request);
 
@@ -72,8 +80,12 @@ class VariableFeeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_variable_fee_delete', methods: ['POST'])]
-    public function delete(Request $request, VariableFee $variableFee, VariableFeeRepository $variableFeeRepository): Response
+    public function delete(Request $request, VariableFee $variableFee, VariableFeeRepository $variableFeeRepository, UserRepository $userRepository): Response
     {
+        if ($userRepository->findUserByVariableFee($variableFee->getId())[0] !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         if ($this->isCsrfTokenValid('delete'.$variableFee->getId(), $request->request->get('_token'))) {
             $variableFeeRepository->remove($variableFee, true);
         }

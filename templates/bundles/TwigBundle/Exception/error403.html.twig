@@ -1,0 +1,11 @@
+{% extends 'base-membre.html.twig' %}
+
+{% block title %}403{% endblock %}
+
+{% block body %}
+    <h1>Accès refusé</h1>
+
+    <p>
+        vous n’êtes pas autorisé à accéder à cette page! <a href="{{ path('app_dashboard') }}">Retour à l'accueil </a>.
+    </p>
+{% endblock %}

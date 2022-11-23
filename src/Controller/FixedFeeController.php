@@ -44,16 +44,24 @@ class FixedFeeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_fixed_fee_show', methods: ['GET'])]
-    public function show(FixedFee $fixedFee): Response
+    public function show(FixedFee $fixedFee, UserRepository $userRepository): Response
     {
+        if ($userRepository->findUserByFixedFee($fixedFee->getId())[0] !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         return $this->render('fixed_fee/show.html.twig', [
             'fixed_fee' => $fixedFee,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_fixed_fee_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, FixedFee $fixedFee, FixedFeeRepository $fixedFeeRepository): Response
+    public function edit(Request $request, FixedFee $fixedFee, FixedFeeRepository $fixedFeeRepository, UserRepository $userRepository): Response
     {
+        if ($userRepository->findUserByFixedFee($fixedFee->getId())[0] !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(FixedFeeType::class, $fixedFee);
         $form->handleRequest($request);
 
@@ -70,8 +78,12 @@ class FixedFeeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_fixed_fee_delete', methods: ['POST'])]
-    public function delete(Request $request, FixedFee $fixedFee, FixedFeeRepository $fixedFeeRepository): Response
+    public function delete(Request $request, FixedFee $fixedFee, FixedFeeRepository $fixedFeeRepository, UserRepository $userRepository): Response
     {
+        if ($userRepository->findUserByFixedFee($fixedFee->getId())[0] !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         if ($this->isCsrfTokenValid('delete'.$fixedFee->getId(), $request->request->get('_token'))) {
             $fixedFeeRepository->remove($fixedFee, true);
         }

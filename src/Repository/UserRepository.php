@@ -135,4 +135,61 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         
         return $query->getResult();
     }
+
+        /**
+     * @return User Returns an array of FixedFee objects
+     */
+    public function findUserByFixedFee($idFixedFee): array
+    {
+            $entityManager = $this->getEntityManager();
+
+            $query = $entityManager->createQuery(
+                'SELECT u
+                FROM App\Entity\User u
+                INNER JOIN u.calculs c
+                INNER JOIN c.fixedFees f
+                WHERE f.id = :id'
+                
+            )->setParameter('id', $idFixedFee);
+            
+            return $query->getResult();
+    }
+
+        /**
+     * @return User Returns an array of FixedFee objects
+     */
+    public function findUserByVariableFee($idFixedFee): array
+    {
+            $entityManager = $this->getEntityManager();
+
+            $query = $entityManager->createQuery(
+                'SELECT u
+                FROM App\Entity\User u
+                INNER JOIN u.calculs c
+                INNER JOIN c.variableFees v
+                WHERE v.id = :id'
+                
+            )->setParameter('id', $idFixedFee);
+            
+            return $query->getResult();
+    }
+
+        /**
+     * @return User Returns an array of FixedFee objects
+     */
+    public function findUserBySalary($idFixedFee): array
+    {
+            $entityManager = $this->getEntityManager();
+
+            $query = $entityManager->createQuery(
+                'SELECT u
+                FROM App\Entity\User u
+                INNER JOIN u.calculs c
+                INNER JOIN c.salaries s
+                WHERE s.id = :id'
+                
+            )->setParameter('id', $idFixedFee);
+            
+            return $query->getResult();
+    }
 }
