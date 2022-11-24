@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for calcul in userCalculs %}
+        {% for calcul in userCalculs.data %}
                 <tr>
                     <td>{{ calcul.title }}</td>
                     <td>{{ calcul.date ? calcul.date|date('Y-m-d') : '' }}</td>
@@ -37,5 +37,13 @@
         </tbody>
     </table>
     {% endif %}
+    
+    {% set path = 'app_calcul_index' %}
+    {% set pages = userCalculs.pages|default(1)  %}
+    {% set currentPage = userCalculs.page|default(1)  %}
+    {% set page = 1  %}
+    
+    {% include "_partials/_pagination.html.twig" %}
+    
     <a href="{{ path('app_calcul_new') }}">Nouveau calcul</a>
 {% endblock %}

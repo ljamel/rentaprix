@@ -1,0 +1,31 @@
+{% if pages > 1 %}
+    <nav>
+        <ul class="">
+        {% if currentPage > 1 %}
+            <li class="">
+                <a class="" href="{{ path(path, { page: currentPage -1 }) }}">&lt;</a>
+            </li>
+        {% else %}
+            <li class="lien désactivé">
+                <a class="">&lt;</a>
+            </li>
+        {% endif %}
+
+        {% for page in 1..pages %}
+            <li class="{{ (page == currentPage) ? 'activePage' : ''}}">
+                <a class="" href="{{ path(path, { page: page}) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+            
+            {% if currentPage < pages %}
+            <li >
+                <a class="" href="{{ path(path, { page: currentPage  + 1 }) }}">&gt;</a>
+            </li>
+        {% else %}
+            <li class="lien désactivé">
+                <a class="">&gt;</a>
+            </li>
+        {% endif %}
+        </ul>
+    </nav>
+{% endif %}   

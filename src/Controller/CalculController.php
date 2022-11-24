@@ -15,9 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class CalculController extends AbstractController
 {
     #[Route('/', name: 'app_calcul_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(CalculRepository $calculRepository, Request $request): Response
     {
-        $userCalculs = $this->getUser()->getCalculs();
+        $page = $request->query->getInt('page', 1);
+
+        $page < 1 ? $page = 1: '';
+
+        $userCalculs = $calculRepository->findCalculsByUserPaginated($page, 6, $this->getUser()->getId());
         
         return $this->render('calcul/index.html.twig', [
             'userCalculs' => $userCalculs,

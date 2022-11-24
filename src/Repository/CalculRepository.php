@@ -9,6 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join as ExprJoin;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @extends ServiceEntityRepository<Calcul>
@@ -41,6 +42,39 @@ class CalculRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findCalculsByUserPaginated(int $page, int $limit = 6, int $userId): array 
+    {
+        $limit = abs($limit);
+
+        $result = [];
+
+        $query = $this->getEntityManager() ->createQueryBuilder()
+                        ->select('c')
+                        ->from('App\Entity\Calcul', 'c')
+                        ->join('c.user', 'u')
+                        ->where('u.id = :id')
+                        ->setParameter('id', $userId)
+                        ->setMaxResults($limit)
+                        ->setFirstResult(($limit * $page) - $limit)
+                        ->orderBy('c.date', 'DESC');
+
+        $paginator = new Paginator($query);
+        
+        $data = $paginator->getQuery()->getResult();
+        if(empty($data)) {
+            return $result;
+        }
+        
+        $pages = ceil($paginator->count() / $limit);
+        
+        $result['data'] = $data;
+        $result['pages'] = $pages;
+        $result['page'] = $page;
+        $result['limit'] = $limit;
+
+        return $result;
     }
     
 //    /**
