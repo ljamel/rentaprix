@@ -2,7 +2,7 @@
 
 .container {
     display: flex;
-    min-height: 700px;
+    min-height: 620px;
     width: 100%;
 }
 
@@ -37,8 +37,8 @@
 
 .lateral-menu {
     width: 22%;
-    min-height: 100%;
-    padding: 30px;
+    min-height: 620px;
+    padding: 20px 30px 0 30px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
@@ -97,7 +97,7 @@
 
 .footer-menu {
     width: 250px;
-    margin: 50px auto;
+    margin: 40px auto;
     height: 250px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     border-radius: 10%;
@@ -145,7 +145,7 @@
 }
 
 .right-content {
-    min-height: 100%;
+    min-height: 620px;
     width: 78%;
 }
 
@@ -170,9 +170,46 @@
     font-size: 30px;
     margin-right: 10px;
 }
+
 .content {
     background-color: #dff6ff83;
-    height: 100%;
+    min-height: 620px;
+    width: 100%;
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.dashboard-row {
+    display: flex;
+    justify-content: space-between;
+    width: 700px;
+    padding: 50px;
+    margin-top: 20px;
+    margin-right: 50px;
+}
+
+.dashboard-item {
+    width: 250px;
+    justify-content: space-between;
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 7%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    height: 7em; /* hauteur du parent */
+    line-height: 7em; /* hauteur de ligne (identique) */
+    white-space: nowrap; /* interdiction de passer à la ligne */
+    padding-left: 20px;
+}
+
+.dashboard-report {
+    width: 400px;
+    height: 550px;
+    border-radius: 7%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    background-color: #ffffff;
+    text-align: center;
+    padding-top: 20px;
 }
 
 /*******************/
