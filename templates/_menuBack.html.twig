@@ -1,22 +1,53 @@
-<ul id="navbar-right">
-    <p><strong>{{ app.user.email }}</strong></p>
-    <li><a href="{{ path('app_dashboard') }}" /> Dashboard </a> </li>
-    <li>
-        <button type="button" class="collapsible">Calcul de rentabilité</button>
-        <div class="content">
-            <ul>
-                <li><a href="{{ path('app_calcul_index') }}" /> Vos devis </a> </li>
-                <li><a href="{{ path('app_fixed_fee_index') }}" /> Frais fixe </a> </li>
-                <li><a href="{{ path('app_variable_fee_index') }}" /> Frais variable </a> </li>
-                <li><a href="{{ path('app_salary_index') }}" /> Salariés </a> </li>
-            </ul>
+<div class="lateral-menu">
+    <div class="logo">
+        <div>
+            <a href="{{ path('app_dashboard') }}"><img src="/images/logo.png" alt="logo"/></a>
         </div>
-    </li>
-</ul>
+        <div class="logo-title">
+            <a href="{{ path('app_dashboard') }}"><span class="logo-R">Ren</span>ta<span class="logo-P">Prix</span></a>
+        </div>
+    </div>
+    <div class="menu-links">
+        <ul>
+            <li class="link-item">
+                <a href="{{ path('app_dashboard') }}" />
+                    <i class="fa-solid fa-gauge awsome"></i> Dashboard</a>
+            </li>
+            <li class="link-item">
+                <a type="button" class="collapsible"><i class="fa-solid fa-square-root-variable awsome"></i> Calcul de rentabilité</a>
+                <div class="content-collapsible">
+                    <ul class="collapse">
+                        <li class="collapsible-link-item">
+                            <a href="{{ path('app_calcul_index') }}" /><i class="fa-solid fa-caret-right awsome"></i> Vos devis</a> 
+                        </li>
+                        <li class="collapsible-link-item">
+                            <a href="{{ path('app_fixed_fee_index') }}" /><i class="fa-solid fa-caret-right awsome"></i> Frais fixe</a> 
+                        </li>
+                        <li class="collapsible-link-item">
+                            <a href="{{ path('app_variable_fee_index') }}" /><i class="fa-solid fa-caret-right awsome"></i> Frais variable</a> 
+                        </li>
+                        <li class="collapsible-link-item">
+                            <a href="{{ path('app_salary_index') }}" /><i class="fa-solid fa-caret-right awsome"></i> Salariés</a> 
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="link-item">
+                <a href="{{ path('app_dashboard') }}" />
+                    <i class="fa-solid fa-calendar-days awsome"></i> Calendrier</a>
+            </li>
+            <li class="link-item">
+                <a href="{{ path('app_dashboard') }}" />
+                    <i class="fa-regular fa-circle-question awsome"></i> FAQ</a>
+            </li>
+        </ul>
+    </div>
 
-<ul id="navbar-head">
-    <li>lien 4 </li>
-    <li>lien 6 </li>
-    <li><a href="{{ path('app_article_index') }}" /> Gestion d'article </a> </li>
-    <li><a href="{{ path('app_member') }}" /> Gestion compte </a> </li>
-</ul>
+    <div class="footer-menu">
+        <h3 class="footer-title">Some Title<h3/>
+        <p>Laboris nulla dolor sunt elit ea non sunt irure ipsum proidenlit</p>
+        <div class="menu-button">
+            <a href="#">Link</a>
+        </div>
+    </div>
+</div>

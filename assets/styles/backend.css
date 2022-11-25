@@ -1,28 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Rubik:ital,wght@0,400;1,300&family=Satisfy&display=swap');
 
-/* member */
-#navbar-right {
-    position:fixed;
-    top: 0;
-    background-color: rgb(241, 255, 44);
-    width: 189px;
-    height: 100%;
-    margin-top: 0;
-}
-#navbar-head {
+.container {
     display: flex;
-    justify-content: space-evenly;
-    margin-left: 100px;
-    background-color: red;
-    margin-top: 0;
-}
-.content-member {
-    margin-left: 250px;
-    background-color: beige;
-}
-.contentDashboard {
-    margin-left: 250px;
+    min-height: 700px;
+    width: 100%;
 }
 
+.logo {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.logo div img {
+    width: 80px;
+}
+
+.logo-title {
+    margin-top: 20px;
+}
+
+.logo-R {
+    color: #aa3a3c;
+    font-family: 'Satisfy', cursive;
+}
+
+.logo-P {
+    color: #265e13;
+    font-family: 'Satisfy', cursive;
+}
+
+.logo-title a {
+    font-family: 'Satisfy', cursive;
+    font-size: 30px;
+    color: #1761a0;
+}
+
+.lateral-menu {
+    width: 22%;
+    min-height: 100%;
+    padding: 30px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.menu-links {
+    margin-top: 60px;
+    margin-left: 20px;
+}
+
+.awsome {
+    color: #47B5FF;
+    width: 30px;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.link-item a:hover {
+    color: #47B5FF;
+}
+
+.link-item:hover {
+    transform: translateX(3px);
+    transition: 0.2s ease;
+}
+
+.link-item:hover .awsome{
+    color: #47B5FF;
+}
+
+.collapsible {
+    border: none;
+    text-align: left;
+    outline: none;
+}
+
+.content-collapsible {
+    display: none;
+    overflow: hidden;
+}
+
+.link-item {
+    margin-top: 50px;
+}
+
+.link-item a, .collapsible-link-item a {
+    color: #1761a0;
+    font-size: 18px;
+}
+
+.collapsible-link-item {
+    margin-top: 20px;
+}
+
+.collapse {
+    margin-left: 50px;
+}
+
+.footer-menu {
+    width: 250px;
+    margin: 50px auto;
+    height: 250px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 10%;
+}
+
+.footer-title {
+    font-size: 20px;
+    color: #1761a0;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.footer-title:hover {
+    color: #47B5FF;
+}
+
+.footer-menu p {
+    font-size: 15px;
+    padding: 15px;
+    text-align: center;
+    margin-top: 20px;
+    line-height: 30px;
+    opacity: 0.5;
+}
+
+.menu-button {
+    background-color: #47B5FF;
+    width: 80px;
+    height: 40px;
+    border-radius: 10%;
+    margin: 30px auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.menu-button:hover {
+    background-color: #1761a0;
+    cursor: pointer;
+}
+
+.menu-button a {
+    color: #ffffff;
+    font-weight: 300;
+}
+
+.right-content {
+    min-height: 100%;
+    width: 78%;
+}
+
+.header-menu {
+    height: 90px;
+}
+
+.header-menu ul {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 30px;
+    padding: 30px;
+}
+
+.header-menu ul li {
+    margin-left: 20px;
+}
+
+.awsome-header {
+    color: #1761a0;
+    width: 50px;
+    font-size: 30px;
+    margin-right: 10px;
+}
+.content {
+    background-color: #dff6ff83;
+    height: 100%;
+}
+
+/*******************/
 .error-message {
     color: red;
 }
@@ -56,31 +209,6 @@
 
 .prototype div input {
     width: auto;
-}
-
-/* style for the collapsible menu */
-
-.active-link, .collapsible:hover {
-    background-color: #ccc;
-}
-
-.content {
-    padding: 0 18px;
-    display: none;
-    overflow: hidden;
-    background-color: #f1f1f1;
-} 
-
-.collapsible:after {
-    content: '\02795'; /* Unicode character for "plus" sign (+) */
-    font-size: 13px;
-    color: white;
-    float: right;
-    margin-left: 5px;
-}
-
-.active-link:after {
-    content: "\2796"; /* Unicode character for "minus" sign (-) */
 }
 
 /* the wizard form */

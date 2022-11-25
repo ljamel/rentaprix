@@ -1,47 +1,20 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Rubik:ital,wght@0,400;1,300&family=Satisfy&display=swap');
+
+body, html, * {
     margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif
 }
+
+h1, h2 , h3, h4 {
+    font-family: 'Rubik', sans-serif;
+}
+
 ul {
     list-style: none;
 }
-a{
+
+a, a:active, a:hover {
     text-decoration: none;
-    color: #000;
-}
-
-/* index */
-#navbar-index-head {
-    display: flex;
-    justify-content: space-around;
-    text-transform: uppercase;
-    font-size: 12px;
-    font-weight: bold;
-    margin-top: 24px;
-}
-a.title {
-    font-size: 19px;
-}
-.index-content {
-    color: #5597B3;
-    font-family: "Montserrat", Sans-serif;
-    font-size: 2rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    text-align: right;
-}
-
-
-
- /* Style the button that is used to open and close the collapsible content */
-.collapsible {
-    background-color: #eee;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
 }
