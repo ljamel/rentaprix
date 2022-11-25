@@ -71,6 +71,7 @@
     border: none;
     text-align: left;
     outline: none;
+    cursor: pointer;
 }
 
 .content-collapsible {
@@ -128,7 +129,7 @@
     background-color: #47B5FF;
     width: 80px;
     height: 40px;
-    border-radius: 10%;
+    border-radius: 15px;
     margin: 30px auto;
     padding: 10px;
     text-align: center;
@@ -175,7 +176,47 @@
     background-color: #dff6ff83;
     min-height: 620px;
     width: 100%;
-    padding-top: 30px;
+    padding-top: 30px; 
+}
+
+.content-title {
+    font-size: 23px;
+    color: #aa3a3c;
+}
+/* style the breadcrumbs */
+ul.breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+  /* Display list items side by side */
+ul.breadcrumb li {
+    display: inline;
+    font-size: 18px;
+}
+
+  /* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li+li:before {
+    padding: 8px;
+    color: #06283D;
+    content: "/\00a0";
+}
+
+  /* Add a color to all links inside the list */
+ul.breadcrumb li a {
+    color: #47B5FF;
+    text-decoration: none;
+}
+
+  /* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+    color: #1761a0;
+}
+/* style dashboard */
+/*******************/
+
+.home {
     display: flex;
     justify-content: space-around;
 }
@@ -194,25 +235,111 @@
     justify-content: space-between;
     display: flex;
     background-color: #ffffff;
-    border-radius: 7%;
+    border-radius: 10px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-    height: 7em; /* hauteur du parent */
-    line-height: 7em; /* hauteur de ligne (identique) */
-    white-space: nowrap; /* interdiction de passer à la ligne */
+    height: 7em;
+    line-height: 7em;
+    white-space: nowrap;
     padding-left: 20px;
 }
 
 .dashboard-report {
     width: 400px;
     height: 550px;
-    border-radius: 7%;
+    border-radius: 15px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     background-color: #ffffff;
     text-align: center;
     padding-top: 20px;
+    margin-right: 20px;
+}
+/* style Calcul */
+/*******************/
+
+.home-calcul {
+    padding: 0 30px;
 }
 
-/*******************/
+.calcul-data {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.calcul-data table {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    border-collapse: collapse;
+}
+
+.calcul-data table th {
+    padding: 15px;
+    background-color: #1761a0;
+    color: #ffff;
+}
+
+.calcul-data table tr td {
+    padding: 15px;
+    text-align: center;
+}
+
+.calcul-data table tr:nth-child(even) {
+    background-color: #ffff;
+}
+
+.calcul-data table tr:hover {
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, #1761a0 0px 0px 0px 1px;
+}
+
+.calcul-new {
+    width: 20%;
+    margin: 20px auto 0px 50px;
+}
+.new {
+    font-size: 20px;
+    color: #ffff;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #04AA6D;
+}
+
+.new:hover {
+    background-color: #aa3a3c;
+}
+
+.show:hover {
+    color: #aa3a3c;
+}
+
+ /* Pagination links */
+.pagination {
+    display: inline-block;
+    margin: 30px;
+}
+
+.pagination a {
+    color: #06283D;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+  /* Style the active/current link */
+.pagination a.activePage {
+    background-color: #47B5FF;
+    color: white;
+}
+
+.pagination a:hover:not(.activePage) {
+    background-color: #ffff;
+} 
+
+/**************/
 .error-message {
     color: red;
 }
