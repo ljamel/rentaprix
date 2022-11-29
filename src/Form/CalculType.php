@@ -61,7 +61,8 @@ class CalculType extends AbstractType
                             'message' => 'Devis must be grater than 0'
                         ]),
                     ],
-                'label'=> 'Devis'
+                'label'=> 'Devis',
+                'currency' =>''
                 ])
             ->add('durationMonth', TypeIntegerType::class, 
                 [

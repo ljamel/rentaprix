@@ -1,13 +1,18 @@
 <div>
     {% if form.checkedSalaries|default is empty %}
     {% else %}
-        <table class="table">
+        {% if not form.checkedSalaries.vars.valid %}
+            <div class="error-message">
+                    {{  form_errors(form.checkedSalaries) }}
+            </div>
+        {% endif %}
+        <table class="table-fees">
             <thead>
                 <tr>
                     <th>Nom et Prénom</th>
                     <th>Poste</th>
                     <th>Rémunération</th>
-                    <th>Selectionner</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>    
@@ -17,26 +22,24 @@
                                 <td>{{ child.data.getPost() }}</td>
                                 <td>{{ child.data.getPay() }}</td>
                                 <td>
-                                    {{ form_widget(form.checkedSalaries[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
+                                    <label class="switch">
+                                        {{ form_widget(form.checkedSalaries[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
+                                        <span class="slider round"></span>
+                                    </label>
                                 </td>
                             </tr>
                     {% endfor %}
             </tbody>
         </table>
-        <div class="error-message">
-                {{  form_errors(form.checkedSalaries) }}
-        </div>
     {% endif %}
 </div>
 
 <div class="salary" data-prototype="{{ _self.salary_prototype(form.salaries.vars.prototype)|e }}"
     data-index="{{ form.salaries|length > 0 ? form.salaries|last.vars.name + 1 : 0 }}">
     
-    <div>
-        <a class="add_item_salary" data-collection-holder-class="salary"><img src='/images/add.png' class="add_button"></a>
+    <div class="calcul-new">
+        <a class="add_item_salary" data-collection-holder-class="salary" title="Nouveau salarié"><i class="fa-solid fa-plus new"></i></a>
     </div>
-
-    <a class="add_item_salary" data-collection-holder-class="salary">Nouveau salarié</a>
 
     {% for salary in form.salaries %}
         {{ _self.salary_prototype(salary) }}
@@ -47,23 +50,29 @@
             <div>
                 {{ form_label(salary.fullName) }}
                 <div class="">{{ form_widget(salary.fullName, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                <div class="error-message">
-                    {{ form_errors(salary.fullName) }}
-                </div>
+                {% if not salary.fullName.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(salary.fullName) }}
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_label(salary.post) }}
-                <div class="">{{ form_widget(salary.post, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                <div class="error-message">
-                    {{ form_errors(salary.post) }}
-                </div>
+                <div class="poste">{{ form_widget(salary.post, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
+                {% if not salary.post.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(salary.post) }}
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_label(salary.pay) }}
-                <div class="">{{ form_widget(salary.pay, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                <div class="error-message">
-                    {{ form_errors(salary.pay) }}
-                </div>
+                <div class="price">{{ form_widget(salary.pay, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
+                {% if not salary.pay.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(salary.pay) }}
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% endmacro %}

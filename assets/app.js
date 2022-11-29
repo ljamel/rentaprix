@@ -1,5 +1,6 @@
 import './styles/app.css';
 import './styles/backend.css';
+import './styles/fixedFees.css';
 
 // start the Stimulus application
 import './bootstrap';
@@ -18,9 +19,8 @@ const addTagFormDeleteLink = (item) => {
 
     const removeFormButton = document.createElement('a');
     
-    const deleteImage = document.createElement('img');
-    deleteImage.setAttribute('class', 'add_button');
-    deleteImage.setAttribute('src', '/images/remove.png');
+    const deleteImage = document.createElement('i');
+    deleteImage.setAttribute('class', 'fa-solid fa-circle-minus moins');
 
     removeFormButton.appendChild(deleteImage);
     container.appendChild(removeFormButton);

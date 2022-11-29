@@ -21,7 +21,8 @@ class SalaryType extends AbstractType
                 'label' => 'Poste occupé'
             ])
             ->add('pay', MoneyType::class, [
-                'label' => 'Rémunération'
+                'label' => 'Rémunération',
+                'currency' =>''
             ])
         ;
     }

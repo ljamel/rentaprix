@@ -1,13 +1,18 @@
 <div>
     {% if form.checkedFixedFees|default is empty %}
     {% else %}
-        <table class="table">
+        {% if not form.checkedFixedFees.vars.valid %}
+            <div class="error-message">
+                        {{  form_errors(form.checkedFixedFees) }}
+            </div>
+        {% endif %}
+        <table class="table-fees">
             <thead>
                 <tr>
                     <th>Titre</th>
                     <th>Prix</th>
                     <th>Unité</th>
-                    <th>Selectionner</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>    
@@ -17,22 +22,29 @@
                                 <td>{{ child.data.getPrice() }}</td>
                                 <td>{{ child.data.getUnit() }}</td>
                                 <td>
-                                    {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
+                                    <label class="switch">
+                                        {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
+                                        <span class="slider round"></span>
+                                    </label>
                                 </td>
                             </tr>
                     {% endfor %}
             </tbody>
         </table>
-        <div class="error-message">
-                {{  form_errors(form.checkedFixedFees) }}
-        </div>
+        {% set path = 'app_calcul_index' %}
+        {% set pages = userCalculs.pages|default(1)  %}
+        {% set currentPage = userCalculs.page|default(1)  %}
+        {% set page = 1  %}
+            
+        {% include "_partials/_pagination.html.twig" %}
+        
     {% endif %}
 </div>
 
 <div class="fixed" data-prototype="{{ _self.fixed_prototype(form.fixedFees.vars.prototype)|e }}"
         data-index="{{ form.fixedFees|length > 0 ? form.fixedFees|last.vars.name + 1 : 0 }}">
-    <div>
-        <a class="add_item_fixed" data-collection-holder-class="fixed"><img src='/images/add.png' class="add_button"></a>
+    <div class="calcul-new">
+        <a class="add_item_fixed" data-collection-holder-class="fixed" title="Nouveau frais"><i class="fa-solid fa-plus new"></i></a>
     </div>
     
     {% for fixedFee in form.fixedFees %}
@@ -44,23 +56,29 @@
             <div>
                 {{ form_label(fixedFee.title) }}
                 <div class="">{{ form_widget(fixedFee.title, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                <div class="error-message">
-                    {{ form_errors(fixedFee.title) }}
-                </div>
+                {% if not fixedFee.title.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(fixedFee.title) }}
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_label(fixedFee.price) }}
-                <div class="">{{ form_widget(fixedFee.price, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                <div class="error-message">
-                    {{ form_errors(fixedFee.price) }}
-                </div>
+                <div class="price">{{ form_widget(fixedFee.price, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
+                {% if not fixedFee.price.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(fixedFee.price) }}
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_label(fixedFee.unit) }}
-                <div class="">{{ form_widget(fixedFee.unit, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                <div class="error-message">
-                    {{ form_errors(fixedFee.unit) }}
-                </div>
+                <div class="unit">{{ form_widget(fixedFee.unit, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
+                {% if not fixedFee.title.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(fixedFee.unit) }}
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% endmacro %}

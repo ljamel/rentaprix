@@ -6,46 +6,54 @@
         <div>
             {{ form_label(form.title) }}
             <div class="">{{ form_widget(form.title, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
-            <div class="error-message">
-                {{ form_errors(form.title) }}
-            </div>
+            
+            {% if not form.title.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.title) }}
+                </div>
+            {% endif %}
+            
         </div>
         <div>
             {{ form_label(form.devis) }}
             <div class="">{{ form_widget(form.devis, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
-            <div class="error-message">
-                {{ form_errors(form.devis) }}
-            </div>
+            {% if not form.devis.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.devis) }}
+                </div>
+            {% endif %}
         </div>        
         <div>
             {{ form_label(form.durationMonth) }}
             <div class="">{{ form_widget(form.durationMonth, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
-            <div class="error-message">
-                {{ form_errors(form.durationMonth) }}
-            </div>
+            {% if not form.durationMonth.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.durationMonth) }}
+                </div>
+            {% endif %}
         </div>
     </div>
     <div class="tab">
-        <h3 class="fixedFees">Frais fixes</h3>
+        <h3 class="fixedFees">Ajouter des frais fixes</h3>
         
         {{ include('calcul/_form_fixed_fees.html.twig') }}
     </div>
     <div class="tab">
-        <h3 class="fixedFees">Frais variables</h3>
+        <h3 class="fixedFees">Ajouter des frais variables</h3>
         
     {{ include('calcul/_form_variable_fees.html.twig') }}
     </div> 
     <div class="tab">
-        <h3 class="fixedFees">Salariés</h3>
+        <h3 class="fixedFees">Ajouter des salariés</h3>
     
     {{ include('calcul/_form_salaries.html.twig') }}
     
     </div>
 
-    <div style="overflow:auto;">
-        <div style="float:right;">
-            <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-            <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+    <div class="next-prev-section">
+        <div>
+            <button type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa-solid fa-angles-left"></i> Précédent</button>
+            <button type="button" id="nextBtn" onclick="nextPrev(1)">Suivant <i class="fa-solid fa-angles-right"></i></button>
         </div>
     </div>
 
@@ -75,9 +83,10 @@
         document.getElementById("prevBtn").style.display = "inline";
     }
     if (n == (x.length - 1)) {
-        document.getElementById("nextBtn").innerHTML = "Submit";
+        document.getElementById("nextBtn").innerHTML = "Valider";
+        document.getElementById("nextBtn").style.backgroundColor = "#04AA6D";
     } else {
-        document.getElementById("nextBtn").innerHTML = "Next";
+        document.getElementById("nextBtn").innerHTML = "Suivant <i class='fa-solid fa-angles-right'></i>";
     }
     // ... and run a function that displays the correct step indicator:
     fixStepIndicator(n)

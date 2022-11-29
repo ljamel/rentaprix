@@ -3,9 +3,17 @@
 {% block title %}New Calcul{% endblock %}
 
 {% block body %}
-    <h1>Create new Calcul</h1>
-
-    {{ include('calcul/_form.html.twig') }}
-
-    <a href="{{ path('app_calcul_index') }}">back to list</a>
+    <ul class="breadcrumb">
+        <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+        <li><a href="{{ path('app_calcul_index') }}">Vos devis</a></li>
+        <li>Nouveau calcul</li>
+    </ul>
+    <div class="back">
+        <div class="back-to-list">
+            <a href="{{ path('app_calcul_index') }}">Retour à la liste</a>
+        </div>
+    </div>
+    <div class="calcul-data">
+        {{ include('calcul/_form.html.twig') }}
+    </div>
 {% endblock %}

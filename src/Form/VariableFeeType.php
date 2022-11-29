@@ -22,7 +22,8 @@ class VariableFeeType extends AbstractType
                 'label'=> 'Titre'
             ])
             ->add('price', MoneyType::class, [
-            'label'=> 'Prix'
+            'label'=> 'Prix',
+            'currency' => ''
             ])
             ->add('unit', TextType::class, [
                 'label'=> 'Unité'

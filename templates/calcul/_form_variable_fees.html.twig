@@ -1,14 +1,19 @@
 <div>
     {% if form.checkedVariableFees|default is empty %}
     {% else %}
-        <table class="table">
+        {% if not form.checkedVariableFees.vars.valid %}
+            <div class="error-message">
+                {{  form_errors(form.checkedVariableFees) }}
+            </div>
+        {% endif %}
+        <table class="table-fees">
             <thead>
                 <tr>
                     <th>Titre</th>
                     <th>Prix</th>
                     <th>Unité</th>
                     <th>Type</th>
-                    <th>Selectionner</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>    
@@ -19,23 +24,29 @@
                                 <td>{{ child.data.getUnit() }}</td>
                                 <td>{{ child.data.getType() }}</td>
                                 <td>
-                                    {{ form_widget(form.checkedVariableFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
+                                    <label class="switch">
+                                        {{ form_widget(form.checkedVariableFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
+                                        <span class="slider round"></span>
+                                    </label>
                                 </td>
                             </tr>
                     {% endfor %}
             </tbody>
         </table>
-        <div class="error-message">
-            {{  form_errors(form.checkedVariableFees) }}
-        </div>
+        {% set path = 'app_calcul_index' %}
+        {% set pages = userCalculs.pages|default(1)  %}
+        {% set currentPage = userCalculs.page|default(1)  %}
+        {% set page = 1  %}
+            
+        {% include "_partials/_pagination.html.twig" %}
     {% endif %}
 </div>
 
 <div class="variable" data-prototype="{{ _self.variable_prototype(form.variableFees.vars.prototype)|e }}"
     data-index="{{ form.variableFees|length > 0 ? form.variableFees|last.vars.name + 1 : 0 }}">
     
-    <div>
-        <a class="add_item_variable" data-collection-holder-class="variable"><img src='/images/add.png' class="add_button"></a>
+    <div class="calcul-new">
+        <a class="add_item_variable" data-collection-holder-class="variable" title="Nouveau frais"><i class="fa-solid fa-plus new"></i></a>
     </div>
 
     {% for variableFee in form.variableFees %}
@@ -47,30 +58,38 @@
             <div>
                 {{ form_label(variableFee.title) }}
                 <div class="">{{ form_widget(variableFee.title, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                <div class="error-message">
-                    {{ form_errors(variableFee.title) }}
-                </div>
+                {% if not variableFee.title.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(variableFee.title) }}
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_label(variableFee.price) }}
-                <div class="">{{ form_widget(variableFee.price, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                <div class="error-message">
-                    {{ form_errors(variableFee.price) }}
-                </div>
+                <div class="price">{{ form_widget(variableFee.price, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
+                {% if not variableFee.price.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(variableFee.price) }}
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_label(variableFee.unit) }}
-                <div class="">{{ form_widget(variableFee.unit, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                <div class="error-message">
-                    {{ form_errors(variableFee.unit) }}
-                </div>
+                <div class="unit">{{ form_widget(variableFee.unit, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
+                {% if not variableFee.unit.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(variableFee.unit) }}
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_label(variableFee.type) }}
-                <div class="">{{ form_widget(variableFee.type, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                <div class="error-message">
-                    {{ form_errors(variableFee.type) }}
-                </div>
+                <div class="type">{{ form_widget(variableFee.type, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
+                {% if not variableFee.type.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(variableFee.type) }}
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% endmacro %}
