@@ -115,13 +115,14 @@ class CalculType extends AbstractType
                     'multiple' => true,
                     'mapped' => false,
                     'expanded' => true,
-                    'choices' => $fixedFeesChoices,
+                    'choices' => $fixedFeesChoices['data'],
                     'choice_label' => function (FixedFee $fixedFee) {
                         $data = [
                             'Title' => $fixedFee->getTitle(),
                             'Price' => $fixedFee->getPrice(),
-                            'Unit' => $fixedFee->getUnit(),
+                            'Unit' => $fixedFee->getUnit(),  
                         ];
+
                         return json_encode($data);
                     },
                     'constraints' => [
@@ -135,7 +136,7 @@ class CalculType extends AbstractType
                     'multiple' => true,
                     'mapped' => false,
                     'expanded' => true,
-                    'choices' => $variableFeesChoices ,
+                    'choices' => $variableFeesChoices['data'] ,
                     'choice_label' => function (VariableFee $variableFee) {
                         $data = [
                             'Title' => $variableFee->getTitle(),
@@ -156,7 +157,7 @@ class CalculType extends AbstractType
                     'multiple' => true,
                     'mapped' => false,
                     'expanded' => true,
-                    'choices' => $salariesChoices,
+                    'choices' => $salariesChoices['data'],
                     'choice_label' => function (Salary $salary) {
                         $data = [
                             'Nom et Prénom' => $salary->getFullName(),

@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\VariableFee;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -82,8 +83,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         /**
      * @return FixedFee[] Returns an array of FixedFee objects
      */
-    public function findFixedFeesByUser($idUser): array
+    public function findFixedFeesByUserPaginated(int $page, int $limit = 6, int $idUser): array
     {
+        $limit = abs($limit);
+        $result = [];
+
             $entityManager = $this->getEntityManager();
 
             $query = $entityManager->createQuery(
@@ -91,18 +95,40 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 FROM App\Entity\FixedFee f
                 INNER JOIN f.calcul c
                 INNER JOIN c.user u
-                WHERE u.id = :id'
-                
-            )->setParameter('id', $idUser);
+                WHERE u.id = :id
+                ORDER BY f.title
+                ASC' 
+            )
+            ->setParameter('id', $idUser)
+            ->setMaxResults($limit)
+            ->setFirstResult(($limit * $page) - $limit);
             
-            return $query->getResult();
+            
+        $paginator = new Paginator($query);
+        
+        $data = $paginator->getQuery()->getResult();
+        if(empty($data)) {
+            return $result;
+        }
+        
+        $pages = ceil($paginator->count() / $limit);
+        
+        $result['data'] = $data;
+        $result['pages'] = $pages;
+        $result['page'] = $page;
+        $result['limit'] = $limit;
+
+        return $result;
     }
 
         /**
      * @return FixedFee[] Returns an array of VariableFee objects
      */
-    public function findVariableFeesByUser($idUser): array
+    public function findVariableFeesByUserPaginated(int $page, int $limit = 6, int $idUser): array
     {
+        $limit = abs($limit);
+        $result = [];
+
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
@@ -110,18 +136,40 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             FROM App\Entity\VariableFee v
             INNER JOIN v.calcul c
             INNER JOIN c.user u
-            WHERE u.id = :id'
+            WHERE u.id = :id
+            ORDER BY v.title
+            ASC'
             
-        )->setParameter('id', $idUser);
+        )
+        ->setParameter('id', $idUser)
+        ->setMaxResults($limit)
+        ->setFirstResult(($limit * $page) - $limit);
         
-        return $query->getResult();
+        $paginator = new Paginator($query);
+        
+        $data = $paginator->getQuery()->getResult();
+        if(empty($data)) {
+            return $result;
+        }
+        
+        $pages = ceil($paginator->count() / $limit);
+        
+        $result['data'] = $data;
+        $result['pages'] = $pages;
+        $result['page'] = $page;
+        $result['limit'] = $limit;
+
+        return $result;
     }
 
         /**
      * @return Salary[] Returns an array of Salary objects
      */
-    public function findSalariesByUser($idUser): array
+    public function findSalariesByUserPaginated(int $page, int $limit = 6, int $idUser): array
     {
+        $limit = abs($limit);
+        $result = [];
+
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
@@ -129,11 +177,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             FROM App\Entity\Salary s
             INNER JOIN s.calcul c
             INNER JOIN c.user u
-            WHERE u.id = :id'
+            WHERE u.id = :id
+            ORDER BY s.FullName
+            ASC'
             
         )->setParameter('id', $idUser);
         
-        return $query->getResult();
+        $paginator = new Paginator($query);
+        
+        $data = $paginator->getQuery()->getResult();
+        if(empty($data)) {
+            return $result;
+        }
+        
+        $pages = ceil($paginator->count() / $limit);
+        
+        $result['data'] = $data;
+        $result['pages'] = $pages;
+        $result['page'] = $page;
+        $result['limit'] = $limit;
+
+        return $result;
     }
 
         /**
@@ -156,7 +220,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
         /**
-     * @return User Returns an array of FixedFee objects
+     * @return User 
      */
     public function findUserByVariableFee($idFixedFee): array
     {
@@ -175,7 +239,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
         /**
-     * @return User Returns an array of FixedFee objects
+     * @return User
      */
     public function findUserBySalary($idFixedFee): array
     {

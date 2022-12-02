@@ -1,5 +1,4 @@
-{% if pages > 1 %}
-    <div class="pagination">
+<div class="pagination">
         {% if currentPage > 1 %}       
                 <a class="" href="{{ path(path, { page: currentPage -1 }) }}">&lt;</a>
         {% else %}
@@ -9,11 +8,10 @@
         {% for page in 1..pages %}    
                 <a class="{{ (page == currentPage) ? 'activePage' : ''}}" href="{{ path(path, { page: page}) }}">{{ page }}</a>
         {% endfor %}
-            
-            {% if currentPage < pages %}
+        
+        {% if currentPage < pages %}
                 <a class="" href="{{ path(path, { page: currentPage  + 1 }) }}">&gt;</a>
         {% else %}
                 <a class="desactivated">&gt;</a>
         {% endif %}
-    </div>
-{% endif %}   
+</div>

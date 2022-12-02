@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Calcul;
+use App\Service\CalculService;
 use App\Form\CalculType;
 use App\Repository\CalculRepository;
 use App\Repository\UserRepository;
@@ -29,13 +30,16 @@ class CalculController extends AbstractController
     }
 
     #[Route('/new', name: 'app_calcul_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CalculRepository $calculRepository, UserRepository $userRepository): Response
+    public function new(Request $request, UserRepository $userRepository, CalculService $calculService): Response
     {
         $calcul = new Calcul();
+        $page = $request->query->getInt('page', 1);
 
-        $oldFixedFees = $userRepository->findFixedFeesByUser($this->getUser()->getId());
-        $oldVariableFees = $userRepository->findVariableFeesByUser($this->getUser()->getId());
-        $oldSalaries = $userRepository->findSalariesByUser($this->getUser()->getId());
+        $page < 1 ? $page = 1: '';
+
+        $oldFixedFees = $userRepository->findFixedFeesByUserPaginated($page, 5, $this->getUser()->getId());
+        $oldVariableFees = $userRepository->findVariableFeesByUserPaginated($page, 5, $this->getUser()->getId());
+        $oldSalaries = $userRepository->findSalariesByUserPaginated($page, 5, $this->getUser()->getId());
 
         $form = $this->createForm(CalculType::class, $calcul, [
             'fixedFeesChoices' => $oldFixedFees,
@@ -44,33 +48,21 @@ class CalculController extends AbstractController
         ]);
         
         $form->handleRequest($request);
+    
         
-        if ($form->isSubmitted() && $form->isValid()) {         
-            $checkedFixedFees = $form->get('checkedFixedFees')->getData();
-            $createdFixedFees = $form->get('fixedFees')->getData();
-
-            $checkedVariableFees = $form->get('checkedVariableFees')->getData();
-            $createdVariableFees = $form->get('variableFees')->getData();
-
-            $checkedSalaries = $form->get('checkedSalaries')->getData();
-            $createdSalaries = $form->get('salaries')->getData();
-            
-            $calcul->addFixedFees($checkedFixedFees, $createdFixedFees);
-            $calcul->addVariableFees($checkedVariableFees, $createdVariableFees);
-            $calcul->addSalaries($checkedSalaries, $createdSalaries);
-
-            $calcul->addUser($this->getUser());
-            
-            $calculRepository->save($calcul, true);
-            
-            $this->addFlash('sucess', 'Le calcul a été crée avec succées');
-
-            return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER); 
+        if ($form->isSubmitted()) {  
+            return $calculService->handleCalculFormData($form, $this->getUser(), $request->get('tab'));
         }
         
         return $this->renderForm('calcul/new.html.twig', [
             'calcul' => $calcul,
             'form' => $form,
+            'numberOfPagesFixed' => $oldFixedFees['pages'],
+            'currentPageFixed' => $oldFixedFees['page'],
+            'numberOfPagesVariable' => $oldVariableFees['pages'],
+            'currentPageVariable' => $oldVariableFees['page'],
+            'numberOfPagesSalary' => $oldSalaries['pages'],
+            'currentPageSalary' => $oldSalaries['page'],
         ]);
     }
 

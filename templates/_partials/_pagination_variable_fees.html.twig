@@ -1,0 +1,18 @@
+<div class="pagination">
+        {% if currentPageVariable > 1 %}       
+                <a class="" href="{{ path(pathVariable, { pageVariable: currentPageVariable -1 }) }}">&lt;</a>
+        {% else %}
+                <a class="desactivated">&lt;</a>
+        {% endif %}
+
+        {% for pageVariable in 1..pagesVariable %}    
+                <a class="{{ (pageVariable == currentPageVariable) ? 'activePage' : ''}}" 
+                        href="{{ path(pathVariable, { pageVariable: pageVariable}) }}">{{ pageVariable }}</a>
+        {% endfor %}
+        
+        {% if currentPageVariable < pagesVariable %}
+                <a class="" href="{{ path(pathVariable, { pageVariable: currentPageVariable  + 1 }) }}">&gt;</a>
+        {% else %}
+                <a class="desactivated">&gt;</a>
+        {% endif %}
+</div>

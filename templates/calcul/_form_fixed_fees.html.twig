@@ -1,4 +1,4 @@
-<div>
+<div class="form-wizard">
     {% if form.checkedFixedFees|default is empty %}
     {% else %}
         {% if not form.checkedFixedFees.vars.valid %}
@@ -6,6 +6,7 @@
                         {{  form_errors(form.checkedFixedFees) }}
             </div>
         {% endif %}
+        <input id="calcul_checkedFixedFees" name="calcul_checkedFixedFees" type="hidden"/>
         <table class="table-fees">
             <thead>
                 <tr>
@@ -31,9 +32,9 @@
                     {% endfor %}
             </tbody>
         </table>
-        {% set path = 'app_calcul_index' %}
-        {% set pages = userCalculs.pages|default(1)  %}
-        {% set currentPage = userCalculs.page|default(1)  %}
+        {% set path = 'app_calcul_new' %}
+        {% set pages = numberOfPagesFixed|default(1)  %}
+        {% set currentPage = currentPageFixed|default(1)  %}
         {% set page = 1  %}
             
         {% include "_partials/_pagination.html.twig" %}

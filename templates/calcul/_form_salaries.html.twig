@@ -1,4 +1,4 @@
-<div>
+<div class="form-wizard">
     {% if form.checkedSalaries|default is empty %}
     {% else %}
         {% if not form.checkedSalaries.vars.valid %}
@@ -6,6 +6,7 @@
                     {{  form_errors(form.checkedSalaries) }}
             </div>
         {% endif %}
+        <input id="calcul_checkedSalaries" name="calcul_checkedSalaries" type="hidden"/>
         <table class="table-fees">
             <thead>
                 <tr>
@@ -31,6 +32,13 @@
                     {% endfor %}
             </tbody>
         </table>
+        {% set path = 'app_calcul_new' %}
+        {% set pages = numberOfPagesSalary|default(1)  %}
+        {% set currentPage = currentPageSalary|default(1)  %}
+        {% set page = 1  %}
+            
+        {% include "_partials/_pagination.html.twig" %}
+
     {% endif %}
 </div>
 
