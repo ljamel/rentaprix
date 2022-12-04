@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Calcul;
 use App\Entity\FixedFee;
 use App\Entity\Salary;
 use App\Entity\User;

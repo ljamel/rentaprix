@@ -7,6 +7,7 @@ use App\Service\CalculService;
 use App\Form\CalculType;
 use App\Repository\CalculRepository;
 use App\Repository\UserRepository;
+use App\Service\CalculService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,6 +67,13 @@ class CalculController extends AbstractController
         ]);
     }
 
+    #[Route('/redirect', name: 'app_calcul_redirect', methods: ['GET'])]
+    public function redirectToMainPage(): Response
+    {
+        $this->addFlash('success', "Le Calcul a été crée avec succès");
+        return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
+    }
+
     #[Route('/{id}', name: 'app_calcul_show', methods: ['GET'])]
     public function show(Calcul $calcul): Response
     {
@@ -113,4 +121,6 @@ class CalculController extends AbstractController
 
         return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 }
