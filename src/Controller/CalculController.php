@@ -56,6 +56,13 @@ class CalculController extends AbstractController
         ]);
     }
 
+    #[Route('/redirect', name: 'app_calcul_redirect', methods: ['GET'])]
+    public function redirectToMainPage(): Response
+    {
+        $this->addFlash('success', "Le Calcul a été crée avec succès");
+        return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
+    }
+
     #[Route('/{id}', name: 'app_calcul_show', methods: ['GET'])]
     public function show(Calcul $calcul): Response
     {
@@ -104,10 +111,5 @@ class CalculController extends AbstractController
         return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}', name: 'app_calcul_delete', methods: ['POST'])]
-    public function redirectToMainPage(): Response
-    {
-        $this->addFlash('success', "Le Calcul a été crée avec succès");
-        return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
-    }
+    
 }
