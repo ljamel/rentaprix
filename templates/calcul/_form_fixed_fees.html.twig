@@ -32,12 +32,6 @@
                     {% endfor %}
             </tbody>
         </table>
-        {% set path = 'app_calcul_new' %}
-        {% set pages = numberOfPagesFixed|default(1)  %}
-        {% set currentPage = currentPageFixed|default(1)  %}
-        {% set page = 1  %}
-            
-        {% include "_partials/_pagination.html.twig" %}
         
     {% endif %}
 </div>

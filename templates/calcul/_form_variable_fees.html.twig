@@ -18,7 +18,6 @@
                 </tr>
             </thead>
             <tbody> 
-            {{ dump(form.checkedVariableFees.vars.choices)}}   
                     {% for child in form.checkedVariableFees.vars.choices %}
                             <tr>
                                 <td>{{ child.data.getTitle() }}</td>
@@ -35,12 +34,6 @@
                     {% endfor %}
             </tbody>
         </table>
-        {% set pathVariable = 'app_calcul_new' %}
-        {% set pagesVariable = numberOfPagesVariable|default(1)  %}
-        {% set currentPageVariable = currentPageVariable|default(1)  %}
-        {% set pageVariable = 1  %}
-            
-        {% include "_partials/_pagination_variable_fees.html.twig" %}
     {% endif %}
 </div>
 

@@ -197,3 +197,33 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+.show-table {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #ffff;
+    box-shadow: 0 1px 2px #d1d1d1;
+    border-radius: 5px;
+}
+
+.show-table th {
+    color: #1761a0;
+    width: 20%;
+    border: 0;
+    border-bottom: 1px solid #dff6ff;
+    border-right: 1px solid #dff6ff;
+    background-color: #ffff;
+    text-align: left;
+}
+
+.show-table tr td {
+    text-align: center;
+    border: 0;
+    border-bottom: 1px solid #dff6ff83;
+}
+
+.show-table {
+    border-collapse: collapse;
+}
+

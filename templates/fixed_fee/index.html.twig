@@ -3,33 +3,51 @@
 {% block title %}FixedFee index{% endblock %}
 
 {% block body %}
-    <h1>Liste des frais fixes</h1>
+    <div class="home-calcul">
+        {% for message in app.flashes('success') %}
+            <div class="alert-success" role="alert">{{ message }}</div>
+        {% endfor %}
+        
+        <ul class="breadcrumb">
+            <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+            <li>Frais fixes</li>
+        </ul>
+        <div class="calcul-data">
+        {% if fixedFees|default is empty %}
+            <P>Aucune donnée à afficher<p/>
+        {% else %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Prix</th>
+                        <th>Unité</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>     
+                    {% for fixedFee in fixedFees.data %}
+                        <tr>
+                            <td>{{ fixedFee.title }}</td>
+                            <td>{{ fixedFee.price }}</td>
+                            <td>{{ fixedFee.unit }}</td>
+                            <td>
+                                <a href="{{ path('app_fixed_fee_show', {'id': fixedFee.id}) }}"><i class="fa-solid fa-eye awsome show"></i></a>
+                                <a href="{{ path('app_fixed_fee_edit', {'id': fixedFee.id}) }}"><i class="fa-regular fa-pen-to-square awsome show"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
 
-    {% if fixedFees|default is empty %}
-        <P>Aucune donnée à afficher<p/>
-    {% else %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Prix</th>
-                <th>Unité</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>     
-            {% for fixedFee in fixedFees %}
-                <tr>
-                    <td>{{ fixedFee.title }}</td>
-                    <td>{{ fixedFee.price }}</td>
-                    <td>{{ fixedFee.unit }}</td>
-                    <td>
-                        <a href="{{ path('app_fixed_fee_show', {'id': fixedFee.id}) }}">Afficher</a>
-                        <a href="{{ path('app_fixed_fee_edit', {'id': fixedFee.id}) }}">Editer</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
+            {% set path = 'app_fixed_fee_index' %}
+            {% set pages = fixedFees.pages|default(1)  %}
+            {% set currentPage = fixedFees.page|default(1)  %}
+            {% set page = 1  %}
+        
+            {% include "_partials/_pagination.html.twig" %}
+            </div>
+    </div>
+    
 {% endblock %}

@@ -3,9 +3,17 @@
 {% block title %}New FixedFee{% endblock %}
 
 {% block body %}
-    <h1>Create new FixedFee</h1>
-
-    {{ include('fixed_fee/_form.html.twig') }}
-
-    <a href="{{ path('app_fixed_fee_index') }}">back to list</a>
+    <ul class="breadcrumb">
+        <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+        <li><a href="{{ path('app_fixed_fee_index') }}">Frais fixes</a></li>
+        <li>Nouveau</li>
+    </ul>
+    <div class="back">
+        <div class="back-to-list">
+            <a href="{{ path('app_fixed_fee_index') }}">Retour à la liste</a>
+        </div>
+    </div>
+    <div class="calcul-data">
+        {{ include('fixed_fee/_form.html.twig') }}
+    </div>
 {% endblock %}

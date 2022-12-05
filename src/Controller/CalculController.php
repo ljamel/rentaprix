@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Calcul;
-use App\Service\CalculService;
 use App\Form\CalculType;
 use App\Repository\CalculRepository;
 use App\Repository\UserRepository;
@@ -34,13 +33,10 @@ class CalculController extends AbstractController
     public function new(Request $request, UserRepository $userRepository, CalculService $calculService): Response
     {
         $calcul = new Calcul();
-        $page = $request->query->getInt('page', 1);
 
-        $page < 1 ? $page = 1: '';
-
-        $oldFixedFees = $userRepository->findFixedFeesByUserPaginated($page, 5, $this->getUser()->getId());
-        $oldVariableFees = $userRepository->findVariableFeesByUserPaginated($page, 5, $this->getUser()->getId());
-        $oldSalaries = $userRepository->findSalariesByUserPaginated($page, 5, $this->getUser()->getId());
+        $oldFixedFees = $userRepository->findFixedFeesByUser($this->getUser()->getId());
+        $oldVariableFees = $userRepository->findVariableFeesByUser($this->getUser()->getId());
+        $oldSalaries = $userRepository->findSalariesByUser($this->getUser()->getId());
 
         $form = $this->createForm(CalculType::class, $calcul, [
             'fixedFeesChoices' => $oldFixedFees,
@@ -58,12 +54,6 @@ class CalculController extends AbstractController
         return $this->renderForm('calcul/new.html.twig', [
             'calcul' => $calcul,
             'form' => $form,
-            'numberOfPagesFixed' => $oldFixedFees['pages'],
-            'currentPageFixed' => $oldFixedFees['page'],
-            'numberOfPagesVariable' => $oldVariableFees['pages'],
-            'currentPageVariable' => $oldVariableFees['page'],
-            'numberOfPagesSalary' => $oldSalaries['pages'],
-            'currentPageSalary' => $oldSalaries['page'],
         ]);
     }
 

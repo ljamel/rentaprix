@@ -5,15 +5,9 @@ namespace App\Service;
 use App\Entity\Calcul;
 use App\Entity\User;
 use App\Repository\CalculRepository;
-<<<<<<< HEAD
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-=======
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
->>>>>>> 92ac7adc1ec2c354b29e1f579fbb0b795bc38c82
 use Twig\Environment;
 
 Class CalculService {

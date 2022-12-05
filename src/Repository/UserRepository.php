@@ -79,6 +79,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $query->getResult();
     }
 
+    public function findFixedFeesByUser($idUser): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT f
+            FROM App\Entity\FixedFee f
+            INNER JOIN f.calcul c
+            INNER JOIN c.user u
+            WHERE u.id = :id'
+
+        )->setParameter('id', $idUser);
+
+        return $query->getResult();
+    }
+
         /**
      * @return FixedFee[] Returns an array of FixedFee objects
      */
@@ -87,21 +103,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $limit = abs($limit);
         $result = [];
 
-            $entityManager = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT f
+            FROM App\Entity\FixedFee f
+            INNER JOIN f.calcul c
+            INNER JOIN c.user u
+            WHERE u.id = :id
+            ORDER BY f.id
+            DESC'
 
-            $query = $entityManager->createQuery(
-                'SELECT f
-                FROM App\Entity\FixedFee f
-                INNER JOIN f.calcul c
-                INNER JOIN c.user u
-                WHERE u.id = :id
-                ORDER BY f.title
-                ASC' 
-            )
-            ->setParameter('id', $idUser)
-            ->setMaxResults($limit)
-            ->setFirstResult(($limit * $page) - $limit);
-            
+        )->setParameter('id', $idUser);
             
         $paginator = new Paginator($query);
         
@@ -120,6 +132,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $result;
     }
 
+    public function findVariableFeesByUser($idUser): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT v
+            FROM App\Entity\VariableFee v
+            INNER JOIN v.calcul c
+            INNER JOIN c.user u
+            WHERE u.id = :id'
+
+        )->setParameter('id', $idUser);
+
+        return $query->getResult();
+    }
         /**
      * @return FixedFee[] Returns an array of VariableFee objects
      */
@@ -161,6 +188,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $result;
     }
 
+    public function findSalariesByUser($idUser): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Salary s
+            INNER JOIN s.calcul c
+            INNER JOIN c.user u
+            WHERE u.id = :id'
+
+        )->setParameter('id', $idUser);
+
+        return $query->getResult();
+    }
         /**
      * @return Salary[] Returns an array of Salary objects
      */
