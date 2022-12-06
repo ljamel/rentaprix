@@ -112,8 +112,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             WHERE u.id = :id
             ORDER BY f.id
             DESC'
-
-        )->setParameter('id', $idUser);
+        )
+        ->setParameter('id', $idUser)
+        ->setMaxResults($limit)
+        ->setFirstResult(($limit * $page) - $limit);
             
         $paginator = new Paginator($query);
         
@@ -163,8 +165,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             INNER JOIN v.calcul c
             INNER JOIN c.user u
             WHERE u.id = :id
-            ORDER BY v.title
-            ASC'
+            ORDER By v.id
+            DESC'
             
         )
         ->setParameter('id', $idUser)
@@ -222,7 +224,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ORDER BY s.FullName
             ASC'
             
-        )->setParameter('id', $idUser);
+        )
+        ->setParameter('id', $idUser)
+        ->setMaxResults($limit)
+        ->setFirstResult(($limit * $page) - $limit);
         
         $paginator = new Paginator($query);
         

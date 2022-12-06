@@ -3,32 +3,44 @@
 {% block title %}Salary{% endblock %}
 
 {% block body %}
-    <h1>Salary</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+        <li><a href="{{ path('app_salary_index') }}">Salariés</a></li>
+        <li>{{ salary.fullName }}</li>
+    </ul>
+    <div class="back">
+        <div class="back-to-list">
+            <a href="{{ path('app_salary_index') }}">Retour à la liste</a>
+        </div>
+    </div>
+    <div class="calcul-data">
+        <table class="show-table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ salary.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom et Prénom</th>
+                    <td>{{ salary.fullName }}</td>
+                </tr>
+                <tr>
+                    <th>Poste</th>
+                    <td>{{ salary.post }}</td>
+                </tr>
+                <tr>
+                    <th>Rémunération</th>
+                    <td>{{ salary.pay }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ salary.id }}</td>
-            </tr>
-            <tr>
-                <th>FullName</th>
-                <td>{{ salary.FullName }}</td>
-            </tr>
-            <tr>
-                <th>Post</th>
-                <td>{{ salary.post }}</td>
-            </tr>
-            <tr>
-                <th>Pay</th>
-                <td>{{ salary.pay }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_salary_index') }}">back to list</a>
-
-    <a href="{{ path('app_salary_edit', {'id': salary.id}) }}">edit</a>
-
-    {{ include('salary/_delete_form.html.twig') }}
+    <div class="bottom-btn">
+        <div>
+            <a href="{{ path('app_salary_edit', {'id': salary.id}) }}" class="btn">Editer</a>
+        </div>
+            {{ include('salary/_delete_form.html.twig') }}
+    </div>
+    
 {% endblock %}

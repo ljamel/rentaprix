@@ -3,33 +3,52 @@
 {% block title %}Salary index{% endblock %}
 
 {% block body %}
-    <h1>Liste des salariés</h1>
+    <div class="home-calcul">
+        {% for message in app.flashes('success') %}
+            <div class="alert-success" role="alert">{{ message }}</div>
+        {% endfor %}
+        
+        <ul class="breadcrumb">
+            <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+            <li>Salariés</li>
+        </ul>
+        <div class="calcul-data">
+        {% if salaries|default is empty %}
+            <P>Aucune donnée à afficher<p/>
+        {% else %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom et Prénom</th>
+                        <th>Poste</th>
+                        <th>Rémunération</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>     
+                    {% for salary in salaries.data %}
+                        <tr>
+                            <td>{{ salary.fullName }}</td>
+                            <td>{{ salary.post }}</td>
+                            <td>{{ salary.pay }}</td>
+                            <td>
+                                <a href="{{ path('app_salary_show', {'id': salary.id}) }}"><i class="fa-solid fa-eye awsome show"></i></a>
+                                <a href="{{ path('app_salary_edit', {'id': salary.id}) }}"><i class="fa-regular fa-pen-to-square awsome show"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+
+            {% set path = 'app_salary_index' %}
+            {% set pages = salaries.pages|default(1)  %}
+            {% set currentPage = salaries.page|default(1)  %}
+            {% set page = 1  %}
+        
+            {% include "_partials/_pagination.html.twig" %}
+            </div>
+    </div>
     
-    {% if salaries|default is empty %}
-        <P>Aucune donnée à afficher<p/>
-    {% else %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nom et Prénom</th>
-                <th>Poste</th>
-                <th>Rémunération</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for salary in salaries %}
-            <tr>
-                <td>{{ salary.FullName }}</td>
-                <td>{{ salary.post }}</td>
-                <td>{{ salary.pay }}</td>
-                <td>
-                    <a href="{{ path('app_salary_show', {'id': salary.id}) }}">Afficher</a>
-                    <a href="{{ path('app_salary_edit', {'id': salary.id}) }}">Editer</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
 {% endblock %}
+
