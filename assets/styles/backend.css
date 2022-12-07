@@ -171,8 +171,8 @@ span.down {
 
 .awsome-header {
     color: #1761a0;
-    width: 50px;
-    font-size: 30px;
+    width: 40px;
+    font-size: 25px;
     margin-right: 10px;
 }
 
@@ -533,4 +533,27 @@ label {
 .bottom-btn div button {
     width: auto;
     margin-top: 0;
+}
+
+.edit-bottom {
+    margin-bottom: 20px;
+}
+
+.edit {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.show-edit {
+    width: 70%;
+}
+
+.edit-form {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.fees-section {
+    margin-top: 30px;
 }

@@ -3,11 +3,78 @@
 {% block title %}Edit Calcul{% endblock %}
 
 {% block body %}
-    <h1>Editer le Calcul</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+        <li><a href="{{ path('app_calcul_index') }}">Vos Devis</a></li>
+        <li><a href="{{ path('app_calcul_show', {'id': calcul.id}) }}">{{ calcul.title }}</a></li>
+        <li>Editer</li>
+    </ul>
+    <div class="back">
+        <div class="back-to-list">
+            <a href="{{ path('app_calcul_index') }}">Retour à la liste</a>
+        </div>
+    </div>
 
-    {{ include('calcul/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="calcul-data">
+    
+    {{ form_start(form, {'attr': {'id': 'regForm', 'class': 'regForm edit-form'}})}} 
+    {{ form_row(form._token) }}
+    <div>
+        <div>
+            {{ form_label(form.title) }}
+            <div class="">{{ form_widget(form.title, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            
+            {% if not form.title.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.title) }}
+                </div>
+            {% endif %}
+            
+        </div>
+        <div>
+            {{ form_label(form.devis) }}
+            <div class="">{{ form_widget(form.devis, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            {% if not form.devis.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.devis) }}
+                </div>
+            {% endif %}
+        </div>        
+        <div>
+            {{ form_label(form.durationMonth) }}
+            <div class="">{{ form_widget(form.durationMonth, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            {% if not form.durationMonth.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.durationMonth) }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="fees-section">
+        <h3 class="fixedFees">Frais fixes</h3>
+        
+        {{ include('calcul/_form_fixed_fees.html.twig') }}
+    </div>
+    <div class="fees-section">
+        <h3 class="fixedFees">Frais variables</h3>
+        
+    {{ include('calcul/_form_variable_fees.html.twig') }}
+    </div> 
+    <div class="fees-section">
+        <h3 class="fixedFees">Salariés</h3>
+    
+    {{ include('calcul/_form_salaries.html.twig') }}
+    
+    </div>
 
-    <a href="{{ path('app_calcul_index') }}">Retour à la liste</a>
+    <div class="bottom-btn">
+        <div>
+            <button type="submit" class="btn">{{ button_label|default('Valider') }}</button>
+            {{ form_end(form, {'render_rest': false})}}
+        </div>
+        <div>
+            {{ include('calcul/_delete_form.html.twig') }}
+        </div>
+    </div>
 
-    {{ include('calcul/_delete_form.html.twig') }}
 {% endblock %}

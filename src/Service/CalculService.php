@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Repository\CalculRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 Class CalculService {
@@ -43,6 +42,17 @@ Class CalculService {
         } 
         
         return $this->handleValidForm($calculForm, $user);
+    }
+
+    public function handleFees($form, $calcul) {
+        $checkedFixedFees = $form->get('checkedFixedFees')->getData();
+        $checkedVariableFees = $form->get('checkedVariableFees')->getData();
+        $checkedSalaries = $form->get('checkedSalaries')->getData();
+
+
+        $calcul->addFixedFees($checkedFixedFees, $form->get('fixedFees')->getData());
+        $calcul->addVariableFees($checkedVariableFees, $form->get('variableFees')->getData());
+        $calcul->addSalaries($checkedSalaries, $form->get('salaries')->getData());
     }
 
     private function handleValidForm(FormInterface $form, User $user) 
@@ -104,4 +114,5 @@ Class CalculService {
 
         return $errors;
     }
+
 }

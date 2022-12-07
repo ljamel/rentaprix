@@ -19,16 +19,23 @@
             </thead>
             <tbody> 
                     {% for child in form.checkedVariableFees.vars.choices %}
-                            <tr>
+                            <tr id="var_{{child.data.getId()}}">
                                 <td>{{ child.data.getTitle() }}</td>
                                 <td>{{ child.data.getPrice() }}</td>
                                 <td>{{ child.data.getUnit() }}</td>
                                 <td>{{ child.data.getType() }}</td>
                                 <td>
-                                    <label class="switch">
-                                        {{ form_widget(form.checkedVariableFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
-                                        <span class="slider round"></span>
-                                    </label>
+                                    {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
+                                        <a title="Supprimer ce frais" onClick="deleteThisLinkVariable({{child.data.getId}})"><i class="fa-regular fa-trash-can trash"></i></a>
+                                        <div style="display: none">
+                                            {{ form_widget(form.checkedVariableFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
+                                        </div>
+                                    {% else %}
+                                        <label class="switch">
+                                            {{ form_widget(form.checkedVariableFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
+                                            <span class="slider round"></span>
+                                        </label>
+                                    {% endif %}
                                 </td>
                             </tr>
                     {% endfor %}
@@ -89,3 +96,12 @@
         </div>
     {% endmacro %}
 </div>
+<script>
+const deleteThisLinkVariable = (blockId) =>{
+    let block = document.querySelector('#var_' + blockId);
+    if(confirm("êtes vous sûr de vouloir supprimer cet élement?")){
+
+        block.remove();
+    }
+}
+</script>

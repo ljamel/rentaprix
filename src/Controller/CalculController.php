@@ -45,7 +45,6 @@ class CalculController extends AbstractController
         ]);
         
         $form->handleRequest($request);
-    
         
         if ($form->isSubmitted()) {  
             return $calculService->handleCalculFormData($form, $this->getUser(), $request->get('tab'));
@@ -77,21 +76,35 @@ class CalculController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_calcul_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Calcul $calcul, CalculRepository $calculRepository): Response
+    public function edit(Request $request, Calcul $calcul, 
+            CalculRepository $calculRepository, CalculService $calculService): Response
     {
         if ($calcul->getUser()->get(0) !== $this->getUser()) {
             throw $this->createAccessDeniedException();
         }
 
-        $form = $this->createForm(CalculType::class, $calcul);
+        $oldFixedFees = $calcul->getFixedFees();
+        $oldVariableFees = $calcul->getVariableFees();
+        $oldSalaries = $calcul->getSalaries();
+
+        $form = $this->createForm(CalculType::class, $calcul, [
+            'fixedFeesChoices' => $oldFixedFees,
+            'variableFeesChoices' => $oldVariableFees,
+            'salariesChoices' => $oldSalaries,
+        ]);
+        
         $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $calculService->handleFees($form, $calcul);
+            
+            if($form->isValid()) {
+                $calculRepository->save($calcul, true);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $calculRepository->save($calcul, true);
-
-            return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', "Le Calcul a été modifié avec succès");
+                
+                return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
-
         return $this->renderForm('calcul/edit.html.twig', [
             'calcul' => $calcul,
             'form' => $form,
@@ -109,6 +122,8 @@ class CalculController extends AbstractController
             $calculRepository->remove($calcul, true);
         }
 
+        $this->addFlash('success', "Le Calcul a été supprimé avec succès");
+        
         return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
     }
 

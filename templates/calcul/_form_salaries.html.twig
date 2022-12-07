@@ -18,15 +18,22 @@
             </thead>
             <tbody>    
                     {% for child in form.checkedSalaries.vars.choices %}
-                            <tr>
+                            <tr id="sal_{{child.data.getId()}}">
                                 <td>{{ child.data.getFullName() }}</td>
                                 <td>{{ child.data.getPost() }}</td>
                                 <td>{{ child.data.getPay() }}</td>
                                 <td>
+                                    {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
+                                        <a title="Supprimer ce frais" onClick="deleteThisLinkSalary({{child.data.getId}})"><i class="fa-regular fa-trash-can trash"></i></a>
+                                        <div style="display: none">
+                                            {{ form_widget(form.checkedSalaries[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
+                                        </div>
+                                    {% else %}
                                     <label class="switch">
                                         {{ form_widget(form.checkedSalaries[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
                                         <span class="slider round"></span>
                                     </label>
+                                    {% endif %}
                                 </td>
                             </tr>
                     {% endfor %}
@@ -79,3 +86,12 @@
         </div>
     {% endmacro %}
 </div>
+<script>
+const deleteThisLinkSalary = (blockId) =>{
+    let block = document.querySelector('#sal_' + blockId);
+    if(confirm("êtes vous sûr de vouloir supprimer cet élement?")){
+
+        block.remove();
+    }
+}
+</script>

@@ -80,3 +80,12 @@ for (i = 0; i < coll.length; i++) {
         }
     });
 }
+
+const deleteThisLink = (blockId) =>{
+    let block = document.querySelector('#fee_' + blockId);
+    if(confirm("êtes vous sûr de vouloir supprimer cet élement?")){
+
+        block.remove();
+    }
+}
+

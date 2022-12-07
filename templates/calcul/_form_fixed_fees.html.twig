@@ -16,17 +16,24 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>    
+            <tbody> 
                     {% for child in form.checkedFixedFees.vars.choices %}
-                            <tr>
+                            <tr id="fee_{{child.data.getId()}}">
                                 <td>{{ child.data.getTitle() }}</td>
                                 <td>{{ child.data.getPrice() }}</td>
                                 <td>{{ child.data.getUnit() }}</td>
                                 <td>
+                                {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
+                                    <a title="Supprimer ce frais" class="delete-link" onClick="deleteThisLink({{child.data.getId}})"><i class="fa-regular fa-trash-can trash"></i></a>
+                                    <div style="display: none">
+                                        {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
+                                    </div>
+                                {% else %}
                                     <label class="switch">
-                                        {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
+                                        {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""' }})}}
                                         <span class="slider round"></span>
                                     </label>
+                                {% endif %}
                                 </td>
                             </tr>
                     {% endfor %}
@@ -78,3 +85,13 @@
         </div>
     {% endmacro %}
 </div>
+
+<script>
+const deleteThisLink = (blockId) =>{
+    let block = document.querySelector('#fee_' + blockId);
+    if(confirm("êtes vous sûr de vouloir supprimer cet élement?")){
+
+        block.remove();
+    }
+}
+</script>

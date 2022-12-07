@@ -74,7 +74,7 @@ class CalculType extends AbstractType
                             'message' => 'Duration month must be grater than 0'
                         ]),
                     ],
-                    'label'=> 'Durée en mois'
+                    'label'=> 'Durée (Mois)'
                 ])
             ->add( 'fixedFees', CollectionType::class,
                 [
@@ -183,7 +183,7 @@ class CalculType extends AbstractType
             'data_class' => Calcul::class,
             'fixedFeesChoices' => [],
             'variableFeesChoices' => [],
-            'salariesChoices' => []
+            'salariesChoices' => [],
         ]);
     }
 
@@ -193,7 +193,7 @@ class CalculType extends AbstractType
         $checkedFixedFees = $context->getRoot()->get('checkedFixedFees')->getData();
 
         if($fixedFees[0]->getTitle() === null && count($checkedFixedFees) === 0) {
-            $context->buildViolation('Select at least one fixed Fee')
+            $context->buildViolation('Veuillez selectionner un frais fixe')
                     ->addViolation();
         }
     }
@@ -205,7 +205,7 @@ class CalculType extends AbstractType
 
 
         if($variableFees[0]->getTitle() === null && count($checkedVariableFees) === 0) {
-            $context->buildViolation('Select at least one variable Fee')
+            $context->buildViolation('Veuillez selectionner un frais variable')
                     ->addViolation();
         }
     }
@@ -217,7 +217,7 @@ class CalculType extends AbstractType
 
 
         if($salaries[0]->getFullName() === null && count($checkedSalaries) === 0) {
-            $context->buildViolation('Select at least one salary')
+            $context->buildViolation('Veuillez selectionner un salarié')
                     ->addViolation();
         }
     }
