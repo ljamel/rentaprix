@@ -1,12 +1,13 @@
 <div class="form-wizard">
+    {% if not form.checkedFixedFees.vars.valid %}
+        <div class="error-message">
+            {{  form_errors(form.checkedFixedFees) }}
+        </div>
+    {% endif %}
+    <input id="calcul_checkedFixedFees" name="calcul_checkedFixedFees" type="hidden"/>
+
     {% if form.checkedFixedFees|default is empty %}
     {% else %}
-        {% if not form.checkedFixedFees.vars.valid %}
-            <div class="error-message">
-                        {{  form_errors(form.checkedFixedFees) }}
-            </div>
-        {% endif %}
-        <input id="calcul_checkedFixedFees" name="calcul_checkedFixedFees" type="hidden"/>
         <table class="table-fees">
             <thead>
                 <tr>
@@ -17,26 +18,26 @@
                 </tr>
             </thead>
             <tbody> 
-                    {% for child in form.checkedFixedFees.vars.choices %}
-                            <tr id="fee_{{child.data.getId()}}">
-                                <td>{{ child.data.getTitle() }}</td>
-                                <td>{{ child.data.getPrice() }}</td>
-                                <td>{{ child.data.getUnit() }}</td>
-                                <td>
-                                {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
-                                    <a title="Supprimer ce frais" class="delete-link" onClick="deleteThisLink({{child.data.getId}})"><i class="fa-regular fa-trash-can trash"></i></a>
-                                    <div style="display: none">
-                                        {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
-                                    </div>
-                                {% else %}
-                                    <label class="switch">
-                                        {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""' }})}}
-                                        <span class="slider round"></span>
-                                    </label>
-                                {% endif %}
-                                </td>
-                            </tr>
-                    {% endfor %}
+                {% for child in form.checkedFixedFees.vars.choices %}
+                    <tr id="fee_{{child.data.getId()}}">
+                        <td>{{ child.data.getTitle() }}</td>
+                        <td>{{ child.data.getPrice() }}</td>
+                        <td>{{ child.data.getUnit() }}</td>
+                        <td>
+                        {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
+                            <a title="Supprimer ce frais" class="delete-link" onClick="deleteThisLink({{child.data.getId}})"><i class="fa-regular fa-trash-can trash"></i></a>
+                            <div style="display: none">
+                                {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
+                            </div>
+                        {% else %}
+                            <label class="switch">
+                                {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""' }})}}
+                                <span class="slider round"></span>
+                            </label>
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
         

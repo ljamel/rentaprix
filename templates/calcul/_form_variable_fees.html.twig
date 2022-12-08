@@ -1,11 +1,13 @@
 <div class="form-wizard">
+    {% if not form.checkedVariableFees.vars.valid %}
+        <div class="error-message">
+            {{  form_errors(form.checkedVariableFees) }}
+        </div>
+    {% endif %}
+    <input id="calcul_checkedVariableFees" name="calcul_checkedVariableFees" type="hidden"/>
+
     {% if form.checkedVariableFees|default is empty %}
     {% else %}
-        {% if not form.checkedVariableFees.vars.valid %}
-            <div class="error-message">
-                {{  form_errors(form.checkedVariableFees) }}
-            </div>
-        {% endif %}
         <input id="calcul_checkedVariableFees" name="calcul_checkedVariableFees" type="hidden"/>
         <table class="table-fees">
             <thead>

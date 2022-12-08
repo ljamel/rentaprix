@@ -14,7 +14,7 @@
         </ul>
         <div class="calcul-data">
         {% if variableFees|default is empty %}
-            <P>Aucune donnée à afficher<p/>
+            <p class="no-data">Aucune donnée à afficher.</p>
         {% else %}
             <table class="table">
                 <thead>
@@ -41,7 +41,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-            {% endif %}
 
             {% set path = 'app_fixed_fee_index' %}
             {% set pages = variableFees.pages|default(1)  %}
@@ -50,6 +49,7 @@
         
             {% include "_partials/_pagination.html.twig" %}
             </div>
+        {% endif %}
     </div>
     
 {% endblock %}

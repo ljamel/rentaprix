@@ -17,7 +17,7 @@
         </div>
         <div class="calcul-data">
             {% if userCalculs|default is empty %}
-                <P>Aucune donnée à afficher<p/>
+                <p class="no-data">Aucune donnée à afficher.</p>
             {% else %}
                 <table class="table">
                     <thead>
@@ -44,14 +44,13 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                {% set path = 'app_calcul_index' %}
+                {% set pages = userCalculs.pages|default(1)  %}
+                {% set currentPage = userCalculs.page|default(1)  %}
+                {% set page = 1  %}
+
+                {% include "_partials/_pagination.html.twig" %}
             {% endif %}
-        
-            {% set path = 'app_calcul_index' %}
-            {% set pages = userCalculs.pages|default(1)  %}
-            {% set currentPage = userCalculs.page|default(1)  %}
-            {% set page = 1  %}
-        
-            {% include "_partials/_pagination.html.twig" %}
         </div>
     </div>
 {% endblock %}

@@ -1,11 +1,13 @@
 <div class="form-wizard">
-    {% if form.checkedSalaries|default is empty %}
+    {% if not form.checkedSalaries.vars.valid %}
+        <div class="error-message">
+            {{  form_errors(form.checkedSalaries) }}
+        </div>
+    {% endif %}
+    <input id="calcul_checkedSalaries" name="calcul_checkedSalaries" type="hidden"/>
+
+    {% if form.checkedFixedFees|default is empty %}
     {% else %}
-        {% if not form.checkedSalaries.vars.valid %}
-            <div class="error-message">
-                    {{  form_errors(form.checkedSalaries) }}
-            </div>
-        {% endif %}
         <input id="calcul_checkedSalaries" name="calcul_checkedSalaries" type="hidden"/>
         <table class="table-fees">
             <thead>

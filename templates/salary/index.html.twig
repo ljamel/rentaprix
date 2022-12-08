@@ -14,7 +14,7 @@
         </ul>
         <div class="calcul-data">
         {% if salaries|default is empty %}
-            <P>Aucune donnée à afficher<p/>
+            <p class="no-data">Aucune donnée à afficher</p>
         {% else %}
             <table class="table">
                 <thead>
@@ -39,7 +39,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-            {% endif %}
 
             {% set path = 'app_salary_index' %}
             {% set pages = salaries.pages|default(1)  %}
@@ -48,6 +47,7 @@
         
             {% include "_partials/_pagination.html.twig" %}
             </div>
+        {% endif %}
     </div>
     
 {% endblock %}
