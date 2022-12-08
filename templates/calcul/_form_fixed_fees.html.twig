@@ -8,39 +8,47 @@
 
     {% if form.checkedFixedFees|default is empty %}
     {% else %}
-        <table class="table-fees">
-            <thead>
+        <div class="search-input">
+            <div class="form-group has-search">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input type="text" class="form-control" placeholder="Rechercher un frais fixe.."
+                       id="search-fixed" onkeyup="searchFees('search-fixed', 'table-fixed')">
+            </div>
+        </div>
+        <div class="table-scroll">
+            <table class="table-fees" id="table-fixed">
+                <thead>
                 <tr>
                     <th>Titre</th>
                     <th>Prix</th>
                     <th>Unité</th>
                     <th></th>
                 </tr>
-            </thead>
-            <tbody> 
+                </thead>
+                <tbody>
                 {% for child in form.checkedFixedFees.vars.choices %}
                     <tr id="fee_{{child.data.getId()}}">
                         <td>{{ child.data.getTitle() }}</td>
                         <td>{{ child.data.getPrice() }}</td>
                         <td>{{ child.data.getUnit() }}</td>
                         <td>
-                        {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
-                            <a title="Supprimer ce frais" class="delete-link" onClick="deleteThisLink({{child.data.getId}})"><i class="fa-regular fa-trash-can trash"></i></a>
-                            <div style="display: none">
-                                {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
-                            </div>
-                        {% else %}
-                            <label class="switch">
-                                {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""' }})}}
-                                <span class="slider round"></span>
-                            </label>
-                        {% endif %}
+                            {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
+                                <a title="Supprimer ce frais" class="delete-link" onClick="deleteThisLink({{child.data.getId}})"><i class="fa-regular fa-trash-can trash"></i></a>
+                                <div style="display: none">
+                                    {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
+                                </div>
+                            {% else %}
+                                <label class="switch">
+                                    {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""' }})}}
+                                    <span class="slider round"></span>
+                                </label>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
-        
+                </tbody>
+            </table>
+        </div>
     {% endif %}
 </div>
 
@@ -93,6 +101,28 @@ const deleteThisLink = (blockId) =>{
     if(confirm("êtes vous sûr de vouloir supprimer cet élement?")){
 
         block.remove();
+    }
+}
+
+function searchFees(idInput, idTable) {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById(idInput);
+    filter = input.value.toUpperCase();
+    table = document.getElementById(idTable);
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
     }
 }
 </script>

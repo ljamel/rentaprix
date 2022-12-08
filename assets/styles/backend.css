@@ -562,3 +562,9 @@ label {
     text-align: center;
     box-shadow: rgba(255, 255, 255, 0.2) 0 0 0 1px inset, #1761a0 0 0 0 1px;
 }
+
+.table-scroll {
+    overflow-y: scroll;
+    max-height: 270px;
+    width: 100%;
+}

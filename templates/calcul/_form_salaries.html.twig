@@ -8,40 +8,47 @@
 
     {% if form.checkedFixedFees|default is empty %}
     {% else %}
-        <input id="calcul_checkedSalaries" name="calcul_checkedSalaries" type="hidden"/>
-        <table class="table-fees">
-            <thead>
-                <tr>
-                    <th>Nom et Prénom</th>
-                    <th>Poste</th>
-                    <th>Rémunération</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>    
-                    {% for child in form.checkedSalaries.vars.choices %}
-                            <tr id="sal_{{child.data.getId()}}">
-                                <td>{{ child.data.getFullName() }}</td>
-                                <td>{{ child.data.getPost() }}</td>
-                                <td>{{ child.data.getPay() }}</td>
-                                <td>
-                                    {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
-                                        <a title="Supprimer ce frais" onClick="deleteThisLinkSalary({{child.data.getId}})"><i class="fa-regular fa-trash-can trash"></i></a>
-                                        <div style="display: none">
-                                            {{ form_widget(form.checkedSalaries[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
-                                        </div>
-                                    {% else %}
-                                    <label class="switch">
-                                        {{ form_widget(form.checkedSalaries[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
-                                        <span class="slider round"></span>
-                                    </label>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                    {% endfor %}
-            </tbody>
-        </table>
-
+        <div class="search-input">
+            <div class="form-group has-search">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input type="text" class="form-control" placeholder="Rechercher un salarié.."
+                       id="search-salary" onkeyup="searchFees('search-salary', 'table-salary')">
+            </div>
+        </div>
+        <div class="table-scroll" id="table-salary">
+            <table class="table-fees">
+                <thead>
+                    <tr>
+                        <th>Nom et Prénom</th>
+                        <th>Poste</th>
+                        <th>Rémunération</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for child in form.checkedSalaries.vars.choices %}
+                                <tr id="sal_{{child.data.getId()}}">
+                                    <td>{{ child.data.getFullName() }}</td>
+                                    <td>{{ child.data.getPost() }}</td>
+                                    <td>{{ child.data.getPay() }}</td>
+                                    <td>
+                                        {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
+                                            <a title="Supprimer ce frais" onClick="deleteThisLinkSalary({{child.data.getId}})"><i class="fa-regular fa-trash-can trash"></i></a>
+                                            <div style="display: none">
+                                                {{ form_widget(form.checkedSalaries[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
+                                            </div>
+                                        {% else %}
+                                        <label class="switch">
+                                            {{ form_widget(form.checkedSalaries[child.data.getId()], {'attr': {'onInput': 'this.className = ""'}})}}
+                                            <span class="slider round"></span>
+                                        </label>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endif %}
 </div>
 
