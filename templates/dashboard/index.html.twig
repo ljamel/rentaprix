@@ -6,10 +6,16 @@
 <div class="home">
         <div>
                 <div class="dashboard-row">
-                        <div class="dashboard-item">
-                                <div>image + chiffre</div>
-                                <div><a href=""><i class="fa-solid fa-chevron-right awsome"></i></a></div>
+                        <div class="dashboard-item" onclick="displayModal('devisModal')">
+                                {{ render_chart(chart) }}
                         </div>
+                        <div id="devisModal" class="modal">
+                                <div class="modal-content">
+                                        <span class="close">&times;</span>
+                                        {{ render_chart(chart) }}
+                                </div>
+                        </div>
+
                         <div class="dashboard-item">
                                 <div>image + chiffre</div>
                                 <div><a href=""><i class="fa-solid fa-chevron-right awsome"></i></a></div>
@@ -30,4 +36,23 @@
                 <h3 class="footer-title">Rapport</h3>
         </div>
 </div>
+        <script>
+                const displayModal = (myModal) =>{
+                        let modal = document.getElementById(myModal);
+                        let span = document.getElementsByClassName("close")[0];
+
+                         modal.style.display = "block";
+
+                        span.onclick = function() {
+                                modal.style.display = "none";
+                        }
+
+                        // When the user clicks anywhere outside of the modal, close it
+                        window.onclick = function(event) {
+                                if (event.target === modal) {
+                                        modal.style.display = "none";
+                                }
+                        }
+                }
+        </script>
 {% endblock %}

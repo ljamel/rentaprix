@@ -186,7 +186,6 @@ span.down {
     background-color: #dff6ff83;
     min-height: 620px;
     width: 100%;
-    padding-top: 10px; 
 }
 
 .content-title {
@@ -219,52 +218,10 @@ ul.breadcrumb li a {
     text-decoration: none;
 }
 
-  /* Add a color on mouse-over */
 ul.breadcrumb li a:hover {
     color: #1761a0;
 }
-/* style dashboard */
-/*******************/
-.home {
-    display: flex;
-    justify-content: space-around;
-}
 
-.dashboard-row {
-    display: flex;
-    justify-content: space-between;
-    width: 700px;
-    padding: 50px;
-    margin-top: 20px;
-    margin-right: 50px;
-}
-
-.dashboard-item {
-    width: 250px;
-    justify-content: space-between;
-    display: flex;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
-    height: 7em;
-    line-height: 7em;
-    white-space: nowrap;
-    padding-left: 20px;
-}
-
-.dashboard-report {
-    width: 400px;
-    height: 550px;
-    border-radius: 15px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-    background-color: #ffffff;
-    text-align: center;
-    padding-top: 20px;
-    margin-right: 20px;
-    margin-top: 30px;
-}
-/* style Calcul */
-/*******************/
 .home-calcul {
     padding: 0 30px;
 }

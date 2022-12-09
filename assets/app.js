@@ -1,6 +1,7 @@
 import './styles/app.css';
 import './styles/backend.css';
 import './styles/fixedFees.css';
+import './styles/dashboard.css';
 
 // start the Stimulus application
 import './bootstrap';
@@ -65,7 +66,6 @@ document
     .forEach((item) => {
         addTagFormDeleteLink(item)
     })
-
 
 
 
