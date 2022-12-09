@@ -117,4 +117,4 @@ const deleteThisLink = (blockId) =>{
 
 window.searchFees = searchFees;
 window.deleteThisLink = deleteThisLink;
-document.nextPrev = nextPrev;
+window.nextPrev = nextPrev;

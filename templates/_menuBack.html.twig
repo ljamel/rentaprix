@@ -14,7 +14,7 @@
                     <i class="fa-solid fa-gauge awsome"></i> Dashboard</a>
             </li>
             <li class="link-item">
-                <a type="button" class="collapsible"><i class="fa-solid fa-square-root-variable awsome"></i> Calcul de rentabilité
+                <a class="collapsible" onClick="displayMenu()"><i class="fa-solid fa-square-root-variable awsome"></i> Calcul de rentabilité
                         <span class="down"><i class="fa-solid fa-sort-down awsome"></i></span>
                 </a>
                 <div class="content-collapsible">
@@ -35,8 +35,7 @@
                 </div>
             </li>
             <li class="link-item">
-                <a href="{{ path('app_dashboard') }}" />
-                    <i class="fa-solid fa-calendar-days awsome"></i> Calendrier</a>
+                <a href="{{ path('app_dashboard') }}" /><i class="fa-solid fa-calendar-days awsome"></i> Calendrier</a>
             </li>
             <li class="link-item">
                 <a href="{{ path('app_dashboard') }}" />
@@ -46,10 +45,26 @@
     </div>
 
     <div class="footer-menu">
-        <h3 class="footer-title">Some Title<h3/>
+        <h3 class="footer-title">Some Title</h3>
         <p>Laboris nulla dolor sunt elit ea non sunt irure ipsum proidenlit</p>
         <div class="menu-button">
             <a href="#">Link</a>
         </div>
     </div>
 </div>
+
+<script>
+    const displayMenu = () => {
+        const link = document.querySelector(".collapsible");
+
+        link.classList.toggle("active-link");
+
+        let content = link.nextElementSibling;
+
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    }
+</script>
