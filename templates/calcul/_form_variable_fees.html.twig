@@ -35,7 +35,7 @@
                         <td>{{ child.data.getType() }}</td>
                         <td>
                             {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
-                                <a title="Supprimer ce frais" onClick="deleteThisLinkVariable({{child.data.getId}})"><i class="fa-regular fa-trash-can trash"></i></a>
+                                <a title="Supprimer ce frais" onClick="deleteThisLink('#var_{{child.data.getId}}')"><i class="fa-regular fa-trash-can trash"></i></a>
                                 <div style="display: none">
                                     {{ form_widget(form.checkedVariableFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
                                 </div>
@@ -106,12 +106,3 @@
         </div>
     {% endmacro %}
 </div>
-<script>
-const deleteThisLinkVariable = (blockId) =>{
-    let block = document.querySelector('#var_' + blockId);
-    if(confirm("êtes vous sûr de vouloir supprimer cet élement?")){
-
-        block.remove();
-    }
-}
-</script>

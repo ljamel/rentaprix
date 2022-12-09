@@ -4,6 +4,7 @@ import './styles/fixedFees.css';
 
 // start the Stimulus application
 import './bootstrap';
+import './formWizard';
 
 const addTagFormDeleteLink = (item) => {
     let firstItem = item;
@@ -66,13 +67,13 @@ document
     })
 
 // code for collapsible menu
-var coll = document.getElementsByClassName("collapsible");
-var i;
+let coll = document.getElementsByClassName("collapsible");
+let i;
 
 for (i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function() {
         this.classList.toggle("active-link");
-        var content = this.nextElementSibling;
+        let content = this.nextElementSibling;
         if (content.style.display === "block") {
         content.style.display = "none";
         } else {
@@ -81,33 +82,9 @@ for (i = 0; i < coll.length; i++) {
     });
 }
 
-const deleteThisLink = (blockId) =>{
-    let block = document.querySelector('#fee_' + blockId);
-    if(confirm("êtes vous sûr de vouloir supprimer cet élement?")){
 
-        block.remove();
-    }
-}
 
-function searchFees(idInput, idTable) {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById(idInput);
-    filter = input.value.toUpperCase();
-    table = document.getElementById(idTable);
-    tr = table.getElementsByTagName("tr");
 
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
+
+
 
