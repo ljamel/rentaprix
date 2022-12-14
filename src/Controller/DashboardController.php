@@ -42,7 +42,7 @@ class DashboardController extends AbstractController
             'scales' => [
                 'y' => [
                     'suggestedMin' => 0,
-                    'suggestedMax' => 3000,
+                    'suggestedMax' => 80000,
                 ],
             ],
         ]);

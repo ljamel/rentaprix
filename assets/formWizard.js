@@ -1,21 +1,28 @@
-var currentTab = 0; // Current tab is set to be the first tab (0)
-var valid = false;
+let currentTab = 0;
+let submit = 0;
+const valid = false;
+
 showTab(currentTab); // Display the current tab
 
 function showTab(n) {
-    var x = document.getElementsByClassName("tab");
+    const x = document.getElementsByClassName("tab");
     x[n].style.display = "block";
 
-    if (n == 0) {
+    if (n === 0) {
         document.getElementById("prevBtn").style.display = "none";
     } else {
         document.getElementById("prevBtn").style.display = "inline";
     }
-    if (n == (x.length - 1)) {
+
+    if (n === (x.length - 1)) {
         document.getElementById("nextBtn").innerHTML = "Valider";
         document.getElementById("nextBtn").style.backgroundColor = "#04AA6D";
     } else {
         document.getElementById("nextBtn").innerHTML = "Suivant <i class='fa-solid fa-angles-right'></i>";
+    }
+
+    if (n === x.length) {
+        validateForm(n);
     }
     // ... and run a function that displays the correct step indicator:
     fixStepIndicator(n)
@@ -24,11 +31,7 @@ function nextPrev(n) {
     validateForm(n);
 }
 function validateForm(n) {
-    var x, y, i;
     const allForm = document.querySelector('#regForm');
-    x = document.getElementsByClassName("tab");
-    y = x[currentTab].getElementsByClassName("input");
-
     const form = new FormData(allForm);
     form.append('tab', currentTab);
 
@@ -45,7 +48,7 @@ function validateForm(n) {
         });
 }
 function fixStepIndicator(n) {
-    var i, x = document.getElementsByClassName("step");
+    let i, x = document.getElementsByClassName("step");
 
     for (i = 0; i < x.length; i++) {
         x[i].className = x[i].className.replace(" active", "");
@@ -58,7 +61,7 @@ const handleResponse = function (response, n) {
     if(response.code === 'CALCUL_INVALID_FORM') {
         handleErrors(response.errors);
     } else {
-        var x = document.getElementsByClassName("tab");
+        const x = document.getElementsByClassName("tab");
 
         x[currentTab].querySelectorAll('input').forEach(e => {
             e.style.border = "#ccc 1px solid";
@@ -67,6 +70,7 @@ const handleResponse = function (response, n) {
         currentTab = currentTab + n;
         // if you have reached the end of the form... :
         if (currentTab >= x.length) {
+            validateForm(currentTab);
             window.location.href="/dashboard/calcul/redirect";
         }
 

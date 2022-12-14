@@ -4,10 +4,6 @@
 
 {% block body %}
     <div class="home-calcul">
-        {% for message in app.flashes('success') %}
-                <div class="alert-success" role="alert">{{ message }}</div>
-        {% endfor %}
-        
         <ul class="breadcrumb">
             <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
             <li>Vos devis</li>

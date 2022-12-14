@@ -9,7 +9,7 @@
     width: 700px;
     padding: 10px;
     margin-top: 20px;
-    height: 300px;
+    height: 280px;
 }
 
 .dashboard-item {
@@ -37,7 +37,7 @@
     width: 400px;
     height: 550px;
     border-radius: 15px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
     background-color: #ffffff;
     text-align: center;
     padding-top: 20px;
@@ -65,6 +65,19 @@
     padding: 20px;
     border: 1px solid #888;
     width: 60%;
+    position: relative;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+@-webkit-keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
 }
 
 .close {

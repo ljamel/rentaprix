@@ -43,13 +43,13 @@ class CalculController extends AbstractController
             'variableFeesChoices' => $oldVariableFees,
             'salariesChoices' => $oldSalaries,
         ]);
-        
+
         $form->handleRequest($request);
-        
-        if ($form->isSubmitted()) {  
+
+        if ($form->isSubmitted()) {
             return $calculService->handleCalculFormData($form, $this->getUser(), $request->get('tab'));
         }
-        
+
         return $this->renderForm('calcul/new.html.twig', [
             'calcul' => $calcul,
             'form' => $form,

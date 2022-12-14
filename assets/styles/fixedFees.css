@@ -12,12 +12,11 @@
     padding: 20px;
     border-collapse: collapse;
     border-radius: 5px;
-    text-shadow: 1px 1px 0px #fff;
+    text-shadow: 1px 1px 0 #fff;
     background:#eaebec;
 	border:#ccc 1px solid;
     -moz-border-radius:3px;
 	-webkit-border-radius:3px;
-	border-radius:3px;
 
 	-moz-box-shadow: 0 1px 2px #d1d1d1;
 	-webkit-box-shadow: 0 1px 2px #d1d1d1;
@@ -189,8 +188,6 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
     transform: translateX(26px);
 }
 

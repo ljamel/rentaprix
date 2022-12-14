@@ -39,7 +39,7 @@
     width: 22%;
     min-height: 620px;
     padding: 20px 30px 0 30px;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 3px;
 }
 
 .menu-links {
@@ -156,13 +156,16 @@ span.down {
 
 .header-menu {
     height: 90px;
+    display: flex;
 }
 
 .header-menu ul {
     display: flex;
     justify-content: flex-end;
     margin-right: 30px;
-    padding: 30px;
+    padding: 10px;
+    align-self: center;
+    margin-left: auto;
 }
 
 .header-menu ul li {
@@ -186,6 +189,7 @@ span.down {
     background-color: #dff6ff83;
     min-height: 620px;
     width: 100%;
+    padding-top: 10px;
 }
 
 .content-title {
@@ -238,7 +242,7 @@ ul.breadcrumb li a:hover {
     width: 70%;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0, rgba(255, 255, 255, 0.8) -6px -2px 16px 0;
     border-collapse: collapse;
 }
 
@@ -263,7 +267,7 @@ ul.breadcrumb li a:hover {
 
 .calcul-new {
     width: 20%;
-    margin: 20px auto 0px 30px;
+    margin: 20px auto 0 30px;
 }
 
 .new {
@@ -313,7 +317,7 @@ ul.breadcrumb li a:hover {
     padding: 25px;
     width: 90%;
     min-width: 500px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
     border-radius: 15px;
 }
 
@@ -471,10 +475,11 @@ label {
 .alert-success {
     background-color: #d4edda;
     color: #206b5d;
-    width: 700px;
-    margin: 10px;
-    padding: 20px;
     border-radius: 5px;
+    margin-right: auto;
+    align-self: center;
+    padding: 15px;
+    margin-left: 20px;
 }
 
 .bottom-btn {
