@@ -21,6 +21,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "chart.js": "^4.1.1",
         "yarn": "^1.22.19"
     }
 }

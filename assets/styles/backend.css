@@ -2,8 +2,9 @@
 
 .container {
     display: flex;
-    min-height: 620px;
+    min-height: 700px !important;
     width: 100%;
+    background-color: #dff6ff83;
 }
 
 .logo {
@@ -37,9 +38,10 @@
 
 .lateral-menu {
     width: 22%;
-    min-height: 620px;
     padding: 20px 30px 0 30px;
     box-shadow: rgba(0, 0, 0, 0.15) 2px 2px 3px;
+    min-height: 100%;
+    background-color: #FFFFFF;
 }
 
 .menu-links {
@@ -150,13 +152,16 @@ span.down {
 }
 
 .right-content {
-    min-height: 620px;
     width: 78%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .header-menu {
-    height: 90px;
+    height: 70px;
     display: flex;
+    background-color: #ffff !important;
 }
 
 .header-menu ul {
@@ -186,10 +191,9 @@ span.down {
 }
 
 .content {
-    background-color: #dff6ff83;
-    min-height: 620px;
     width: 100%;
     padding-top: 10px;
+    height: auto !important;
 }
 
 .content-title {

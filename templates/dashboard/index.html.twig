@@ -7,28 +7,43 @@
         <div>
                 <div class="dashboard-row">
                         <div class="dashboard-item" onclick="displayModal('devisModal')">
-                                {{ render_chart(chart) }}
+                                {{ render_chart(devisChart) }}
                         </div>
                         <div id="devisModal" class="modal">
                                 <div class="modal-content">
                                         <span class="close">&times;</span>
-                                        {{ render_chart(chart) }}
+                                        {{ render_chart(devisChart) }}
                                 </div>
                         </div>
 
-                        <div class="dashboard-item">
-                                <div>image + chiffre</div>
-                                <div><a href=""><i class="fa-solid fa-chevron-right awsome"></i></a></div>
+                        <div class="dashboard-item" onclick="displayModal('profitModal')">
+                                {{ render_chart(profitChart) }}
+                        </div>
+                        <div id="profitModal" class="modal">
+                                <div class="modal-content">
+                                        <span class="close">&times;</span>
+                                        {{ render_chart(profitChart) }}
+                                </div>
                         </div>
                 </div>
                 <div class="dashboard-row">
-                        <div class="dashboard-item">
-                                <div>image + chiffre</div>
-                                <div><a href=""><i class="fa-solid fa-chevron-right awsome"></i></a></div>
+                        <div class="dashboard-item" onclick="displayModal('profitPercentageModal')">
+                                {{ render_chart(profitPercentage) }}
                         </div>
-                        <div class="dashboard-item">
-                                <div>image + chiffre</div>
-                                <div><a href=""><i class="fa-solid fa-chevron-right awsome"></i></a></div>
+                        <div id="profitPercentageModal" class="modal">
+                                <div class="modal-content">
+                                        <span class="close">&times;</span>
+                                        {{ render_chart(profitPercentage, {'data-controller': 'myPercentageChart'}) }}
+                                </div>
+                        </div>
+                        <div class="dashboard-item" onclick="displayModal('countModal')">
+                                {{ render_chart(caclulsPerMonth) }}
+                        </div>
+                        <div id="countModal" class="modal">
+                                <div class="modal-content">
+                                        <span class="close">&times;</span>
+                                        {{ render_chart(caclulsPerMonth) }}
+                                </div>
                         </div>
                 </div>
         </div>
@@ -37,22 +52,26 @@
         </div>
 </div>
         <script>
-                const displayModal = (myModal) =>{
-                        let modal = document.getElementById(myModal);
-                        let span = document.getElementsByClassName("close")[0];
 
-                         modal.style.display = "block";
+        const displayModal = (myModal) =>{
+                let modal = document.getElementById(myModal);
+                let span = document.querySelectorAll(".close");
 
-                        span.onclick = function() {
+                 modal.style.display = "block";
+
+                span.forEach(item => {
+                        item.onclick = function() {
                                 modal.style.display = "none";
                         }
+                })
 
-                        // When the user clicks anywhere outside of the modal, close it
-                        window.onclick = function(event) {
-                                if (event.target === modal) {
-                                        modal.style.display = "none";
-                                }
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                        if (event.target === modal) {
+                                modal.style.display = "none";
                         }
                 }
-        </script>
+        }
+
+</script>
 {% endblock %}

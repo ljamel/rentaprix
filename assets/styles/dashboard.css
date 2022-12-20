@@ -5,19 +5,21 @@
 
 .dashboard-row {
     display: flex;
-    justify-content: space-between;
     width: 700px;
-    padding: 10px;
-    margin-top: 20px;
     height: 280px;
+    justify-content: space-around;
+}
+
+.dashboard-row:nth-child(even) {
+    margin-top: 30px;
 }
 
 .dashboard-item {
     background-color: #ffffff;
     border-radius: 10px;
     padding: 5px;
-    width: 320px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,7 +66,7 @@
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 60%;
+    max-width: 60%;
     position: relative;
     animation-name: animatetop;
     animation-duration: 0.4s

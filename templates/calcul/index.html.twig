@@ -29,7 +29,7 @@
                     {% for calcul in userCalculs.data %}
                             <tr>
                                 <td>{{ calcul.title }}</td>
-                                <td>{{ calcul.date ? calcul.date|date('Y-m-d') : '' }}</td>
+                                <td>{{ calcul.date ? calcul.date|date('d-m-Y') : '' }}</td>
                                 <td>{{ calcul.devis }}</td>
                                 <td>{{ calcul.durationMonth }}</td>
                                 <td>

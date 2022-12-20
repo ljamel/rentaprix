@@ -6,7 +6,6 @@ import './styles/dashboard.css';
 // start the Stimulus application
 import './bootstrap';
 import './formWizard';
-
 const addTagFormDeleteLink = (item) => {
     let firstItem = item;
 
