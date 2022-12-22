@@ -17,18 +17,18 @@
                         </div>
 
                         <div class="dashboard-item" onclick="displayModal('profitModal')">
-                                {{ render_chart(profitChart) }}
+                                {{ render_chart(profitChart, {'data-controller': 'myProfitChart'}) }}
                         </div>
                         <div id="profitModal" class="modal">
                                 <div class="modal-content">
                                         <span class="close">&times;</span>
-                                        {{ render_chart(profitChart) }}
+                                        {{ render_chart(profitChart, {'data-controller': 'myProfitChart'}) }}
                                 </div>
                         </div>
                 </div>
                 <div class="dashboard-row">
                         <div class="dashboard-item" onclick="displayModal('profitPercentageModal')">
-                                {{ render_chart(profitPercentage) }}
+                                {{ render_chart(profitPercentage, {'data-controller': 'myPercentageSmallChart'}) }}
                         </div>
                         <div id="profitPercentageModal" class="modal">
                                 <div class="modal-content">

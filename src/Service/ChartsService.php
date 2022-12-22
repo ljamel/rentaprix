@@ -41,8 +41,7 @@ class ChartsService {
         $chart->setOptions([
             'scales' => [
                 'y' => [
-                    'suggestedMin' => 0,
-                    'suggestedMax' => 80000,
+
                 ],
             ],
         ]);
