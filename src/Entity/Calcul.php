@@ -14,7 +14,7 @@ class Calcul
 {
     const CALCUL_ADDED_SUCCESSFULLY = 'CALCUL_ADDED_SUCCESSFULLY';
     const CALCUL_INVALID_FORM = 'CALCUL_INVALID_FORM';
-
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

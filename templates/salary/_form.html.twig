@@ -1,4 +1,44 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="form-container" >
+    {{ form_start(form, {'attr': {'class': 'regForm'}})}}
+    {{ form_row(form._token) }}
+    
+        <div>
+            {{ form_label(form.fullName) }}
+            <div class="">{{ form_widget(form.fullName, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            
+            {% if not form.fullName.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.fullName) }}
+                </div>
+            {% endif %}
+            
+        </div>
+        <div>
+            {{ form_label(form.post) }}
+            <div class="">{{ form_widget(form.post, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            {% if not form.post.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.post) }}
+                </div>
+            {% endif %}
+        </div>        
+        <div>
+            {{ form_label(form.pay) }}
+            <div class="">{{ form_widget(form.pay, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            {% if not form.pay.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.pay) }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="bottom-btn">
+            <div>
+                <button type="submit" class="btn">{{ button_label|default('Valider') }}</button>
+                {{ form_end(form, {'render_rest': false})}}
+            </div>
+            <div>
+                {{ include('salary/_delete_form.html.twig') }}
+            </div>
+        </div>
+</div>
+

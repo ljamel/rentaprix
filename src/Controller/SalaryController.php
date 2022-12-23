@@ -15,9 +15,14 @@ use App\Repository\UserRepository;
 class SalaryController extends AbstractController
 {
     #[Route('/', name: 'app_salary_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request): Response
     {
-        $salaries = $userRepository->findSalariesByUser($this->getUser()->getId());
+        $page = $request->query->getInt('page', 1);
+
+        $page < 1 ? $page = 1: '';
+
+        $salaries = $userRepository->findSalariesByUserPaginated($page, 6, $this->getUser()->getId());
+        
         return $this->render('salary/index.html.twig', [
             'salaries' => $salaries,
         ]);
@@ -33,6 +38,7 @@ class SalaryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $salaryRepository->save($salary, true);
 
+            $this->addFlash('success', "Le salarié a été ajouté avec succèes");
             return $this->redirectToRoute('app_salary_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -67,6 +73,7 @@ class SalaryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $salaryRepository->save($salary, true);
 
+            $this->addFlash('success', "Le salarié a été modifé avec succèes");
             return $this->redirectToRoute('app_salary_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -86,6 +93,8 @@ class SalaryController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$salary->getId(), $request->request->get('_token'))) {
             $salaryRepository->remove($salary, true);
         }
+
+        $this->addFlash('success', "Le salarié a été supprimé avec succèes");
 
         return $this->redirectToRoute('app_salary_index', [], Response::HTTP_SEE_OTHER);
     }

@@ -76,7 +76,37 @@ class CalculRepository extends ServiceEntityRepository
 
         return $result;
     }
-    
+
+    public function findCalculsByUser(int $userId): array
+    {
+        $query = $this->getEntityManager() ->createQueryBuilder()
+            ->select('c')
+            ->from('App\Entity\Calcul', 'c')
+            ->join('c.user', 'u')
+            ->where('u.id = :id')
+            ->setParameter('id', $userId);
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * returns number of calculs per month
+     * @return void
+     */
+    public function countByMonth(int $userId): array {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT SUBSTRING(c.date, 6, 2) as dateCalcul, COUNT(c) as count
+            FROM App\Entity\Calcul c
+            INNER JOIN c.user u
+            WHERE u.id = :id
+            GROUP BY dateCalcul'
+        )->setParameter('id', $userId);
+
+        return $query->getResult();
+
+    }
 //    /**
 //     * @return Calcul[] Returns an array of Calcul objects
 //     */

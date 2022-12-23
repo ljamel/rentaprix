@@ -15,9 +15,13 @@ use App\Repository\UserRepository;
 class FixedFeeController extends AbstractController
 {
     #[Route('/', name: 'app_fixed_fee_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request): Response
     {
-        $fixedFees = $userRepository->findFixedFeesByUser($this->getUser()->getId());
+        $page = $request->query->getInt('page', 1);
+
+        $page < 1 ? $page = 1: '';
+        
+        $fixedFees = $userRepository->findFixedFeesByUserPaginated($page, 6, $this->getUser()->getId());
 
         return $this->render('fixed_fee/index.html.twig', [
             'fixedFees' => $fixedFees,
@@ -34,10 +38,12 @@ class FixedFeeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $fixedFeeRepository->save($fixedFee, true);
 
+            $this->addFlash('success', "Le frais fixe a été ajouté avec succèes");
+
             return $this->redirectToRoute('app_fixed_fee_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('fixed_fee/new.html.twig', [
+        return $this->renderForm('fixed_fee/new.html.twig', [
             'fixed_fee' => $fixedFee,
             'form' => $form,
         ]);
@@ -68,6 +74,7 @@ class FixedFeeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $fixedFeeRepository->save($fixedFee, true);
 
+            $this->addFlash('success', "Le frais fixe a été modifé avec succèes");
             return $this->redirectToRoute('app_fixed_fee_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -88,6 +95,7 @@ class FixedFeeController extends AbstractController
             $fixedFeeRepository->remove($fixedFee, true);
         }
 
+        $this->addFlash('success', "Le frais fixe a été supprimé avec succèes");
         return $this->redirectToRoute('app_fixed_fee_index', [], Response::HTTP_SEE_OTHER);
     }
 }

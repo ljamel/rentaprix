@@ -1,4 +1,52 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="form-container" >
+    {{ form_start(form, {'attr': {'class': 'regForm'}})}}
+    {{ form_row(form._token) }}
+    
+        <div>
+            {{ form_label(form.title) }}
+            <div class="">{{ form_widget(form.title, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            
+            {% if not form.title.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.title) }}
+                </div>
+            {% endif %}
+            
+        </div>
+        <div>
+            {{ form_label(form.price) }}
+            <div class="">{{ form_widget(form.price, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            {% if not form.price.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.price) }}
+                </div>
+            {% endif %}
+        </div>        
+        <div>
+            {{ form_label(form.unit) }}
+            <div class="">{{ form_widget(form.unit, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            {% if not form.unit.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.unit) }}
+                </div>
+            {% endif %}
+        </div>
+        <div>
+            {{ form_label(form.type) }}
+            <div class="">{{ form_widget(form.type, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            {% if not form.type.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.type) }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="bottom-btn">
+            <div>
+                <button type="submit" class="btn">{{ button_label|default('Valider') }}</button>
+                {{ form_end(form, {'render_rest': false})}}
+            </div>
+            <div>
+                {{ include('variable_fee/_delete_form.html.twig') }}
+            </div>
+        </div>
+</div>

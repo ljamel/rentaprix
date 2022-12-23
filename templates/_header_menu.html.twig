@@ -1,4 +1,7 @@
 <div class="header-menu">
+    {% for message in app.flashes('success') %}
+        <div class="alert-success" role="alert">{{ message }}</div>
+    {% endfor %}
     <ul>
         <li>
             <a href="{{ path('app_article_index') }}" title="Gérer les articles"/><i class="fa-solid fa-list-check awsome-header"></i></a>

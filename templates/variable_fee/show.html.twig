@@ -3,36 +3,49 @@
 {% block title %}VariableFee{% endblock %}
 
 {% block body %}
-    <h1>VariableFee</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+        <li><a href="{{ path('app_variable_fee_index') }}">Frais variables</a></li>
+        <li>{{ variable_fee.title }}</li>
+    </ul>
+    <div class="back">
+        <div class="back-to-list">
+            <a href="{{ path('app_variable_fee_index') }}">Retour à la liste</a>
+        </div>
+    </div>
+    <div class="calcul-data">
+        <table class="show-table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ variable_fee.id }}</td>
+                </tr>
+                <tr>
+                    <th>Titre</th>
+                    <td>{{ variable_fee.title }}</td>
+                </tr>
+                <tr>
+                    <th>Prix</th>
+                    <td>{{ variable_fee.price }}</td>
+                </tr>
+                <tr>
+                    <th>Unité</th>
+                    <td>{{ variable_fee.unit }}</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td>{{ variable_fee.type }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ variable_fee.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ variable_fee.title }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ variable_fee.price }}</td>
-            </tr>
-            <tr>
-                <th>Unit</th>
-                <td>{{ variable_fee.unit }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ variable_fee.type }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="bottom-btn">
+        <div>
+            <a href="{{ path('app_variable_fee_edit', {'id': variable_fee.id}) }}" class="btn">Editer</a>
+        </div>
+            {{ include('variable_fee/_delete_form.html.twig') }}
+    </div>
 
-    <a href="{{ path('app_variable_fee_index') }}">back to list</a>
-
-    <a href="{{ path('app_variable_fee_edit', {'id': variable_fee.id}) }}">edit</a>
-
-    {{ include('variable_fee/_delete_form.html.twig') }}
+    
 {% endblock %}

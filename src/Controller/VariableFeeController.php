@@ -16,10 +16,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class VariableFeeController extends AbstractController
 {
     #[Route('/', name: 'app_variable_fee_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request): Response
     {
-        // show information calcul relation with current user
-        $variableFees = $userRepository->findVariableFeesByUser($this->getUser()->getId());
+        $page = $request->query->getInt('page', 1);
+
+        $page < 1 ? $page = 1: '';
+        
+        $variableFees = $userRepository->findVariableFeesByUserPaginated($page, 6, $this->getUser()->getId());
 
         return $this->render('variable_fee/index.html.twig', [
             'variableFees' => $variableFees,
@@ -35,6 +38,8 @@ class VariableFeeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $variableFeeRepository->save($variableFee, true);
+
+            $this->addFlash('success', "Le frais variable a été ajouté avec succèes");
 
             return $this->redirectToRoute('app_variable_fee_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -69,6 +74,7 @@ class VariableFeeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $variableFeeRepository->save($variableFee, true);
+            $this->addFlash('success', "Le frais variable a été modifé avec succèes");
 
             return $this->redirectToRoute('app_variable_fee_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -90,6 +96,7 @@ class VariableFeeController extends AbstractController
             $variableFeeRepository->remove($variableFee, true);
         }
 
+        $this->addFlash('success', "Le frais variable a été supprimé avec succèes");
         return $this->redirectToRoute('app_variable_fee_index', [], Response::HTTP_SEE_OTHER);
     }
 }
