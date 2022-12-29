@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class RegistrationController extends AbstractController
 {
@@ -31,19 +32,54 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $now = new \DateTime();
+            $user->setRegistrationDate($now);
+            $user->setConnectionDate($now);
+
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
-            return $userAuthenticator->authenticateUser(
+            $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
                 $request
             );
+            // do anything else you need here, like send an email
+
+            return $this->render('registration/payement.html.twig', [
+                'registrationForm' => $form->createView(),
+            ]);
+
+            //return $userAuthenticator->authenticateUser(
+              //  $user,
+                //$authenticator,
+                //$request
+            //);
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+
+    #[Route('/payement', name: 'payement', methods: ['POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $securityContext = $this->container->get('security.authorization_checker');
+        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+
+            $user = $this->getUser();
+
+            // add number subsicription
+            $user->setSubscribeId($request->query->get('subId'));
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Souscription réussi !');
+
+        }
+        return $this->redirectToRoute('app_dashboard');
+
     }
 }

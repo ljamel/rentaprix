@@ -4,6 +4,11 @@
 
 {% block body %}
 <div class="home">
+        {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                        {{ message }}
+                </div>
+        {% endfor %}
         <div>
                 <div class="dashboard-row">
                         <div class="dashboard-item" onclick="displayModal('devisModal')">
