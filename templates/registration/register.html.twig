@@ -5,13 +5,42 @@
 {% block body %}
     <h1>S'inscrire</h1>
 
+    <span class="passwdTest"></span>
+
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
+        {{ form_widget(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
         <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
+
+    <script>
+
+            const passwordInput = document.querySelector('input[type="password"]');
+            passwordInput.addEventListener('keyup', checkPasswordStrength);
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            document.getElementsByClassName("btn")[0].style.cursor = "no-drop";
+
+            function checkPasswordStrength() {
+                const passwordInputElements = document.querySelectorAll('input[type="password"]')[0].value;
+                // Définissez une expression régulière qui exige au moins 8 caractères, dont au moins 1 chiffre et 1 lettre majuscule
+                const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+                console.log(passwordRegex.test(passwordInputElements));
+                console.log(passwordInputElements);
+                const errorMessageDiv = document.querySelector('.passwdTest');
+                if (!passwordRegex.test(passwordInputElements)) {
+                    errorMessageDiv.textContent = 'Le mot de passe doit au moins avoir 9 caractères, dont au moins 1 chiffre et 1 lettre majuscule';
+                } else {
+                    submitButton.disabled = false;
+                    document.getElementsByClassName("btn")[0].style.cursor = "pointer";
+                    errorMessageDiv.textContent = '';
+                }
+            }
+
+    </script>
 {% endblock %}
