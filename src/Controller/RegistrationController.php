@@ -62,11 +62,11 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/payement', name: 'payement', methods: ['POST'])]
+    #[Route('/payement', name: 'payement')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $securityContext = $this->container->get('security.authorization_checker');
-        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') && $this->getUser()->getSubscribeId() == null) {
 
             $user = $this->getUser();
 
@@ -77,9 +77,11 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Souscription réussi !');
-
+            return $this->render('registration/payement.html.twig');
+        } else {
+            return $this->redirectToRoute('app_dashboard');
         }
-        return $this->redirectToRoute('app_dashboard');
+
 
     }
 }

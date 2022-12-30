@@ -13,6 +13,11 @@ class DashboardController extends AbstractController
     #[Route('/', name: 'app_dashboard')]
     public function index(ChartsService $chartsService): Response
     {
+        // check if subscribe
+        if ($this->getUser()->getSubscribeId() == null) {
+            return $this->render('registration/payement.html.twig');
+        }
+
         $devisChart = $chartsService->getDevisCharts($this->getUser());
         $profitChart = $chartsService->getProfitCharts($this->getUser());
         $profitPercentage = $chartsService->getProfitChartsPercentage($this->getUser());
