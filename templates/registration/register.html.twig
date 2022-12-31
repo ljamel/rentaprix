@@ -28,10 +28,8 @@
 
             function checkPasswordStrength() {
                 const passwordInputElements = document.querySelectorAll('input[type="password"]')[0].value;
-                // Définissez une expression régulière qui exige au moins 8 caractères, dont au moins 1 chiffre et 1 lettre majuscule
-                const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-                console.log(passwordRegex.test(passwordInputElements));
-                console.log(passwordInputElements);
+                // Définissez une expression régulière qui exige au moins 9 caractères, dont au moins 1 chiffre et 1 lettre majuscule
+                const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{9,}$/;
                 const errorMessageDiv = document.querySelector('.passwdTest');
                 if (!passwordRegex.test(passwordInputElements)) {
                     errorMessageDiv.textContent = 'Le mot de passe doit au moins avoir 9 caractères, dont au moins 1 chiffre et 1 lettre majuscule';
