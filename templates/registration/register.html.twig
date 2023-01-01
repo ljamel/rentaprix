@@ -12,9 +12,10 @@
         {{ form_widget(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
+    <span>En cliquant sur Accepter et s’inscrire, vous acceptez les<a href="{{ path('app_condition-generales') }}" /> Conditions générales </a></span>
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn">Accepter et s’inscrire</button>
     {{ form_end(registrationForm) }}
 
     <script>

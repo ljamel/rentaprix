@@ -30,4 +30,11 @@ class IndexController extends AbstractController
 
         return $this->render('index/mentions.html.twig');
     }
+
+    #[Route('/condition-generales', name: 'app_condition-generales')]
+    public function condition(): Response
+    {
+
+        return $this->render('index/condition-subscribe.html.twig');
+    }
 }
