@@ -49,8 +49,7 @@ class RegistrationController extends AbstractController
             $to = $form->get('email')->getData();
             $subject = "Merci pour votre inscription";
             $message = "This is a test email sent from PHP using Sendmail.";
-            $headers = "From: sender@example.com\r\n" .
-                "CC: cc_recipient@example.com\r\n";
+            $headers = "From: nereply@rentaprix.com\r\n";
             mail($to, $subject, $message, $headers);
 
             return $this->render('registration/payement.html.twig', [

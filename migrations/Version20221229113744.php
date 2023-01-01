@@ -20,7 +20,7 @@ final class Version20221229113744 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user ADD subscribe_id VARCHAR(255) DEFAULT NULL, ADD registration_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL, ADD connection_date DATE DEFAULT CURRENT_TIMESTAMP NOT NULL');
+        $this->addSql('ALTER TABLE user ADD subscribe_id VARCHAR(255) DEFAULT NULL, ADD registration_date DATE NOT NULL, ADD connection_date DATE NOT NULL');
     }
 
     public function down(Schema $schema): void
