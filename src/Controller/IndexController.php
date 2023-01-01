@@ -21,8 +21,13 @@ class IndexController extends AbstractController
     public function about(): Response
     {
 
-        return $this->render('index/about.html.twig', [
-            'controller_name' => 'About',
-        ]);
+        return $this->render('index/about.html.twig');
+    }
+
+    #[Route('/mentions-legales', name: 'app_mentions-legales')]
+    public function mentions(): Response
+    {
+
+        return $this->render('index/mentions.html.twig');
     }
 }
