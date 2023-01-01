@@ -45,6 +45,13 @@ class RegistrationController extends AbstractController
                 $request
             );
             // do anything else you need here, like send an email
+            // send email welcome to subscribe ps (don't use bundle symfony i use mail natif php)
+            $to = $form->get('email')->getData();
+            $subject = "Merci pour votre inscription";
+            $message = "This is a test email sent from PHP using Sendmail.";
+            $headers = "From: sender@example.com\r\n" .
+                "CC: cc_recipient@example.com\r\n";
+            mail($to, $subject, $message, $headers);
 
             return $this->render('registration/payement.html.twig', [
                 'registrationForm' => $form->createView(),
