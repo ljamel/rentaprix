@@ -37,4 +37,11 @@ class IndexController extends AbstractController
 
         return $this->render('index/condition-subscribe.html.twig');
     }
+
+    #[Route('/confidentialites', name: 'app_confidentialites')]
+    public function confidentialites(): Response
+    {
+
+        return $this->render('index/confidentialite.html.twig');
+    }
 }

@@ -12,7 +12,7 @@
         {{ form_widget(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
-    <span>En cliquant sur Accepter et s’inscrire, vous acceptez les<a href="{{ path('app_condition-generales') }}" /> Conditions générales </a></span>
+        <span>En cliquant sur Accepter et s’inscrire, vous acceptez les<a href="{{ path('app_condition-generales') }}" /> Conditions générales </a> et la <a href="{{ path('app_confidentialites') }}" /> Politique de confidentialité </a> sur Rentaprix</span>
         {{ form_row(registrationForm.agreeTerms) }}
 
         <button type="submit" class="btn">Accepter et s’inscrire</button>
