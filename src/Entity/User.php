@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -33,6 +34,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToMany(targetEntity: Calcul::class, mappedBy: 'user')]
     private Collection $calculs;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $SubscribeId = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $RegistrationDate = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $ConnectionDate = null;
 
     public function __construct()
     {
@@ -132,6 +142,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->calculs->removeElement($calcul)) {
             $calcul->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getSubscribeId(): ?string
+    {
+        return $this->SubscribeId;
+    }
+
+    public function setSubscribeId(?string $SubscribeId): self
+    {
+        $this->SubscribeId = $SubscribeId;
+
+        return $this;
+    }
+
+    public function getRegistrationDate(): ?\DateTimeInterface
+    {
+        return $this->RegistrationDate;
+    }
+
+    public function setRegistrationDate(\DateTimeInterface $RegistrationDate): self
+    {
+        $this->RegistrationDate = $RegistrationDate;
+
+        return $this;
+    }
+
+    public function getConnectionDate(): ?\DateTimeInterface
+    {
+        return $this->ConnectionDate;
+    }
+
+    public function setConnectionDate(\DateTimeInterface $ConnectionDate): self
+    {
+        $this->ConnectionDate = $ConnectionDate;
 
         return $this;
     }

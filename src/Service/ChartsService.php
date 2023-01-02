@@ -111,8 +111,13 @@ class ChartsService {
         $titles = [];
 
         foreach ($calculs as $calcul) {
-            $data[] = number_format($this->calculateProfit($calcul) / $calcul->getDevis(), 2) * 100;
-            $titles[] = $calcul->getTitle();
+            // for avoid bug divised by zero
+            if($calcul->getDevis() == 0){
+                $data[] = 0;
+            } else {
+                $data[] = number_format($this->calculateProfit($calcul) / $calcul->getDevis(), 2) * 100;
+                $titles[] = $calcul->getTitle();
+            }
         }
 
         $chart->setData([

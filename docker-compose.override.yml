@@ -5,4 +5,5 @@ services:
   database:
     ports:
       - "5432"
-###< doctrine/doctrine-bundle ###
+###< doctrine/doctrine-bundle ###
+

@@ -19,3 +19,22 @@ volumes:
 ###> doctrine/doctrine-bundle ###
   db-data:
 ###< doctrine/doctrine-bundle ###
+
+---
+- name: Apache server installed
+  hosts: node1
+  become: yes
+  tasks:
+  - name: latest Apache version installed
+    yum:
+      name: apache
+      state: latest
+  - name: Apache enabled and running
+    service:
+      name: httpd
+     enabled: true
+      state: started
+  - name: copy web.html
+    copy:
+      src: web.html
+      dest: /var/www/html/index.html
