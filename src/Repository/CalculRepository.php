@@ -44,7 +44,7 @@ class CalculRepository extends ServiceEntityRepository
         }
     }
 
-    public function findCalculsByUserPaginated(int $page, int $limit = 6, int $userId): array 
+    public function findCalculsByUserPaginated(int $page, int $userId, int $limit = 6): array
     {
         $limit = abs($limit);
 

@@ -98,7 +98,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         /**
      * @return FixedFee[] Returns an array of FixedFee objects
      */
-    public function findFixedFeesByUserPaginated(int $page, int $limit = 6, int $idUser): array
+    public function findFixedFeesByUserPaginated(int $page, int $idUser, int $limit = 6): array
     {
         $limit = abs($limit);
         $result = [];
@@ -152,7 +152,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         /**
      * @return FixedFee[] Returns an array of VariableFee objects
      */
-    public function findVariableFeesByUserPaginated(int $page, int $limit = 6, int $idUser): array
+    public function findVariableFeesByUserPaginated(int $page, int $idUser, int $limit = 6): array
     {
         $limit = abs($limit);
         $result = [];
@@ -208,7 +208,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         /**
      * @return Salary[] Returns an array of Salary objects
      */
-    public function findSalariesByUserPaginated(int $page, int $limit = 6, int $idUser): array
+    public function findSalariesByUserPaginated(int $page, int $idUser, int $limit = 6): array
     {
         $limit = abs($limit);
         $result = [];
