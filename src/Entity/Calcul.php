@@ -32,6 +32,18 @@ class Calcul
     #[ORM\Column]
     private ?int $durationMonth = null;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $software = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $hardware = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $training = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $startupExpenses = null;
+
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'calculs')]
     private Collection $user;
 
@@ -284,4 +296,69 @@ class Calcul
 
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getSoftware(): ?string
+    {
+        return $this->software;
+    }
+
+    /**
+     * @param string|null $software
+     */
+    public function setSoftware(?string $software): void
+    {
+        $this->software = $software;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHardware(): ?string
+    {
+        return $this->hardware;
+    }
+
+    /**
+     * @param string|null $hardware
+     */
+    public function setHardware(?string $hardware): void
+    {
+        $this->hardware = $hardware;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTraining(): ?string
+    {
+        return $this->training;
+    }
+
+    /**
+     * @param string|null $training
+     */
+    public function setTraining(?string $training): void
+    {
+        $this->training = $training;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStartupExpenses(): ?string
+    {
+        return $this->startupExpenses;
+    }
+
+    /**
+     * @param string|null $startupExpenses
+     */
+    public function setStartupExpenses(?string $startupExpenses): void
+    {
+        $this->startupExpenses = $startupExpenses;
+    }
+
 }

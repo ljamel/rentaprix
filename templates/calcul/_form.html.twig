@@ -33,17 +33,57 @@
         </div>
     </div>
     <div class="tab">
-        <h3 class="fixedFees">Ajouter des frais fixes</h3>
+        <h3 class="fixedFees">Coûts initiaux</h3>
+
+        <div>
+            {{ form_label(form.software) }}
+            <div class="">{{ form_widget(form.software, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            {% if not form.software.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.software) }}
+                </div>
+            {% endif %}
+        </div>
+        <div>
+            {{ form_label(form.hardware) }}
+            <div class="">{{ form_widget(form.hardware, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            {% if not form.hardware.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.hardware) }}
+                </div>
+            {% endif %}
+        </div>
+        <div>
+            {{ form_label(form.training) }}
+            <div class="">{{ form_widget(form.training, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            {% if not form.training.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.training) }}
+                </div>
+            {% endif %}
+        </div>
+        <div>
+            {{ form_label(form.startupExpenses) }}
+            <div class="">{{ form_widget(form.startupExpenses, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+            {% if not form.startupExpenses.vars.valid %}
+                <div class="error-message">
+                    {{ form_errors(form.startupExpenses) }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="tab">
+        <h3 class="fixedFees">Coûts récurrents</h3>
         
         {{ include('calcul/_form_fixed_fees.html.twig') }}
     </div>
     <div class="tab">
-        <h3 class="fixedFees">Ajouter des frais variables</h3>
+        <h3 class="fixedFees">Coûts ponctuels</h3>
         
     {{ include('calcul/_form_variable_fees.html.twig') }}
     </div> 
     <div class="tab">
-        <h3 class="fixedFees">Ajouter des salariés</h3>
+        <h3 class="fixedFees">Frais de personnel</h3>
     
     {{ include('calcul/_form_salaries.html.twig') }}
     
@@ -62,6 +102,8 @@
         <span class="step"></span>
         <span class="step"></span>
         <span class="step"></span>
+        <span class="step"></span>
+
     </div>     
 </div>
 

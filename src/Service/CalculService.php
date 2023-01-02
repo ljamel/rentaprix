@@ -21,16 +21,16 @@ Class CalculService {
             }
         }
 
-        if($tab === 1 && !$calculForm->get('checkedFixedFees')->isValid()){
-            return $this->handleInvalidForm($calculForm, 1);
-        }
-
-        if($tab === 2 && !$calculForm->get('checkedVariableFees')->isValid()){
+        if($tab === 2 && !$calculForm->get('checkedFixedFees')->isValid()){
             return $this->handleInvalidForm($calculForm, 2);
         }
 
-        if($tab === 3 && !$calculForm->get('checkedSalaries')->isValid()){
+        if($tab === 3 && !$calculForm->get('checkedVariableFees')->isValid()){
             return $this->handleInvalidForm($calculForm, 3);
+        }
+
+        if($tab === 4 && !$calculForm->get('checkedSalaries')->isValid()){
+            return $this->handleInvalidForm($calculForm, 4);
         }
 
         return $this->handleValidForm($calculForm, $user, $tab);
@@ -49,7 +49,7 @@ Class CalculService {
 
     private function handleValidForm(FormInterface $form, User $user, int $tab): JsonResponse
     {
-        if($form->isValid() && $tab === 4){
+        if($form->isValid() && $tab === 5){
             $calcul = $form->getData();
 
             $checkedFixedFees = $form->get('checkedFixedFees')->getData();
@@ -104,5 +104,4 @@ Class CalculService {
 
         return $errors;
     }
-
 }

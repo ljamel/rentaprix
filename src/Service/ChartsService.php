@@ -229,13 +229,14 @@ class ChartsService {
 
     private function calculateProfit(Calcul $calcul) {
         return $calcul->getDevis()
-            - $this->calculateTotalFees($calcul->getFixedFees()->getValues())
-            - $this->calculateTotalFees($calcul->getVariableFees()->getValues())
-            - ($this->calculateTotalSalaries($calcul->getSalaries()->getValues()) * $calcul->getDurationMonth());
+            - (($this->calculateTotalFees($calcul->getFixedFees()->getValues())
+            + $this->calculateTotalFees($calcul->getVariableFees()->getValues())
+            + $this->calculateTotalSalaries($calcul->getSalaries()->getValues())) * $calcul->getDurationMonth());
     }
 
     private function calculateTotalFees(array $fees) {
         $result = 0;
+
         foreach ($fees as $fee) {
             $result += $fee->getPrice();
         }

@@ -76,6 +76,26 @@ class CalculType extends AbstractType
                     ],
                     'label'=> 'Durée (Mois)'
                 ])
+            ->add('software', MoneyType::class,
+                [
+                    'label'=> 'Logiciels',
+                    'currency' =>''
+                ])
+            ->add('hardware', MoneyType::class,
+                [
+                    'label'=> 'Matériels',
+                    'currency' =>''
+                ])
+            ->add('training', MoneyType::class,
+                [
+                    'label'=> 'Formation',
+                    'currency' =>''
+                ])
+            ->add('startupExpenses', MoneyType::class,
+                [
+                    'label'=> 'Dépenses de démarrage',
+                    'currency' =>''
+                ])
             ->add( 'fixedFees', CollectionType::class,
                 [
                     'entry_type' => FixedFeeType::class, // le formulaire enfant qui doit être répété
@@ -193,7 +213,7 @@ class CalculType extends AbstractType
         $checkedFixedFees = $context->getRoot()->get('checkedFixedFees')->getData();
 
         if($fixedFees[0]->getTitle() === null && count($checkedFixedFees) === 0) {
-            $context->buildViolation('Veuillez selectionner un frais fixe')
+            $context->buildViolation('Veuillez ajouter un coût récurrent')
                     ->addViolation();
         }
     }
@@ -205,7 +225,7 @@ class CalculType extends AbstractType
 
 
         if($variableFees[0]->getTitle() === null && count($checkedVariableFees) === 0) {
-            $context->buildViolation('Veuillez selectionner un frais variable')
+            $context->buildViolation('Veuillez ajouter un coût ponctuel')
                     ->addViolation();
         }
     }
@@ -217,7 +237,7 @@ class CalculType extends AbstractType
 
 
         if($salaries[0]->getFullName() === null && count($checkedSalaries) === 0) {
-            $context->buildViolation('Veuillez selectionner un salarié')
+            $context->buildViolation('Veuillez ajouter un salarié')
                     ->addViolation();
         }
     }

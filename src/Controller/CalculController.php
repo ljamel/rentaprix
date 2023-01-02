@@ -126,6 +126,4 @@ class CalculController extends AbstractController
         
         return $this->redirectToRoute('app_calcul_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    
 }
