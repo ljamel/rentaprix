@@ -3,17 +3,20 @@
 {% block title %}Edit VariableFee{% endblock %}
 
 {% block body %}
-    <ul class="breadcrumb">
-        <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
-        <li><a href="{{ path('app_variable_fee_index') }}">Frais variables</a></li>
-        <li><a href="{{ path('app_variable_fee_show', {'id': variable_fee.id}) }}">{{ variable_fee.title}}</a></li>
-        <li>Editer</li>
-    </ul>
-    <div class="back">
-        <div class="back-to-list">
-            <a href="{{ path('app_variable_fee_index') }}">Retour à la liste</a>
+    <div class="breadcrumb-header">
+        <ul class="breadcrumb">
+            <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+            <li><a href="{{ path('app_variable_fee_index') }}">Coûts ponctuels</a></li>
+            <li><a href="{{ path('app_variable_fee_show', {'id': variable_fee.id}) }}">{{ variable_fee.title}}</a></li>
+            <li>Editer</li>
+        </ul>
+        <div class="back">
+            <div class="back-to-list">
+                <a href="{{ path('app_variable_fee_index') }}">Retour à la liste</a>
+            </div>
         </div>
     </div>
+
     <div class="calcul-data">
         {{ include('variable_fee/_form.html.twig') }}
     </div>

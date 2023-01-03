@@ -200,11 +200,15 @@ span.down {
     font-size: 23px;
     color: #aa3a3c;
 }
+
+.breadcrumb-header {
+    display: flex;
+    justify-content: space-between;
+}
 /* style the breadcrumbs */
 ul.breadcrumb {
     padding: 10px 16px;
     list-style: none;
-    margin-bottom: 20px;
 }
 
   /* Display list items side by side */
@@ -319,7 +323,9 @@ ul.breadcrumb li a:hover {
     background-color: #ffffff;
     margin-bottom: 20px;
     padding: 25px;
-    width: 90%;
+    width: 83%;
+    margin-left: auto;
+    margin-right: auto;
     min-width: 500px;
     box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
     border-radius: 15px;
@@ -388,9 +394,7 @@ label {
 } 
 
 .back {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 100px;
+    margin-right: 30px;
 }
 
 .back-to-list, #nextBtn, #prevBtn {
@@ -449,7 +453,6 @@ label {
 #prevBtn {
     box-shadow: none;
     border: none;
-    margin-top: 20px;
     color: #06283D;
     margin-right: 10px;
     cursor: pointer;
@@ -464,6 +467,11 @@ label {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
+}
+
+.steps {
+    text-align:center;
+    margin-top:10px;
 }
 
 /**************/

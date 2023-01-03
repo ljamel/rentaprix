@@ -3,17 +3,20 @@
 {% block title %}Edit Salary{% endblock %}
 
 {% block body %}
-    <ul class="breadcrumb">
-        <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
-        <li><a href="{{ path('app_salary_index') }}">Salariés</a></li>
-        <li><a href="{{ path('app_salary_show', {'id': salary.id}) }}">{{ salary.fullName }}</a></li>
-        <li>Editer</li>
-    </ul>
-    <div class="back">
-        <div class="back-to-list">
-            <a href="{{ path('app_salary_index') }}">Retour à la liste</a>
+    <div class="breadcrumb-header">
+        <ul class="breadcrumb">
+            <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+            <li><a href="{{ path('app_salary_index') }}">Frais de personnel</a></li>
+            <li><a href="{{ path('app_salary_show', {'id': salary.id}) }}">{{ salary.fullName }}</a></li>
+            <li>Editer</li>
+        </ul>
+        <div class="back">
+            <div class="back-to-list">
+                <a href="{{ path('app_salary_index') }}">Retour à la liste</a>
+            </div>
         </div>
     </div>
+
     <div class="calcul-data">
         {{ include('salary/_form.html.twig') }}
     </div>

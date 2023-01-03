@@ -97,11 +97,13 @@ class CalculRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
-            'SELECT SUBSTRING(c.date, 6, 2) as dateCalcul, COUNT(c) as count
+            'SELECT SUBSTRING(c.date, 1, 7) as dateCalcul, COUNT(c) as count
             FROM App\Entity\Calcul c
             INNER JOIN c.user u
             WHERE u.id = :id
-            GROUP BY dateCalcul'
+            GROUP BY dateCalcul
+            ORDER BY dateCalcul
+            '
         )->setParameter('id', $userId);
 
         return $query->getResult();

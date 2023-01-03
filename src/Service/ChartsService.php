@@ -197,7 +197,7 @@ class ChartsService {
                 str_replace(
                     array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
                     array('Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'),
-                    date('F', mktime(0, 0, 0, $calcul['dateCalcul'], 10))
+                    date('F', mktime(0, 0, 0, substr($calcul['dateCalcul'], 5, 2), 10))
                 );
         }
 
@@ -234,9 +234,13 @@ class ChartsService {
 
     private function calculateProfit(Calcul $calcul) {
         return $calcul->getDevis()
-            - (($this->calculateTotalFees($calcul->getFixedFees()->getValues())
-            + $this->calculateTotalFees($calcul->getVariableFees()->getValues())
-            + $this->calculateTotalSalaries($calcul->getSalaries()->getValues())) * $calcul->getDurationMonth());
+            - ( $calcul->getSoftware()
+                + $calcul->getHardware()
+                + $calcul->getTraining()
+                + $calcul->getStartupExpenses()
+                +($this->calculateTotalFees($calcul->getFixedFees()->getValues())
+                + $this->calculateTotalFees($calcul->getVariableFees()->getValues())
+                + $this->calculateTotalSalaries($calcul->getSalaries()->getValues())) * $calcul->getDurationMonth());
     }
 
     private function calculateTotalFees(array $fees) {

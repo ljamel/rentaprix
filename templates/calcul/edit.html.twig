@@ -3,15 +3,17 @@
 {% block title %}Edit Calcul{% endblock %}
 
 {% block body %}
-    <ul class="breadcrumb">
-        <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
-        <li><a href="{{ path('app_calcul_index') }}">Vos Devis</a></li>
-        <li><a href="{{ path('app_calcul_show', {'id': calcul.id}) }}">{{ calcul.title }}</a></li>
-        <li>Editer</li>
-    </ul>
-    <div class="back">
-        <div class="back-to-list">
-            <a href="{{ path('app_calcul_index') }}">Retour à la liste</a>
+    <div class="breadcrumb-header">
+        <ul class="breadcrumb">
+            <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+            <li><a href="{{ path('app_calcul_index') }}">Vos Devis</a></li>
+            <li><a href="{{ path('app_calcul_show', {'id': calcul.id}) }}">{{ calcul.title }}</a></li>
+            <li>Editer</li>
+        </ul>
+        <div class="back">
+            <div class="back-to-list">
+                <a href="{{ path('app_calcul_index') }}">Retour à la liste</a>
+            </div>
         </div>
     </div>
 

@@ -3,16 +3,20 @@
 {% block title %}New Calcul{% endblock %}
 
 {% block body %}
-    <ul class="breadcrumb">
-        <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
-        <li><a href="{{ path('app_calcul_index') }}">Vos devis</a></li>
-        <li>Nouveau calcul</li>
-    </ul>
-    <div class="back">
-        <div class="back-to-list">
-            <a href="{{ path('app_calcul_index') }}">Retour à la liste</a>
+    <div class="breadcrumb-header">
+        <ul class="breadcrumb">
+            <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+            <li><a href="{{ path('app_calcul_index') }}">Vos devis</a></li>
+            <li>Nouveau calcul</li>
+        </ul>
+
+        <div class="back">
+            <div class="back-to-list">
+                <a href="{{ path('app_calcul_index') }}">Retour à la liste</a>
+            </div>
         </div>
     </div>
+
     <div class="calcul-data">
         {{ include('calcul/_form.html.twig') }}
     </div>
@@ -114,5 +118,24 @@
             return false;
         }
 
+        const searchFees = (idInput, idTable) =>{
+            let input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById(idInput);
+            filter = input.value.toUpperCase();
+            table = document.getElementById(idTable);
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
     </script>
 {% endblock %}
