@@ -21,6 +21,13 @@ Class CalculService {
             }
         }
 
+        if ($tab === 1) {
+            if (!$calculForm->get('software')->isValid() || !$calculForm->get('hardware')->isValid()
+                || !$calculForm->get('training')->isValid() || !$calculForm->get('startupExpenses')->isValid()) {
+                return $this->handleInvalidForm($calculForm, 1);
+            }
+        }
+
         if($tab === 2 && !$calculForm->get('checkedFixedFees')->isValid()){
             return $this->handleInvalidForm($calculForm, 2);
         }

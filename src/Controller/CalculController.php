@@ -22,7 +22,9 @@ class CalculController extends AbstractController
 
         $page < 1 ? $page = 1: '';
 
-        $userCalculs = $calculRepository->findCalculsByUserPaginated($page, 6, $this->getUser()->getId());
+        //dd($calculRepository->findCalculsByUserPaginated($page, 6, $this->getUser()->getId()));
+
+        $userCalculs = $calculRepository->findCalculsByUserPaginated($page, $this->getUser()->getId(), 6);
         
         return $this->render('calcul/index.html.twig', [
             'userCalculs' => $userCalculs,

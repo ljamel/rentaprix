@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\Callback as ConstraintsCallback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
+use Symfony\Component\Validator\Constraints\PositiveOrZero;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -35,19 +36,14 @@ class CalculType extends AbstractType
                 [
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a title',
+                            'message' => 'Merci de renseigner ce champs',
                         ]),
                         new Length([
                             'min' => 3,
-                            'minMessage' => 'Your title should be at least {{ limit }} characters',
-                            // max length allowed by Symfony for security reasons
+                            'minMessage' => 'Le titre doit contenir au moins {{ limit }} charactères',
                             'max' => 256,
                         ]),
-                        new Regex([
-                                'pattern'=> '/^[a-z_ -]+$/i',
-                                'htmlPattern'=> '^[a-zA-Z]+$',
-                                'message' => 'Title must contains only letters'
-                        ])
+
                     ],
                     'label'=> 'Titre'
                 ])
@@ -55,20 +51,21 @@ class CalculType extends AbstractType
                 [
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a Devis',
+                            'message' => 'Merci de renseigner ce champs',
                         ]),
                         new Positive([
-                            'message' => 'Devis must be grater than 0'
+                            'message' => 'La devis doit être supérieur à zéro'
                         ]),
                     ],
                 'label'=> 'Budget client',
-                'currency' =>''
+                'currency' =>'',
+                    'invalid_message' => 'Cette valeur n\'est pas valide'
                 ])
             ->add('durationMonth', TypeIntegerType::class, 
                 [
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a duration month',
+                            'message' => 'Merci de rensigner ce champs',
                         ]),
                         new Positive([
                             'message' => 'Duration month must be grater than 0'
@@ -78,23 +75,59 @@ class CalculType extends AbstractType
                 ])
             ->add('software', MoneyType::class,
                 [
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Merci de renseigner ce champs',
+                        ]),
+                        new PositiveOrZero([
+                            'message' => 'La valeur doit être supérieure ou égale à zéro'
+                        ]),
+                    ],
                     'label'=> 'Logiciels',
-                    'currency' =>''
+                    'currency' =>'',
+                    'invalid_message' => 'Cette valeur n\'est pas valide'
                 ])
             ->add('hardware', MoneyType::class,
                 [
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Merci de renseigner ce champs',
+                        ]),
+                        new PositiveOrZero([
+                            'message' => 'La valeur doit être supérieure ou égale à zéro'
+                        ]),
+                    ],
                     'label'=> 'Matériels',
-                    'currency' =>''
+                    'currency' =>'',
+                    'invalid_message' => 'Cette valeur n\'est pas valide'
                 ])
             ->add('training', MoneyType::class,
                 [
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Merci de renseigner ce champs',
+                        ]),
+                        new PositiveOrZero([
+                            'message' => 'La valeur doit être supérieure ou égale à zéro'
+                        ]),
+                    ],
                     'label'=> 'Formation',
-                    'currency' =>''
+                    'currency' =>'',
+                    'invalid_message' => 'Cette valeur n\'est pas valide'
                 ])
             ->add('startupExpenses', MoneyType::class,
                 [
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Merci de renseigner ce champs',
+                        ]),
+                        new PositiveOrZero([
+                            'message' => 'La valeur doit être supérieure ou égale à zéro'
+                        ]),
+                    ],
                     'label'=> 'Dépenses de démarrage',
-                    'currency' =>''
+                    'currency' =>'',
+                    'invalid_message' => 'Cette valeur n\'est pas valide'
                 ])
             ->add( 'fixedFees', CollectionType::class,
                 [

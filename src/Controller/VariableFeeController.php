@@ -22,7 +22,7 @@ class VariableFeeController extends AbstractController
 
         $page < 1 ? $page = 1: '';
         
-        $variableFees = $userRepository->findVariableFeesByUserPaginated($page, 6, $this->getUser()->getId());
+        $variableFees = $userRepository->findVariableFeesByUserPaginated($page, $this->getUser()->getId(), 6);
 
         return $this->render('variable_fee/index.html.twig', [
             'variableFees' => $variableFees,

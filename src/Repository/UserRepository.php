@@ -95,7 +95,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $query->getResult();
     }
 
-        /**
+    /**
      * @return FixedFee[] Returns an array of FixedFee objects
      */
     public function findFixedFeesByUserPaginated(int $page, int $idUser, int $limit = 6): array
@@ -223,7 +223,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             WHERE u.id = :id
             ORDER BY s.FullName
             ASC'
-            
         )
         ->setParameter('id', $idUser)
         ->setMaxResults($limit)
@@ -265,7 +264,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             return $query->getResult();
     }
 
-        /**
+    /**
      * @return User 
      */
     public function findUserByVariableFee($idFixedFee): array
@@ -284,7 +283,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             return $query->getResult();
     }
 
-        /**
+    /**
      * @return User
      */
     public function findUserBySalary($idFixedFee): array

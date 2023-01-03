@@ -21,7 +21,7 @@ class SalaryController extends AbstractController
 
         $page < 1 ? $page = 1: '';
 
-        $salaries = $userRepository->findSalariesByUserPaginated($page, 6, $this->getUser()->getId());
+        $salaries = $userRepository->findSalariesByUserPaginated($page, $this->getUser()->getId(), 6);
         
         return $this->render('salary/index.html.twig', [
             'salaries' => $salaries,

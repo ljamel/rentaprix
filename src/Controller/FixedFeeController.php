@@ -21,7 +21,7 @@ class FixedFeeController extends AbstractController
 
         $page < 1 ? $page = 1: '';
         
-        $fixedFees = $userRepository->findFixedFeesByUserPaginated($page, 6, $this->getUser()->getId());
+        $fixedFees = $userRepository->findFixedFeesByUserPaginated($page, $this->getUser()->getId(), 6);
 
         return $this->render('fixed_fee/index.html.twig', [
             'fixedFees' => $fixedFees,
