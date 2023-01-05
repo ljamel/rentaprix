@@ -32,8 +32,8 @@
                                 <td>{{ calcul.title }}</td>
                                 <td>{{ calcul.date ? calcul.date|date('d-m-Y') : '' }}</td>
                                 <td>{{ calcul.devis }}</td>
-                                <td>durée</td>
-                                <td></td>
+                                <td>{{ userCalculs.durations[loop.index0] }}</td>
+                                <td>Taux</td>
                                 <td>
                                     <a href="{{ path('app_calcul_show', {'id': calcul.id}) }}"><i class="fa-solid fa-eye awsome show"></i></a>
                                     <a href="{{ path('app_calcul_edit', {'id': calcul.id}) }}"><i class="fa-regular fa-pen-to-square awsome show"></i></a>

@@ -414,7 +414,6 @@ label {
 #nextBtn {
     box-shadow: none;
     border: none;
-    margin-top: 20px;
     background-color: #1761a0;
     cursor: pointer;
     color: #ffff;
@@ -547,10 +546,7 @@ label {
 }
 
 .dates {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 10px;
 }
 
 #calcul_endDate, #calcul_startDate {

@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Calcul;
 use App\Entity\User;
 use App\Repository\CalculRepository;
+use DateTimeImmutable;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -54,6 +55,17 @@ Class CalculService {
         $calcul->addFixedFees($checkedFixedFees, $form->get('fixedFees')->getData());
         $calcul->addVariableFees($checkedVariableFees, $form->get('variableFees')->getData());
         $calcul->addSalaries($checkedSalaries, $form->get('salaries')->getData());
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function calculateDuration($startDate, $endDate) {
+        $start = new DateTimeImmutable($startDate);
+        $end = new DateTimeImmutable($endDate);
+        $interval = $end->diff($start);
+
+        return $interval->format("%m mois, %d jour(s), %h heure(s)");
     }
 
     private function handleValidForm(FormInterface $form, User $user, int $tab): JsonResponse

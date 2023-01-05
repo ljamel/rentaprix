@@ -16,16 +16,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class CalculController extends AbstractController
 {
     #[Route('/', name: 'app_calcul_index', methods: ['GET'])]
-    public function index(CalculRepository $calculRepository, Request $request): Response
+    public function index(CalculRepository $calculRepository, Request $request, CalculService $calculService): Response
     {
+        $durations =  [];
         $page = $request->query->getInt('page', 1);
 
         $page < 1 ? $page = 1: '';
 
-        //dd($calculRepository->findCalculsByUserPaginated($page, 6, $this->getUser()->getId()));
+        $userCalculs = $calculRepository->findCalculsByUserPaginated($page, $this->getUser()->getId());
 
-        $userCalculs = $calculRepository->findCalculsByUserPaginated($page, $this->getUser()->getId(), 6);
-        
+
+        foreach ($userCalculs['data'] as $calcul) {
+            $durations[] = $calculService->calculateDuration($calcul->getStartDate()->format('Y-m-d H:i:s'), $calcul->getEndDate()->format('Y-m-d H:i:s'));
+        }
+
+        $userCalculs['durations'] = $durations;
+
         return $this->render('calcul/index.html.twig', [
             'userCalculs' => $userCalculs,
         ]);
