@@ -29,9 +29,6 @@ class Calcul
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $devis = null;
 
-    #[ORM\Column]
-    private ?int $durationMonth = null;
-
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $software = null;
 
@@ -47,14 +44,20 @@ class Calcul
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'calculs')]
     private Collection $user;
 
-    #[ORM\ManyToMany(targetEntity: FixedFee::class, mappedBy: 'calcul', cascade: ['persist'], indexBy: 'id', fetch: "EXTRA_LAZY")]
+    #[ORM\ManyToMany(targetEntity: FixedFee::class, mappedBy: 'calcul', cascade: ['persist'], fetch: "EXTRA_LAZY", indexBy: 'id')]
     private Collection $fixedFees;
 
-    #[ORM\ManyToMany(targetEntity: VariableFee::class, mappedBy: 'calcul', cascade: ['persist'], indexBy: 'id', fetch: "EXTRA_LAZY")]
+    #[ORM\ManyToMany(targetEntity: VariableFee::class, mappedBy: 'calcul', cascade: ['persist'], fetch: "EXTRA_LAZY", indexBy: 'id')]
     private Collection $variableFees;
 
-    #[ORM\ManyToMany(targetEntity: Salary::class, mappedBy: 'calcul', cascade: ['persist'], indexBy: 'id', fetch: "EXTRA_LAZY")]
+    #[ORM\ManyToMany(targetEntity: Salary::class, mappedBy: 'calcul', cascade: ['persist'], fetch: "EXTRA_LAZY", indexBy: 'id')]
     private Collection $salaries;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $startDate = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $endDate = null;
 
     public function __construct()
     {
@@ -102,18 +105,6 @@ class Calcul
     public function setDevis(string $devis): self
     {
         $this->devis = $devis;
-
-        return $this;
-    }
-
-    public function getDurationMonth(): ?int
-    {
-        return $this->durationMonth;
-    }
-
-    public function setDurationMonth(int $durationMonth): self
-    {
-        $this->durationMonth = $durationMonth;
 
         return $this;
     }
@@ -359,6 +350,30 @@ class Calcul
     public function setStartupExpenses(?string $startupExpenses): void
     {
         $this->startupExpenses = $startupExpenses;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(\DateTimeInterface $startDate): self
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(\DateTimeInterface $endDate): self
+    {
+        $this->endDate = $endDate;
+
+        return $this;
     }
 
 }

@@ -6,8 +6,10 @@ use App\Entity\Calcul;
 use App\Entity\FixedFee;
 use App\Entity\Salary;
 use App\Entity\VariableFee;
+use http\Message;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -16,6 +18,9 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Callback as ConstraintsCallback;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\Expression;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
@@ -61,17 +66,31 @@ class CalculType extends AbstractType
                 'currency' =>'',
                     'invalid_message' => 'Cette valeur n\'est pas valide'
                 ])
-            ->add('durationMonth', TypeIntegerType::class, 
+            ->add('startDate', DateTimeType::class,
                 [
                     'constraints' => [
-                        new NotBlank([
-                            'message' => 'Merci de rensigner ce champs',
-                        ]),
-                        new Positive([
-                            'message' => 'Duration month must be grater than 0'
+                        new NotBlank(),
+                    ],
+                    'label' => 'Date de début',
+                    'widget' => 'choice',
+                    'html5' => false,
+                    'date_format' => "ddMMyyyy",
+                    'view_timezone' => date_default_timezone_get() // Europe/Paris
+                ])
+            ->add('endDate', DateTimeType::class,
+                [
+                    'constraints' => [
+                        new NotBlank(),
+                        new GreaterThan([
+                            'propertyPath' => 'parent.all[startDate].data',
+                            'message' => "La date de fin doit être supérieure à la date de début"
                         ]),
                     ],
-                    'label'=> 'Durée (Mois)'
+                    'label' => 'Date de fin',
+                    'widget' => 'choice',
+                    'html5' => false,
+                    'date_format' => "ddMMyyyy",
+                    'view_timezone' => date_default_timezone_get() // Europe/Paris
                 ])
             ->add('software', MoneyType::class,
                 [

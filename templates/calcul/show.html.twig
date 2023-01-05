@@ -35,8 +35,16 @@
                     <td>{{ calcul.devis }}</td>
                 </tr>
                 <tr>
-                    <th>Durée (Mois)</th>
-                    <td>{{ calcul.durationMonth }}</td>
+                    <th>Date de début</th>
+                    <td>{{ calcul.startDate ? calcul.startDate|date('d-m-Y H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de fin</th>
+                    <td>{{ calcul.endDate ? calcul.endDate|date('d-m-Y H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Durée</th>
+                    <td>Durée</td>
                 </tr>
                 <tr>
                     <th>Frais Fixes</th>

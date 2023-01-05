@@ -42,14 +42,28 @@
                     </div>
                 {% endif %}
             </div>
+            <div class="dates">
+                <div>
+                    {{ form_label(form.startDate) }}
+                    <div class="">{{ form_widget(form.startDate, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+                    {% if not form.startDate.vars.valid %}
+                        <div class="error-message">
+                            {{ form_errors(form.startDate) }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form_label(form.endDate) }}
+                    <div class="">{{ form_widget(form.endDate, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+                    {% if not form.endDate.vars.valid %}
+                        <div class="error-message">
+                            {{ form_errors(form.endDate) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
             <div>
-                {{ form_label(form.durationMonth) }}
-                <div class="">{{ form_widget(form.durationMonth, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
-                {% if not form.durationMonth.vars.valid %}
-                    <div class="error-message">
-                        {{ form_errors(form.durationMonth) }}
-                    </div>
-                {% endif %}
+               duration
             </div>
         </div>
         <div class="fees-section">

@@ -360,7 +360,7 @@ input[type=text]:hover, input[type=number]:hover {
 
 input.invalid {
     background-color: #f8d7da;
-    border: 1px solid #813037;
+    border: 1px solid #dc3545;
 }
 
 label {
@@ -476,12 +476,15 @@ label {
 
 /**************/
 .error-message {
-    color: #813037;
-    background-color: #f8d7da;
-    margin: 10px auto;
+    color: #dc3545;
+    margin: 5px auto;
     width: 100%;
-    padding: 15px;
-    border-radius: 5px;
+}
+
+.cout {
+    width: 90%;
+    color: #dc3545;
+    margin: 5px auto;
 }
 
 .alert-success {
@@ -541,4 +544,25 @@ label {
     overflow-y: scroll;
     max-height: 270px;
     width: 100%;
+}
+
+.dates {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#calcul_endDate, #calcul_startDate {
+    display: inline-flex;
+}
+
+
+#calcul_startDate select, #calcul_endDate select {
+    background: #fafafa;
+    border:#ccc 1px solid;
+    border-radius: 4px;
+    padding: 8px;
+    color: #4d4d4d;
+    width: auto;
 }

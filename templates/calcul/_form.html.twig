@@ -21,16 +21,34 @@
                     {{ form_errors(form.devis) }}
                 </div>
             {% endif %}
-        </div>        
-        <div>
-            {{ form_label(form.durationMonth) }}
-            <div class="">{{ form_widget(form.durationMonth, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
-            {% if not form.durationMonth.vars.valid %}
-                <div class="error-message">
-                    {{ form_errors(form.durationMonth) }}
-                </div>
-            {% endif %}
         </div>
+        <div class="dates">
+            <div>
+                {{ form_label(form.startDate) }}
+                <div class="">{{ form_widget(form.startDate, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+                {% if not form.startDate.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(form.startDate) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="end_date">
+                {{ form_label(form.endDate) }}
+                <div class="">{{ form_widget(form.endDate, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+                {% if not form.endDate.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(form.endDate) }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div>
+            <label for="duration">Durée</label>
+            <div class="">
+                <input type="text" name="duration" id="duration" value={{ duration|default(0)}} disabled/>
+            </div>
+        </div>
+
     </div>
     <div class="tab">
         <h3 class="fixedFees">Coûts initiaux</h3>

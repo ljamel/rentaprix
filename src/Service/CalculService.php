@@ -16,7 +16,8 @@ Class CalculService {
     public function handleCalculFormData(FormInterface $calculForm, User $user, int $tab=null): JsonResponse
     {
         if ($tab === 0) {
-            if (!$calculForm->get('title')->isValid() || !$calculForm->get('devis')->isValid() || !$calculForm->get('durationMonth')->isValid()) {
+            if (!$calculForm->get('title')->isValid() || !$calculForm->get('devis')->isValid()
+                || !$calculForm->get('startDate')->isValid() || !$calculForm->get('endDate')->isValid()) {
                 return $this->handleInvalidForm($calculForm, 0);
             }
         }
@@ -39,6 +40,7 @@ Class CalculService {
         if($tab === 4 && !$calculForm->get('checkedSalaries')->isValid()){
             return $this->handleInvalidForm($calculForm, 4);
         }
+
 
         return $this->handleValidForm($calculForm, $user, $tab);
     }

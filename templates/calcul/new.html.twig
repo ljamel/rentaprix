@@ -109,10 +109,16 @@
             if (errors.length === 0) return true;
             for (const key in errors) {
                 let element = document.querySelector(`#calcul_${key}`);
+
+                if(element.id === 'calcul_endDate') {
+                    element.style.border= "none";
+                } else {
+                    element.style.border = "solid 1px #dc3545";
+                }
+
                 let div = document.createElement('div');
                 div.classList.add('error-message');
                 div.innerText = errors[key];
-                element.style.border= "solid 1px #aa3a3c";
                 element.after(div);
             }
             return false;

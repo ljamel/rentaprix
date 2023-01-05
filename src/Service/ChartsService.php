@@ -240,7 +240,8 @@ class ChartsService {
                 + $calcul->getStartupExpenses()
                 +($this->calculateTotalFees($calcul->getFixedFees()->getValues())
                 + $this->calculateTotalFees($calcul->getVariableFees()->getValues())
-                + $this->calculateTotalSalaries($calcul->getSalaries()->getValues())) * $calcul->getDurationMonth());
+                //+ $this->calculateTotalSalaries($calcul->getSalaries()->getValues())) * $calcul->getDurationMonth());
+                + $this->calculateTotalSalaries($calcul->getSalaries()->getValues())));
     }
 
     private function calculateTotalFees(array $fees) {
