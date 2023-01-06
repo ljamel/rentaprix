@@ -65,7 +65,7 @@ Class CalculService {
         $end = new DateTimeImmutable($endDate);
         $interval = $end->diff($start);
 
-        return $interval->format("%m mois, %d jour(s), %h heure(s)");
+        return $interval->format("%mmois %dj %hh");
     }
 
     private function handleValidForm(FormInterface $form, User $user, int $tab): JsonResponse

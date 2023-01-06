@@ -4,12 +4,14 @@
 
 {% block body %}
     <div class="home-calcul">
-        <ul class="breadcrumb">
-            <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
-            <li>Vos devis</li>
-        </ul> 
-        <div class="calcul-new">
-            <a href="{{ path('app_calcul_new') }}" title="Nouveau calcul"><i class="fa-solid fa-plus new"></i></a>
+        <div class="breadcrumb-header">
+            <ul class="breadcrumb">
+                <li><a href="{{ path('app_calcul_index') }}">Calcul de rentabilité</a></li>
+                <li>Vos devis</li>
+            </ul>
+            <div class="calcul-new">
+                <a href="{{ path('app_calcul_new') }}" title="Nouveau calcul"><i class="fa-solid fa-plus new"></i></a>
+            </div>
         </div>
         <div class="calcul-data">
             {% if userCalculs|default is empty %}
@@ -21,7 +23,7 @@
                             <th>Titre</th>
                             <th>Date</th>
                             <th>Devis</th>
-                            <th>Durée</th>
+                            <th>Durée(Mois, Jours, Heures)</th>
                             <th>Taux de rentabilité</th>
                             <th>Actions</th>
                         </tr>
