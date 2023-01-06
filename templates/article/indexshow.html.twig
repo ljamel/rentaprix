@@ -22,6 +22,7 @@
                 <td>{{ article.datePublication ? article.datePublication|date('Y-m-d') : '' }}</td>
                 <td>{{ article.title }}</td>
                 <td>{{ article.content }}</td>
+                <td><a href="{{ path('app_article_show', {'id': article.id}) }}">show</a></td>
             </tr>
         {% else %}
             <tr>
