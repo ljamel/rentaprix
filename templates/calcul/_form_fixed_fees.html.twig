@@ -4,7 +4,7 @@
             {{  form_errors(form.checkedFixedFees) }}
         </div>
     {% endif %}
-    <input id="calcul_checkedFixedFees" name="calcul_checkedFixedFees" type="hidden"/>
+
     {% if form.checkedFixedFees|default is empty %}
     {% else %}
         <div class="search-input">
@@ -31,11 +31,7 @@
                         <td>{{ child.data.getTitle() }}</td>
                         <td>{{ child.data.getPrice() }}</td>
                         <td id="{{ 'quantity_' ~ child.data.getId() }}" class="quantity">
-                            {% if not form.fixedFeeCalculsQuantity.vars.valid %}
-                                <div class="error-message">
-                                    {{ form_errors(form.fixedFeeCalculsQuantity) }}
-                                </div>
-                            {% endif %}
+                            <input id="calcul_fixedFeeCalculsQuantity" name="calcul_checkedFixedFees" type="hidden"/>
                         <td>
                             {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
                                 <a title="Supprimer ce frais" class="delete-link" onClick="deleteThisLink('#fee_{{child.data.getId}}')"><i class="fa-regular fa-trash-can trash"></i></a>
@@ -110,6 +106,7 @@
             input.id = "calcul_fixedFeeCalculsQuantity_"+ inputId + "_quantity"
             input.type= "number";
             input.value = "1";
+            input.classList.add("quantity-input");
             input.name = "calcul[fixedFeeCalculsQuantity][" + inputId + "][quantity]";
 
             td.appendChild(input);

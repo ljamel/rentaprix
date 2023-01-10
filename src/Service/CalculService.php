@@ -98,9 +98,6 @@ Class CalculService {
             $calcul->addSalaries($checkedSalaries, $createdSalaries);
             $calcul->addUser($user);
 
-
-            //dd($calcul->getFixedFeeCalculs());
-
             $this->calculRepository->save($calcul, true);
 
             return new JsonResponse([

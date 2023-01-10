@@ -106,20 +106,35 @@
             invalidFeedbackElements.forEach(errorElement => errorElement.remove());
         }
         const handleErrors = function(errors) {
+            let element =0;
             if (errors.length === 0) return true;
             for (const key in errors) {
-                let element = document.querySelector(`#calcul_${key}`);
+                if (key === 'fixedFeeCalculsQuantity') {
+                    element = document.querySelectorAll('.quantity-input');
 
-                if(element.id === 'calcul_endDate') {
-                    element.style.border= "none";
+                    element.forEach((e, index) => {
+                        Array(errors[key]).forEach(err => {
+                            let div = document.createElement('div');
+                            div.classList.add('error-message');
+                            div.innerText = Object.values(err)[index].quantity[0];
+                            console.log(Object.values(err)[index].quantity[0]);
+                            e.after(div);
+                        })
+                    })
                 } else {
-                    element.style.border = "solid 1px #dc3545";
-                }
+                    element = document.querySelector(`#calcul_${key}`);
 
-                let div = document.createElement('div');
-                div.classList.add('error-message');
-                div.innerText = errors[key];
-                element.after(div);
+                    if (element.id === 'calcul_endDate') {
+                        element.style.border = "none";
+                    } else {
+                        element.style.border = "solid 1px #dc3545";
+                    }
+
+                    let div = document.createElement('div');
+                    div.classList.add('error-message');
+                    div.innerText = errors[key];
+                    element.after(div);
+                }
             }
             return false;
         }

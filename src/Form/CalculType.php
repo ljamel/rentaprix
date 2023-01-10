@@ -209,7 +209,7 @@ class CalculType extends AbstractType
                     'allow_delete' => true,
                     'by_reference' => false,
                     'constraints' => [
-                        new ConstraintsCallback([$this, 'validateQuantities']),
+                        //new ConstraintsCallback([$this, 'validateQuantities']),
                     ],
                 ]
             )
@@ -266,23 +266,25 @@ class CalculType extends AbstractType
             'fixedFeesChoices' => [],
             'variableFeesChoices' => [],
             'salariesChoices' => [],
+            'error_mapping' => [
+                '.' => 'checkedFixedFees',
+            ],
         ]);
     }
 
-    public function validateQuantities($data, ExecutionContextInterface $context): void
+    /*public function validateQuantities($data, ExecutionContextInterface $context): void
     {
         $fixedFeeCalculs = $context->getRoot()->get('fixedFeeCalculsQuantity')->getData();
 
-        if(!empty($fixedFeeCalculs)) {
+        //if(!empty($fixedFeeCalculs)) {
             foreach ($fixedFeeCalculs as $quantity) {
                 if($quantity->getQuantity() <= 0) {
                     $context->buildViolation('La quantité doit etre supérieure ou égale à 0')
-                        ->atPath('checkedFixedFees')
                             ->addViolation();
                 }
             }
-       }
-    }
+       //}
+    }*/
 
     public function validateFixedFees($data, ExecutionContextInterface $context): void
     {
