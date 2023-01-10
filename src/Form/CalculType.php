@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Calcul;
 use App\Entity\FixedFee;
+use App\Entity\FixedFeeCalcul;
 use App\Entity\Salary;
 use App\Entity\VariableFee;
+use Doctrine\DBAL\Types\IntegerType;
 use http\Message;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -13,19 +15,15 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType as TypeIntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Callback as ConstraintsCallback;
-use Symfony\Component\Validator\Constraints\DateTime;
-use Symfony\Component\Validator\Constraints\Expression;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CalculType extends AbstractType
@@ -35,9 +33,9 @@ class CalculType extends AbstractType
         $fixedFeesChoices = $options['fixedFeesChoices'];
         $variableFeesChoices = $options['variableFeesChoices'];
         $salariesChoices= $options['salariesChoices'];
-        
+
         $builder
-            ->add('title', TextType::class, 
+            ->add('title', TextType::class,
                 [
                     'constraints' => [
                         new NotBlank([
@@ -52,7 +50,7 @@ class CalculType extends AbstractType
                     ],
                     'label'=> 'Titre'
                 ])
-            ->add('devis', MoneyType::class, 
+            ->add('devis', MoneyType::class,
                 [
                     'constraints' => [
                         new NotBlank([
@@ -62,8 +60,8 @@ class CalculType extends AbstractType
                             'message' => 'La devis doit être supérieur à zéro'
                         ]),
                     ],
-                'label'=> 'Budget client',
-                'currency' =>'',
+                    'label'=> 'Budget client',
+                    'currency' =>'',
                     'invalid_message' => 'Cette valeur n\'est pas valide'
                 ])
             ->add('startDate', DateTimeType::class,
@@ -148,15 +146,15 @@ class CalculType extends AbstractType
                     'currency' =>'',
                     'invalid_message' => 'Cette valeur n\'est pas valide'
                 ])
-            ->add( 'fixedFees', CollectionType::class,
+            ->add('fixedFeeCalculs', CollectionType::class,
                 [
-                    'entry_type' => FixedFeeType::class, // le formulaire enfant qui doit être répété
+                    'entry_type' => FixedFeeCalculType::class, // le formulaire enfant qui doit être répété
                     'allow_add' => true, // true si tu veux que l'utilisateur puisse en ajouter
                     'allow_delete' => true, // true si tu veux que l'utilisateur puisse en supprimer
                     'label' => 'Frais Fixes',
                     'by_reference' => false, // voir  https://symfony.com/doc/current/reference/forms/types/collection.html#by-reference
-                    'data' => [new FixedFee()],
-                    'required' => false
+                    'data' => [new FixedFeeCalcul()],
+                    'required' => false,
                 ]
             )
             ->add('variableFees', CollectionType::class,
@@ -181,7 +179,7 @@ class CalculType extends AbstractType
                     'required' => false
                 ]
             )
-            ->add('checkedFixedFees', EntityType::class, 
+            ->add('checkedFixedFees', EntityType::class,
                 [
                     'class' => FixedFee::class,
                     'multiple' => true,
@@ -192,7 +190,7 @@ class CalculType extends AbstractType
                         $data = [
                             'Title' => $fixedFee->getTitle(),
                             'Price' => $fixedFee->getPrice(),
-                            'Unit' => $fixedFee->getUnit(),  
+                            'quantity' => $fixedFee->getFixedFeeCalculs()->get(0)->getQuantity()
                         ];
 
                         return json_encode($data);
@@ -202,7 +200,20 @@ class CalculType extends AbstractType
                     ],
                 ]
             )
-            ->add('checkedVariableFees', EntityType::class, 
+            ->add('fixedFeeCalculsQuantity', CollectionType::class,
+                [
+                    'data' => [new FixedFeeCalcul()],
+                    'mapped' => false,
+                    'entry_type' =>FixedFeeCalculType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'constraints' => [
+                        new ConstraintsCallback([$this, 'validateQuantities']),
+                    ],
+                ]
+            )
+            ->add('checkedVariableFees', EntityType::class,
                 [
                     'class' => VariableFee::class,
                     'multiple' => true,
@@ -223,7 +234,7 @@ class CalculType extends AbstractType
                     ],
                 ]
             )
-            ->add('checkedSalaries', EntityType::class, 
+            ->add('checkedSalaries', EntityType::class,
                 [
                     'class' => Salary::class,
                     'multiple' => true,
@@ -246,7 +257,6 @@ class CalculType extends AbstractType
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'save'],
             ]);
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -259,15 +269,30 @@ class CalculType extends AbstractType
         ]);
     }
 
+    public function validateQuantities($data, ExecutionContextInterface $context): void
+    {
+        $fixedFeeCalculs = $context->getRoot()->get('fixedFeeCalculsQuantity')->getData();
+
+        if(!empty($fixedFeeCalculs)) {
+            foreach ($fixedFeeCalculs as $quantity) {
+                if($quantity->getQuantity() <= 0) {
+                    $context->buildViolation('La quantité doit etre supérieure ou égale à 0')
+                        ->atPath('checkedFixedFees')
+                            ->addViolation();
+                }
+            }
+       }
+    }
+
     public function validateFixedFees($data, ExecutionContextInterface $context): void
     {
-        $fixedFees = $context->getRoot()->get('fixedFees')->getData();
-        $checkedFixedFees = $context->getRoot()->get('checkedFixedFees')->getData();
+        $fixedFeeCalculs = $context->getRoot()->get('fixedFeeCalculs')->getData();
+        $checkedFixedFeeCalculs = $context->getRoot()->get('checkedFixedFees')->getData();
 
-        if($fixedFees[0]->getTitle() === null && count($checkedFixedFees) === 0) {
-            $context->buildViolation('Veuillez ajouter un coût récurrent')
-                    ->addViolation();
-        }
+        //if($fixedFees[0]->getTitle() === null && count($checkedFixedFees) === 0) {// à corriger
+        //  $context->buildViolation('Veuillez ajouter un coût récurrent')
+        //    ->addViolation();
+        //}
     }
 
     public function validateVariableFees($data, ExecutionContextInterface $context): void
@@ -278,7 +303,7 @@ class CalculType extends AbstractType
 
         if($variableFees[0]->getTitle() === null && count($checkedVariableFees) === 0) {
             $context->buildViolation('Veuillez ajouter un coût ponctuel')
-                    ->addViolation();
+                ->addViolation();
         }
     }
 
@@ -290,7 +315,7 @@ class CalculType extends AbstractType
 
         if($salaries[0]->getFullName() === null && count($checkedSalaries) === 0) {
             $context->buildViolation('Veuillez ajouter un salarié')
-                    ->addViolation();
+                ->addViolation();
         }
     }
 }

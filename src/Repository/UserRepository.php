@@ -5,9 +5,7 @@ namespace App\Repository;
 use App\Entity\FixedFee;
 use App\Entity\Salary;
 use App\Entity\User;
-use App\Entity\VariableFee;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -61,24 +59,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
-    /**
-     * @return Product[]
-     */
-    public function findAllGreaterThanPrice(int $price): array
-    {
-        $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT p
-            FROM App\Entity\Product p
-            WHERE p.price > :price
-            ORDER BY p.price ASC'
-        )->setParameter('price', $price);
-
-        // returns an array of Product objects
-        return $query->getResult();
-    }
-
     public function findFixedFeesByUser($idUser): array
     {
         $entityManager = $this->getEntityManager();
@@ -86,10 +66,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $query = $entityManager->createQuery(
             'SELECT f
             FROM App\Entity\FixedFee f
-            INNER JOIN f.calcul c
+            INNER JOIN f.fixedFeeCalculs cf
+            INNER JOIN cf.calcul c
             INNER JOIN c.user u
             WHERE u.id = :id'
-
         )->setParameter('id', $idUser);
 
         return $query->getResult();
@@ -107,7 +87,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $query = $entityManager->createQuery(
             'SELECT f
             FROM App\Entity\FixedFee f
-            INNER JOIN f.calcul c
+            INNER JOIN f.fixedFeeCalculs cf
+            INNER JOIN cf.calcul c
             INNER JOIN c.user u
             WHERE u.id = :id
             ORDER BY f.id
@@ -256,7 +237,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 'SELECT u
                 FROM App\Entity\User u
                 INNER JOIN u.calculs c
-                INNER JOIN c.fixedFees f
+                INNER JOIN c.fixedFeeCalculs f
                 WHERE f.id = :id'
                 
             )->setParameter('id', $idFixedFee);

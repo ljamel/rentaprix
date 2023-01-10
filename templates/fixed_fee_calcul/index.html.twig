@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FixedFeeCalcul index{% endblock %}
+
+{% block body %}
+    <h1>FixedFeeCalcul index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quantity</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fixed_fee_calcul in fixed_fee_calculs %}
+            <tr>
+                <td>{{ fixed_fee_calcul.id }}</td>
+                <td>{{ fixed_fee_calcul.quantity }}</td>
+                <td>
+                    <a href="{{ path('app_fixed_fee_calcul_show', {'id': fixed_fee_calcul.id}) }}">show</a>
+                    <a href="{{ path('app_fixed_fee_calcul_edit', {'id': fixed_fee_calcul.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_fixed_fee_calcul_new') }}">Create new</a>
+{% endblock %}

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230106125533 extends AbstractMigration
+final class Version20230106141120 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -49,6 +49,12 @@ final class Version20230106125533 extends AbstractMigration
             "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MariaDb1027Platform'."
         );
 
+        $this->addSql('CREATE TABLE fixed_fee_calcul (fixed_fee_id INT NOT NULL, calcul_id INT NOT NULL, INDEX IDX_385B7E47841269A9 (calcul_id), INDEX IDX_385B7E47FFF29ECB (fixed_fee_id), PRIMARY KEY(fixed_fee_id, calcul_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->abortIf(
+            !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MariaDb1027Platform,
+            "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MariaDb1027Platform'."
+        );
+
         $this->addSql('CREATE TABLE salary (id INT AUTO_INCREMENT NOT NULL, full_name VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`, post VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COLLATE `utf8mb4_unicode_ci`, pay NUMERIC(10, 2) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
         $this->abortIf(
             !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MariaDb1027Platform,
@@ -73,7 +79,7 @@ final class Version20230106125533 extends AbstractMigration
             "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MariaDb1027Platform'."
         );
 
-        $this->addSql('CREATE TABLE variable_fee_calcul (variable_fee_id INT NOT NULL, calcul_id INT NOT NULL, INDEX IDX_BA3D7D90841269A9 (calcul_id), INDEX IDX_BA3D7D9024FA2B5D (variable_fee_id), PRIMARY KEY(variable_fee_id, calcul_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('CREATE TABLE variable_fee_calcul (variable_fee_id INT NOT NULL, calcul_id INT NOT NULL, INDEX IDX_BA3D7D9024FA2B5D (variable_fee_id), INDEX IDX_BA3D7D90841269A9 (calcul_id), PRIMARY KEY(variable_fee_id, calcul_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
     }
 
     public function down(Schema $schema): void
@@ -108,6 +114,12 @@ final class Version20230106125533 extends AbstractMigration
             "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MariaDb1027Platform'."
         );
 
+        $this->addSql('DROP TABLE fixed_fee_calcul');
+        $this->abortIf(
+            !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MariaDb1027Platform,
+            "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MariaDb1027Platform'."
+        );
+
         $this->addSql('DROP TABLE salary');
         $this->abortIf(
             !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MariaDb1027Platform,
@@ -133,6 +145,5 @@ final class Version20230106125533 extends AbstractMigration
         );
 
         $this->addSql('DROP TABLE variable_fee_calcul');
-        $this->addSql('DROP TABLE fixed_fee_calcul');
     }
 }

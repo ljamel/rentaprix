@@ -6,6 +6,7 @@ use App\Entity\Calcul;
 use App\Entity\User;
 use App\Repository\CalculRepository;
 use DateTimeImmutable;
+use Exception;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -30,9 +31,10 @@ Class CalculService {
             }
         }
 
-        if($tab === 2 && !$calculForm->get('checkedFixedFees')->isValid()){
+        if($tab === 2 && (!$calculForm->get('checkedFixedFees')->isValid() || !$calculForm->get('fixedFeeCalculsQuantity')->isValid())){
             return $this->handleInvalidForm($calculForm, 2);
         }
+
 
         if($tab === 3 && !$calculForm->get('checkedVariableFees')->isValid()){
             return $this->handleInvalidForm($calculForm, 3);
@@ -41,7 +43,6 @@ Class CalculService {
         if($tab === 4 && !$calculForm->get('checkedSalaries')->isValid()){
             return $this->handleInvalidForm($calculForm, 4);
         }
-
 
         return $this->handleValidForm($calculForm, $user, $tab);
     }
@@ -58,7 +59,7 @@ Class CalculService {
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function calculateDuration($startDate, $endDate) {
         $start = new DateTimeImmutable($startDate);
@@ -74,7 +75,16 @@ Class CalculService {
             $calcul = $form->getData();
 
             $checkedFixedFees = $form->get('checkedFixedFees')->getData();
-            $createdFixedFees = $form->get('fixedFees')->getData();
+            // il faut get les quantitiés et les fixedFees
+            $checkedQuantities = $form->get('fixedFeeCalculsQuantity')->getdata();
+
+            $createdFixedFees = $form->get('fixedFeeCalculs')->getData();
+
+
+            foreach ($checkedFixedFees as $checkedFixedFee) {
+                $checkedQuantities[$checkedFixedFee->getId()]->setFixedFee($checkedFixedFee);
+            }
+
 
             $checkedVariableFees = $form->get('checkedVariableFees')->getData();
             $createdVariableFees = $form->get('variableFees')->getData();
@@ -82,10 +92,14 @@ Class CalculService {
             $checkedSalaries = $form->get('checkedSalaries')->getData();
             $createdSalaries = $form->get('salaries')->getData();
 
-            $calcul->addFixedFees($checkedFixedFees, $createdFixedFees);
+
+            $calcul->addFixedFees($checkedQuantities, $createdFixedFees);
             $calcul->addVariableFees($checkedVariableFees, $createdVariableFees);
             $calcul->addSalaries($checkedSalaries, $createdSalaries);
             $calcul->addUser($user);
+
+
+            //dd($calcul->getFixedFeeCalculs());
 
             $this->calculRepository->save($calcul, true);
 

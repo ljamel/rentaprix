@@ -44,9 +44,6 @@ class Calcul
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'calculs')]
     private Collection $user;
 
-    #[ORM\ManyToMany(targetEntity: FixedFee::class, mappedBy: 'calcul', cascade: ['persist'], fetch: "EXTRA_LAZY", indexBy: 'id')]
-    private Collection $fixedFees;
-
     #[ORM\ManyToMany(targetEntity: VariableFee::class, mappedBy: 'calcul', cascade: ['persist'], fetch: "EXTRA_LAZY", indexBy: 'id')]
     private Collection $variableFees;
 
@@ -59,13 +56,17 @@ class Calcul
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $endDate = null;
 
+    #[ORM\OneToMany(mappedBy: 'calcul', targetEntity: FixedFeeCalcul::class, cascade: ['persist'],
+                            fetch: "EXTRA_LAZY", orphanRemoval: true, indexBy: 'id')]
+    private Collection $fixedFeeCalculs;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
-        $this->fixedFees = new ArrayCollection();
         $this->variableFees = new ArrayCollection();
         $this->salaries = new ArrayCollection();
         $this->date = new DateTime('now');
+        $this->fixedFeeCalculs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,45 +130,6 @@ class Calcul
     public function removeUser(User $user): self
     {
         $this->user->removeElement($user);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, FixedFee>
-     */
-    public function getFixedFees(): Collection
-    {
-        return $this->fixedFees;
-    }
-
-    public function addFixedFee(FixedFee $fixedFee): self
-    {
-        if (!$this->fixedFees->contains($fixedFee)) {
-            $this->fixedFees->add($fixedFee);
-            $fixedFee->addCalcul($this);
-        }
-
-        return $this;
-    }
-
-    public function addFixedFees($checkedFixedFees, $fixedFees) {   
-        foreach($checkedFixedFees as $fx) {
-            $this->addFixedFee($fx);
-        }
-
-        if($fixedFees[0]->getTitle()== null) {
-            $this->setFixedFees($checkedFixedFees);
-        }
-
-        return $this;
-    }
-
-    public function removeFixedFee(FixedFee $fixedFee): self
-    {
-        if ($this->fixedFees->removeElement($fixedFee)) {
-            $fixedFee->removeCalcul($this);
-        }
 
         return $this;
     }
@@ -246,20 +208,6 @@ class Calcul
         if ($this->salaries->removeElement($salary)) {
             $salary->removeCalcul($this);
         }
-
-        return $this;
-    }
-
-    
-
-    /**
-     * Set the value of fixedFees
-     *
-     * @return  self
-     */ 
-    public function setFixedFees($fixedFees)
-    {
-        $this->fixedFees = $fixedFees;
 
         return $this;
     }
@@ -372,6 +320,54 @@ class Calcul
     public function setEndDate(\DateTimeInterface $endDate): self
     {
         $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function setFixedFeeCalculs($fixedFeeCalculs): void
+    {
+        $this->fixedFeeCalculs = $fixedFeeCalculs;
+    }
+
+    /**
+     * @return Collection<int, FixedFeeCalcul>
+     */
+    public function getFixedFeeCalculs(): Collection
+    {
+        return $this->fixedFeeCalculs;
+    }
+
+    public function addFixedFeeCalcul(FixedFeeCalcul $fixedFeeCalcul): self
+    {
+        if (!$this->fixedFeeCalculs->contains($fixedFeeCalcul)) {
+            $this->fixedFeeCalculs->add($fixedFeeCalcul);
+            $fixedFeeCalcul->setCalcul($this);
+        }
+
+        return $this;
+    }
+
+    public function addFixedFees($checkedFixedFees, $createdFixedFees): self
+    {
+        foreach($checkedFixedFees as $fx) {
+            $this->addFixedFeeCalcul($fx);
+        }
+
+        if($createdFixedFees[0]->getId() === null && $createdFixedFees[0]->getQuantity() === null) {
+            $this->setFixedFeeCalculs(new ArrayCollection($checkedFixedFees));
+        }
+
+        return $this;
+    }
+
+    public function removeFixedFeeCalcul(FixedFeeCalcul $fixedFeeCalcul): self
+    {
+        if ($this->fixedFeeCalculs->removeElement($fixedFeeCalcul)) {
+            // set the owning side to null (unless already changed)
+            if ($fixedFeeCalcul->getCalcul() === $this) {
+                $fixedFeeCalcul->setCalcul(null);
+            }
+        }
 
         return $this;
     }

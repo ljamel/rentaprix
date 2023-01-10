@@ -5,7 +5,6 @@
         </div>
     {% endif %}
     <input id="calcul_checkedFixedFees" name="calcul_checkedFixedFees" type="hidden"/>
-
     {% if form.checkedFixedFees|default is empty %}
     {% else %}
         <div class="search-input">
@@ -21,16 +20,22 @@
                 <tr>
                     <th>Titre</th>
                     <th>Prix</th>
-                    <th>Unité</th>
+                    <th>Quantité</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for child in form.checkedFixedFees.vars.choices %}
+
                     <tr id="fee_{{child.data.getId()}}">
                         <td>{{ child.data.getTitle() }}</td>
                         <td>{{ child.data.getPrice() }}</td>
-                        <td>{{ child.data.getUnit() }}</td>
+                        <td id="{{ 'quantity_' ~ child.data.getId() }}" class="quantity">
+                            {% if not form.fixedFeeCalculsQuantity.vars.valid %}
+                                <div class="error-message">
+                                    {{ form_errors(form.fixedFeeCalculsQuantity) }}
+                                </div>
+                            {% endif %}
                         <td>
                             {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
                                 <a title="Supprimer ce frais" class="delete-link" onClick="deleteThisLink('#fee_{{child.data.getId}}')"><i class="fa-regular fa-trash-can trash"></i></a>
@@ -38,8 +43,9 @@
                                     {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
                                 </div>
                             {% else %}
+
                                 <label class="switch">
-                                    {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""' }})}}
+                                    {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'onClick': 'addQuantity(this.id)' }})}}
                                     <span class="slider round"></span>
                                 </label>
                             {% endif %}
@@ -52,45 +58,64 @@
     {% endif %}
 </div>
 
-<div class="fixed" data-prototype="{{ _self.fixed_prototype(form.fixedFees.vars.prototype)|e }}"
-        data-index="{{ form.fixedFees|length > 0 ? form.fixedFees|last.vars.name + 1 : 0 }}">
+<div class="fixed" data-prototype="{{ _self.fixed_prototype(form.fixedFeeCalculs.vars.prototype)|e }}"
+        data-index="{{ form.fixedFeeCalculs|length > 0 ? form.fixedFeeCalculs|last.vars.name + 1 : 0 }}">
     <div class="calcul-new">
         <a class="add_item_fixed" data-collection-holder-class="fixed" title="Nouveau frais"><i class="fa-solid fa-plus new"></i></a>
     </div>
-    
-    {% for fixedFee in form.fixedFees %}
-        {{ _self.fixed_prototype(fixedFee) }}
+    {% for fixedFeeCalcul in form.fixedFeeCalculs %}
+        {{ _self.fixed_prototype(fixedFeeCalcul) }}
     {% endfor %}
 
-    {% macro fixed_prototype(fixedFee) %}
+    {% macro fixed_prototype(fixedFeeCalcul) %}
         <div class="prototype">
             <div>
-                {{ form_label(fixedFee.title) }}
-                <div class="">{{ form_widget(fixedFee.title, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                {% if not fixedFee.title.vars.valid %}
+                {{ form_label(fixedFeeCalcul.fixedFee.title) }}
+                <div class="">{{ form_widget(fixedFeeCalcul.fixedFee.title, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
+                {% if not fixedFeeCalcul.fixedFee.title.vars.valid %}
                     <div class="error-message">
-                        {{ form_errors(fixedFee.title) }}
+                        {{ form_errors(fixedFeeCalcul.fixedFee.title) }}
                     </div>
                 {% endif %}
             </div>
             <div>
-                {{ form_label(fixedFee.price) }}
-                <div class="price">{{ form_widget(fixedFee.price, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                {% if not fixedFee.price.vars.valid %}
+                {{ form_label(fixedFeeCalcul.fixedFee.price) }}
+                <div class="price">{{ form_widget(fixedFeeCalcul.fixedFee.price, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
+                {% if not fixedFeeCalcul.fixedFee.price.vars.valid %}
                     <div class="error-message">
-                        {{ form_errors(fixedFee.price) }}
+                        {{ form_errors(fixedFeeCalcul.fixedFee.price) }}
                     </div>
                 {% endif %}
             </div>
             <div>
-                {{ form_label(fixedFee.unit) }}
-                <div class="unit">{{ form_widget(fixedFee.unit, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                {% if not fixedFee.title.vars.valid %}
+                {{ form_label(fixedFeeCalcul.quantity) }}
+                <div class="unit">{{ form_widget(fixedFeeCalcul.quantity, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
+                {% if not fixedFeeCalcul.quantity.vars.valid %}
                     <div class="error-message">
-                        {{ form_errors(fixedFee.unit) }}
+                        {{ form_errors(fixedFeeCalcul.quantity) }}
                     </div>
                 {% endif %}
             </div>
         </div>
     {% endmacro %}
 </div>
+<script>
+    const addQuantity = (chechboxId) => {
+        let inputId = chechboxId.slice(24);
+        let checkBox = document.getElementById(chechboxId);
+        let td = document.querySelector('#quantity_' + inputId)
+        if (checkBox.checked === true){
+            let input = document.createElement('input');
+
+            input.id = "calcul_fixedFeeCalculsQuantity_"+ inputId + "_quantity"
+            input.type= "number";
+            input.value = "1";
+            input.name = "calcul[fixedFeeCalculsQuantity][" + inputId + "][quantity]";
+
+            td.appendChild(input);
+        } else {
+            let inputToDelete = document.querySelector("#calcul_fixedFeeCalculsQuantity_" + inputId + "_quantity");
+            inputToDelete.remove();
+        }
+    }
+</script>

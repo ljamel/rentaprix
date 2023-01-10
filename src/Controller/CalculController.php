@@ -25,12 +25,13 @@ class CalculController extends AbstractController
 
         $userCalculs = $calculRepository->findCalculsByUserPaginated($page, $this->getUser()->getId());
 
+        if(!empty($userCalculs)) {
+            foreach ($userCalculs['data'] as $calcul) {
+                $durations[] = $calculService->calculateDuration($calcul->getStartDate()->format('Y-m-d H:i:s'), $calcul->getEndDate()->format('Y-m-d H:i:s'));
+            }
 
-        foreach ($userCalculs['data'] as $calcul) {
-            $durations[] = $calculService->calculateDuration($calcul->getStartDate()->format('Y-m-d H:i:s'), $calcul->getEndDate()->format('Y-m-d H:i:s'));
+            $userCalculs['durations'] = $durations;
         }
-
-        $userCalculs['durations'] = $durations;
 
         return $this->render('calcul/index.html.twig', [
             'userCalculs' => $userCalculs,
@@ -43,6 +44,7 @@ class CalculController extends AbstractController
         $calcul = new Calcul();
 
         $oldFixedFees = $userRepository->findFixedFeesByUser($this->getUser()->getId());
+
         $oldVariableFees = $userRepository->findVariableFeesByUser($this->getUser()->getId());
         $oldSalaries = $userRepository->findSalariesByUser($this->getUser()->getId());
 

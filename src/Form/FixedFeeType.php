@@ -25,9 +25,6 @@ class FixedFeeType extends AbstractType
                 'label'=> 'Prix',
                 'currency' =>''
             ])
-            ->add('unit', TextType::class, [
-                'label'=> 'Unité'
-            ])
         ;
     }
 

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit FixedFeeCalcul{% endblock %}
+
+{% block body %}
+    <h1>Edit FixedFeeCalcul</h1>
+
+    {{ include('fixed_fee_calcul/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_fixed_fee_calcul_index') }}">back to list</a>
+
+    {{ include('fixed_fee_calcul/_delete_form.html.twig') }}
+{% endblock %}

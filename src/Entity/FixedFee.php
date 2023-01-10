@@ -22,15 +22,16 @@ class FixedFee
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $price = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $unit = null;
+   // #[ORM\ManyToMany(targetEntity: Calcul::class, inversedBy: 'fixedFees')]
+    //private Collection $calcul;
 
-    #[ORM\ManyToMany(targetEntity: Calcul::class, inversedBy: 'fixedFees')]
-    private Collection $calcul;
+    #[ORM\OneToMany(mappedBy: 'fixedFee', targetEntity: FixedFeeCalcul::class, orphanRemoval: true)]
+    private Collection $fixedFeeCalculs;
 
     public function __construct()
     {
-        $this->calcul = new ArrayCollection();
+        //$this->calcul = new ArrayCollection();
+        $this->fixedFeeCalculs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,38 +63,56 @@ class FixedFee
         return $this;
     }
 
-    public function getUnit(): ?string
-    {
-        return $this->unit;
-    }
-
-    public function setUnit(string $unit): self
-    {
-        $this->unit = $unit;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Calcul>
      */
-    public function getCalcul(): Collection
+    //public function getCalcul(): Collection
+    //{
+      //  return $this->calcul;
+    //}
+
+    //public function addCalcul(Calcul $calcul): self
+    //{
+      //  if (!$this->calcul->contains($calcul)) {
+        //    $this->calcul->add($calcul);
+        //}
+
+        //return $this;
+    //}
+
+    /*public function removeCalcul(Calcul $calcul): self
     {
-        return $this->calcul;
+        $this->calcul->removeElement($calcul);
+
+        return $this;
+    }*/
+
+    /**
+     * @return Collection<int, FixedFeeCalcul>
+     */
+    public function getFixedFeeCalculs(): Collection
+    {
+        return $this->fixedFeeCalculs;
     }
 
-    public function addCalcul(Calcul $calcul): self
+    public function addFixedFeeCalcul(FixedFeeCalcul $fixedFeeCalcul): self
     {
-        if (!$this->calcul->contains($calcul)) {
-            $this->calcul->add($calcul);
+        if (!$this->fixedFeeCalculs->contains($fixedFeeCalcul)) {
+            $this->fixedFeeCalculs->add($fixedFeeCalcul);
+            $fixedFeeCalcul->setFixedFee($this);
         }
 
         return $this;
     }
 
-    public function removeCalcul(Calcul $calcul): self
+    public function removeFixedFeeCalcul(FixedFeeCalcul $fixedFeeCalcul): self
     {
-        $this->calcul->removeElement($calcul);
+        if ($this->fixedFeeCalculs->removeElement($fixedFeeCalcul)) {
+            // set the owning side to null (unless already changed)
+            if ($fixedFeeCalcul->getFixedFee() === $this) {
+                $fixedFeeCalcul->setFixedFee(null);
+            }
+        }
 
         return $this;
     }

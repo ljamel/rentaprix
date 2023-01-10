@@ -562,3 +562,7 @@ label {
     color: #4d4d4d;
     width: auto;
 }
+
+.quantity {
+    width: 200px;
+}

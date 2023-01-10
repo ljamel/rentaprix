@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FixedFeeCalcul{% endblock %}
+
+{% block body %}
+    <h1>FixedFeeCalcul</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ fixed_fee_calcul.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ fixed_fee_calcul.quantity }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_fixed_fee_calcul_index') }}">back to list</a>
+
+    <a href="{{ path('app_fixed_fee_calcul_edit', {'id': fixed_fee_calcul.id}) }}">edit</a>
+
+    {{ include('fixed_fee_calcul/_delete_form.html.twig') }}
+{% endblock %}
