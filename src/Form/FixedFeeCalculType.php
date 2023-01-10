@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback as ConstraintsCallback;
 use Symfony\Component\Validator\Constraints\Positive;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class FixedFeeCalculType extends AbstractType
 {
@@ -19,7 +20,7 @@ class FixedFeeCalculType extends AbstractType
                 'label' => 'Quantité',
                 'constraints' => [
                     new Positive([
-                        'message' => 'La valeur doit être supérieure ou égale à zéro'
+                        'message' => 'Quantité invalide'
                     ]),
                 ],
             ])
@@ -32,6 +33,7 @@ class FixedFeeCalculType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => FixedFeeCalcul::class,
+
         ]);
     }
 }

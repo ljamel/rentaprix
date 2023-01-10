@@ -31,7 +31,8 @@ Class CalculService {
             }
         }
 
-        if($tab === 2 && (!$calculForm->get('checkedFixedFees')->isValid() || !$calculForm->get('fixedFeeCalculsQuantity')->isValid())){
+        if($tab === 2 && (!$calculForm->get('checkedFixedFees')->isValid() || !$calculForm->get('fixedFeeCalculsQuantity')->isValid()
+                            ||!$calculForm->get('fixedFeeCalculs')->isValid()) ){
             return $this->handleInvalidForm($calculForm, 2);
         }
 

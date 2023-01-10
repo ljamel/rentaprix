@@ -566,3 +566,9 @@ label {
 .quantity {
     width: 200px;
 }
+
+.errors {
+    text-align: center;
+    width: 50%;
+    margin: 10px auto;
+}

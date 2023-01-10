@@ -95,7 +95,7 @@
                 // if you have reached the end of the form... :
                 if (currentTab >= x.length) {
                     validateForm(currentTab);
-                    //window.location.href="/dashboard/calcul/redirect";
+                    window.location.href="/dashboard/calcul/redirect";
                 }
 
                 showTab(currentTab);
@@ -106,6 +106,7 @@
             invalidFeedbackElements.forEach(errorElement => errorElement.remove());
         }
         const handleErrors = function(errors) {
+            console.log(errors)
             let element =0;
             if (errors.length === 0) return true;
             for (const key in errors) {
@@ -117,7 +118,26 @@
                             let div = document.createElement('div');
                             div.classList.add('error-message');
                             div.innerText = Object.values(err)[index].quantity[0];
-                            console.log(Object.values(err)[index].quantity[0]);
+                            e.style.border = "solid 1px #dc3545";
+                            e.after(div);
+                        })
+                    })
+                } else if (key === 'fixedFeeCalculs' || key === 'checkedFixedFees') {
+                    element = document.querySelectorAll('.calcul_fixedFeeCalculs');
+                    let ul=document.createElement('ul');
+                    element.forEach((e, index) => {
+                        Array(errors[key]).forEach((err, k) => {
+                            let div = document.createElement('div');
+                            div.classList.add('error-message');
+
+                            let li=document.createElement('li');
+                            Object.values(err)[k].quantity ? li.innerHTML= Object.values(err)[index].quantity[0]
+                                                                : li.innerHTML = err[index];
+
+                            ul.appendChild(li);
+                            div.appendChild(ul)
+
+                            e.style.border = "solid 1px #dc3545";
                             e.after(div);
                         })
                     })

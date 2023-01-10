@@ -1,10 +1,4 @@
 <div class="form-wizard">
-    {% if not form.checkedFixedFees.vars.valid %}
-        <div class="cout">
-            {{  form_errors(form.checkedFixedFees) }}
-        </div>
-    {% endif %}
-
     {% if form.checkedFixedFees|default is empty %}
     {% else %}
         <div class="search-input">
@@ -41,7 +35,7 @@
                             {% else %}
 
                                 <label class="switch">
-                                    {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'onClick': 'addQuantity(this.id)' }})}}
+                                    {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'onChange': 'addQuantity(this.id)' }})}}
                                     <span class="slider round"></span>
                                 </label>
                             {% endif %}
@@ -64,15 +58,14 @@
     {% endfor %}
 
     {% macro fixed_prototype(fixedFeeCalcul) %}
+        <div class="errors">
+            <input id="calcul_fixedFeeCalculs" name="calcul_fixedFeeCalculs" type="hidden" class="calcul_fixedFeeCalculs"/>
+        </div>
+
         <div class="prototype">
             <div>
                 {{ form_label(fixedFeeCalcul.fixedFee.title) }}
                 <div class="">{{ form_widget(fixedFeeCalcul.fixedFee.title, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                {% if not fixedFeeCalcul.fixedFee.title.vars.valid %}
-                    <div class="error-message">
-                        {{ form_errors(fixedFeeCalcul.fixedFee.title) }}
-                    </div>
-                {% endif %}
             </div>
             <div>
                 {{ form_label(fixedFeeCalcul.fixedFee.price) }}
@@ -85,12 +78,7 @@
             </div>
             <div>
                 {{ form_label(fixedFeeCalcul.quantity) }}
-                <div class="unit">{{ form_widget(fixedFeeCalcul.quantity, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
-                {% if not fixedFeeCalcul.quantity.vars.valid %}
-                    <div class="error-message">
-                        {{ form_errors(fixedFeeCalcul.quantity) }}
-                    </div>
-                {% endif %}
+                <div class="unit">{{ form_widget(fixedFeeCalcul.quantity, {'attr': {'onInput': 'this.className = "quantity-input"'}}) }}</div>
             </div>
         </div>
     {% endmacro %}

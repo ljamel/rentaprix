@@ -148,33 +148,33 @@ class CalculType extends AbstractType
                 ])
             ->add('fixedFeeCalculs', CollectionType::class,
                 [
-                    'entry_type' => FixedFeeCalculType::class, // le formulaire enfant qui doit être répété
-                    'allow_add' => true, // true si tu veux que l'utilisateur puisse en ajouter
-                    'allow_delete' => true, // true si tu veux que l'utilisateur puisse en supprimer
+                    'entry_type' => FixedFeeCalculType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
                     'label' => 'Frais Fixes',
-                    'by_reference' => false, // voir  https://symfony.com/doc/current/reference/forms/types/collection.html#by-reference
+                    'by_reference' => false,
                     'data' => [new FixedFeeCalcul()],
                     'required' => false,
                 ]
             )
             ->add('variableFees', CollectionType::class,
                 [
-                    'entry_type' => VariableFeeType::class, // le formulaire enfant qui doit être répété
-                    'allow_add' => true, // true si tu veux que l'utilisateur puisse en ajouter
-                    'allow_delete' => true, // true si tu veux que l'utilisateur puisse en supprimer
+                    'entry_type' => VariableFeeType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
                     'label' => 'Frais variables',
-                    'by_reference' => false, // voir  https://symfony.com/doc/current/reference/forms/types/collection.html#by-reference
+                    'by_reference' => false,
                     'data' => [new VariableFee()],
                     'required' => false
                 ]
             )
             ->add( 'salaries', CollectionType::class,
                 [
-                    'entry_type' => SalaryType::class, // le formulaire enfant qui doit être répété
-                    'allow_add' => true, // true si tu veux que l'utilisateur puisse en ajouter
-                    'allow_delete' => true, // true si tu veux que l'utilisateur puisse en supprimer
+                    'entry_type' => SalaryType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
                     'label' => 'Salariés',
-                    'by_reference' => false, // voir  https://symfony.com/doc/current/reference/forms/types/collection.html#by-reference
+                    'by_reference' => false,
                     'data' => [new Salary()],
                     'required' => false
                 ]
@@ -208,9 +208,6 @@ class CalculType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'by_reference' => false,
-                    'constraints' => [
-                        //new ConstraintsCallback([$this, 'validateQuantities']),
-                    ],
                 ]
             )
             ->add('checkedVariableFees', EntityType::class,
@@ -272,29 +269,38 @@ class CalculType extends AbstractType
         ]);
     }
 
-    /*public function validateQuantities($data, ExecutionContextInterface $context): void
-    {
-        $fixedFeeCalculs = $context->getRoot()->get('fixedFeeCalculsQuantity')->getData();
-
-        //if(!empty($fixedFeeCalculs)) {
-            foreach ($fixedFeeCalculs as $quantity) {
-                if($quantity->getQuantity() <= 0) {
-                    $context->buildViolation('La quantité doit etre supérieure ou égale à 0')
-                            ->addViolation();
-                }
-            }
-       //}
-    }*/
-
     public function validateFixedFees($data, ExecutionContextInterface $context): void
     {
         $fixedFeeCalculs = $context->getRoot()->get('fixedFeeCalculs')->getData();
+
         $checkedFixedFeeCalculs = $context->getRoot()->get('checkedFixedFees')->getData();
 
-        //if($fixedFees[0]->getTitle() === null && count($checkedFixedFees) === 0) {// à corriger
-        //  $context->buildViolation('Veuillez ajouter un coût récurrent')
-        //    ->addViolation();
-        //}
+        foreach ($fixedFeeCalculs as $value) {
+
+            if (count($checkedFixedFeeCalculs) === 0 && $value->getFixedFee() === null) {
+                $context->buildViolation('Veuillez ajouter un coût récurrent')
+                    ->atPath('checkedFixedFees')
+                    ->addViolation();
+            }
+
+            if ($value->getFixedFee() !== null && $value->getFixedFee()->getTitle() === null) {
+                $context->buildViolation('Merci de renseigner le titre')
+                    ->atPath('checkedFixedFees')
+                    ->addViolation();
+            }
+
+            if ($value->getFixedFee() !== null && $value->getFixedFee()->getPrice() === null) {
+                $context->buildViolation('Merci de renseigner le prix')
+                    ->atPath('checkedFixedFees')
+                    ->addViolation();
+            }
+
+            if ($value->getFixedFee() !== null && $value->getQuantity() === null) {
+                $context->buildViolation('Merci de renseigner la quantité')
+                    ->atPath('checkedFixedFees')
+                    ->addViolation();
+            }
+        }
     }
 
     public function validateVariableFees($data, ExecutionContextInterface $context): void
