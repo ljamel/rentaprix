@@ -354,7 +354,7 @@ class Calcul
         }
 
         if($createdFixedFees[0]->getId() === null && $createdFixedFees[0]->getQuantity() === null) {
-            $this->setFixedFeeCalculs($checkedFixedFees);
+            $this->removeFixedFeeCalcul($createdFixedFees[0]);
         }
 
         return $this;

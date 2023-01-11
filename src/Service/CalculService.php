@@ -59,6 +59,7 @@ Class CalculService {
         $calcul->addFixedFees($checkedFixedFeeCalculs, $form->get('fixedFeeCalculs')->getData());
 
 
+
         $calcul->addVariableFees($checkedVariableFees, $form->get('variableFees')->getData());
         $calcul->addSalaries($checkedSalaries, $form->get('salaries')->getData());
     }

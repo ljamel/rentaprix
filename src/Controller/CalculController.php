@@ -106,7 +106,7 @@ class CalculController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $calculService->handleFees($form, $calcul);
-            
+
             if($form->isValid()) {
                 $calculRepository->save($calcul, true);
 
