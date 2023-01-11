@@ -237,7 +237,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 'SELECT u
                 FROM App\Entity\User u
                 INNER JOIN u.calculs c
-                INNER JOIN c.fixedFeeCalculs f
+                INNER JOIN c.fixedFeeCalculs fx
+                INNER JOIN fx.fixedFee f
                 WHERE f.id = :id'
                 
             )->setParameter('id', $idFixedFee);

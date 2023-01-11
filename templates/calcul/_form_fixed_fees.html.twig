@@ -1,5 +1,11 @@
 <div class="form-wizard">
-    {% if form.checkedFixedFees|default is empty %}
+    {% if not form.checkedFixedFees.vars.valid %}
+        <div class="cout">
+            {{  form_errors(form.checkedFixedFees) }}
+        </div>
+    {% endif %}
+    <input id="calcul_checkedFixedFees" name="calcul_checkedFixedFees" type="hidden"/>
+    {% if form.fixedFeeCalculs|default is empty %}
     {% else %}
         <div class="search-input">
             <div class="form-group has-search">
@@ -19,35 +25,41 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for child in form.checkedFixedFees.vars.choices %}
-
-                    <tr id="fee_{{child.data.getId()}}">
-                        <td>{{ child.data.getTitle() }}</td>
-                        <td>{{ child.data.getPrice() }}</td>
-                        <td id="{{ 'quantity_' ~ child.data.getId() }}" class="quantity">
-                            <input id="calcul_fixedFeeCalculsQuantity" name="calcul_checkedFixedFees" type="hidden"/>
-                        <td>
-                            {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
-                                <a title="Supprimer ce frais" class="delete-link" onClick="deleteThisLink('#fee_{{child.data.getId}}')"><i class="fa-regular fa-trash-can trash"></i></a>
+                {% if app.request.attributes.get('_route') == "app_calcul_edit" %}
+                    {% for child in form.fixedFeeCalculChoices.vars.choices %}
+                        <tr id="fee_{{child.data.getId()}}">
+                            <td>{{ child.data.fixedFee.title }}</td>
+                            <td>{{ child.data.fixedFee.price }}</td>
+                            <td>{{ child.data.quantity }}</td>
+                            <td>
+                                <a title="Supprimer ce frais" class="delete-link" onClick="deleteThisLink('#fee_{{child.data.id}}')"><i class="fa-regular fa-trash-can trash"></i></a>
                                 <div style="display: none">
-                                    {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
+                                    {{ form_widget(form.fixedFeeCalculChoices[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'checked':'checked' }})}}
                                 </div>
-                            {% else %}
-
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for child in form.checkedFixedFees.vars.choices %}
+                        <tr id="fee_{{child.data.getId()}}">
+                            <td>{{ child.data.getTitle() }}</td>
+                            <td>{{ child.data.getPrice() }}</td>
+                            <td id="{{ 'quantity_' ~ child.data.getId() }}" class="quantity">
+                                <input id="calcul_fixedFeeCalculsQuantity" name="calcul_checkedFixedFees" type="hidden"/>
+                            <td>
                                 <label class="switch">
                                     {{ form_widget(form.checkedFixedFees[child.data.getId()], {'attr': {'onInput': 'this.className = ""', 'onChange': 'addQuantity(this.id)' }})}}
                                     <span class="slider round"></span>
                                 </label>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
                 </tbody>
             </table>
         </div>
     {% endif %}
 </div>
-
 <div class="fixed" data-prototype="{{ _self.fixed_prototype(form.fixedFeeCalculs.vars.prototype)|e }}"
         data-index="{{ form.fixedFeeCalculs|length > 0 ? form.fixedFeeCalculs|last.vars.name + 1 : 0 }}">
     <div class="calcul-new">
@@ -66,6 +78,11 @@
             <div>
                 {{ form_label(fixedFeeCalcul.fixedFee.title) }}
                 <div class="">{{ form_widget(fixedFeeCalcul.fixedFee.title, {'attr': {'onInput': 'this.className = ""'}}) }}</div>
+                {% if not fixedFeeCalcul.fixedFee.title.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(fixedFeeCalcul.fixedFee.title) }}
+                    </div>
+                {% endif %}
             </div>
             <div>
                 {{ form_label(fixedFeeCalcul.fixedFee.price) }}
@@ -79,6 +96,11 @@
             <div>
                 {{ form_label(fixedFeeCalcul.quantity) }}
                 <div class="unit">{{ form_widget(fixedFeeCalcul.quantity, {'attr': {'onInput': 'this.className = "quantity-input"'}}) }}</div>
+                {% if not fixedFeeCalcul.quantity.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(fixedFeeCalcul.quantity) }}
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% endmacro %}
@@ -99,8 +121,9 @@
 
             td.appendChild(input);
         } else {
-            let inputToDelete = document.querySelector("#calcul_fixedFeeCalculsQuantity_" + inputId + "_quantity");
-            inputToDelete.remove();
+            while (td.firstChild) {
+                td.removeChild(td.firstChild);
+            }
         }
     }
 </script>

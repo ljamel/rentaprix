@@ -17,7 +17,6 @@
                     <tr>
                         <th>Titre</th>
                         <th>Prix</th>
-                        <th>Unité</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -26,7 +25,6 @@
                         <tr>
                             <td>{{ fixedFee.title }}</td>
                             <td>{{ fixedFee.price }}</td>
-                            <td>{{ fixedFee.unit }}</td>
                             <td>
                                 <a href="{{ path('app_fixed_fee_show', {'id': fixedFee.id}) }}"><i class="fa-solid fa-eye awsome show"></i></a>
                                 <a href="{{ path('app_fixed_fee_edit', {'id': fixedFee.id}) }}"><i class="fa-regular fa-pen-to-square awsome show"></i></a>

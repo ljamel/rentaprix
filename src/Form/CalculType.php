@@ -7,8 +7,6 @@ use App\Entity\FixedFee;
 use App\Entity\FixedFeeCalcul;
 use App\Entity\Salary;
 use App\Entity\VariableFee;
-use Doctrine\DBAL\Types\IntegerType;
-use http\Message;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -33,6 +31,9 @@ class CalculType extends AbstractType
         $fixedFeesChoices = $options['fixedFeesChoices'];
         $variableFeesChoices = $options['variableFeesChoices'];
         $salariesChoices= $options['salariesChoices'];
+
+        // Pour avoir les frais fixes avec les quantité au moment de l'édition du calcul
+        $fixedFeeCalculChoices = $options['fixedFeeCalculChoices'];
 
         $builder
             ->add('title', TextType::class,
@@ -251,6 +252,25 @@ class CalculType extends AbstractType
                     ],
                 ]
             )
+            //we need this var only when we edit the calcul
+            ->add('fixedFeeCalculChoices', EntityType::class,
+                [
+                    'class' => FixedFeeCalcul::class,
+                    'multiple' => true,
+                    'mapped' => false,
+                    'expanded' => true,
+                    'choices' => $fixedFeeCalculChoices,
+                    'choice_label' => function (FixedFeeCalcul $fixedFeeCalcul) {
+                        $data = [
+                            'Title' => $fixedFeeCalcul->getFixedFee()->getTitle(),
+                            'Price' => $fixedFeeCalcul->getFixedFee()->getPrice(),
+                            'quantity' => $fixedFeeCalcul->getQuantity()
+                        ];
+
+                        return json_encode($data);
+                    },
+                ]
+            )
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'save'],
             ]);
@@ -263,9 +283,7 @@ class CalculType extends AbstractType
             'fixedFeesChoices' => [],
             'variableFeesChoices' => [],
             'salariesChoices' => [],
-            'error_mapping' => [
-                '.' => 'checkedFixedFees',
-            ],
+            'fixedFeeCalculChoices' => [],
         ]);
     }
 
@@ -275,9 +293,11 @@ class CalculType extends AbstractType
 
         $checkedFixedFeeCalculs = $context->getRoot()->get('checkedFixedFees')->getData();
 
+        $fixedFeeCalculChoices = $context->getRoot()->get('fixedFeeCalculChoices')->getData();
+
         foreach ($fixedFeeCalculs as $value) {
 
-            if (count($checkedFixedFeeCalculs) === 0 && $value->getFixedFee() === null) {
+            if (count($checkedFixedFeeCalculs) === 0 && $value->getFixedFee() === null && count($fixedFeeCalculChoices) === 0) {
                 $context->buildViolation('Veuillez ajouter un coût récurrent')
                     ->atPath('checkedFixedFees')
                     ->addViolation();

@@ -21,15 +21,6 @@
                     {{ form_errors(form.price) }}
                 </div>
             {% endif %}
-        </div>        
-        <div>
-            {{ form_label(form.unit) }}
-            <div class="">{{ form_widget(form.unit, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
-            {% if not form.unit.vars.valid %}
-                <div class="error-message">
-                    {{ form_errors(form.unit) }}
-                </div>
-            {% endif %}
         </div>
         <div class="bottom-btn">
             <div>

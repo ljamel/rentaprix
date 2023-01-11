@@ -52,19 +52,17 @@
                         <table class="table-fees edit">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>Titre</th>
                                     <th>Prix</th>
-                                    <th>Unité</th>
+                                    <th>Quantité</th>
                                 </tr>
                             </thead>
                             <tbody>    
-                                {% for fixedFee in calcul.fixedFees %}
+                                {% for fixedFeeCalcul in calcul.fixedFeeCalculs %}
                                     <tr>
-                                        <td>{{ fixedFee.id }}</td>
-                                        <td>{{ fixedFee.title }}</td>
-                                        <td>{{ fixedFee.price }}</td>
-                                        <td>{{ fixedFee.unit }}</td>
+                                        <td>{{ fixedFeeCalcul.fixedFee.title }}</td>
+                                        <td>{{ fixedFeeCalcul.fixedFee.price }}</td>
+                                        <td>{{ fixedFeeCalcul.quantity }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>

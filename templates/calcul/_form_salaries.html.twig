@@ -6,7 +6,7 @@
     {% endif %}
     <input id="calcul_checkedSalaries" name="calcul_checkedSalaries" type="hidden"/>
 
-    {% if form.checkedFixedFees|default is empty %}
+    {% if form.checkedSalaries|default is empty %}
     {% else %}
         <div class="search-input">
             <div class="form-group has-search">

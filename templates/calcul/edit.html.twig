@@ -66,6 +66,46 @@
                duration
             </div>
         </div>
+        <div class="">
+            <h3 class="fixedFees">Coûts initiaux</h3>
+
+            <div>
+                {{ form_label(form.software) }}
+                <div class="">{{ form_widget(form.software, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+                {% if not form.software.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(form.software) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div>
+                {{ form_label(form.hardware) }}
+                <div class="">{{ form_widget(form.hardware, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+                {% if not form.hardware.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(form.hardware) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div>
+                {{ form_label(form.training) }}
+                <div class="">{{ form_widget(form.training, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+                {% if not form.training.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(form.training) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div>
+                {{ form_label(form.startupExpenses) }}
+                <div class="">{{ form_widget(form.startupExpenses, {'attr': {'onInput': 'this.className = ""', 'class': 'input'}}) }}</div>
+                {% if not form.startupExpenses.vars.valid %}
+                    <div class="error-message">
+                        {{ form_errors(form.startupExpenses) }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
         <div class="fees-section">
             <h3 class="fixedFees">Frais fixes</h3>
 

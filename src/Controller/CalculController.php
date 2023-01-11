@@ -87,18 +87,18 @@ class CalculController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_calcul_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Calcul $calcul, 
-            CalculRepository $calculRepository, CalculService $calculService): Response
+            CalculRepository $calculRepository, CalculService $calculService, UserRepository $userRepository): Response
     {
         if ($calcul->getUser()->get(0) !== $this->getUser()) {
             throw $this->createAccessDeniedException();
         }
 
-        $oldFixedFees = $calcul->getFixedFees();
+        $oldFixedFees = $calcul->getFixedFeeCalculs();
         $oldVariableFees = $calcul->getVariableFees();
         $oldSalaries = $calcul->getSalaries();
 
         $form = $this->createForm(CalculType::class, $calcul, [
-            'fixedFeesChoices' => $oldFixedFees,
+            'fixedFeeCalculChoices' => $oldFixedFees,
             'variableFeesChoices' => $oldVariableFees,
             'salariesChoices' => $oldSalaries,
         ]);

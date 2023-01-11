@@ -3,9 +3,11 @@
 namespace App\Service;
 
 use App\Entity\Calcul;
+use App\Entity\FixedFeeCalcul;
 use App\Entity\User;
 use App\Repository\CalculRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -50,11 +52,13 @@ Class CalculService {
 
     public function handleFees($form, $calcul): void
     {
-        $checkedFixedFees = $form->get('checkedFixedFees')->getData();
+        $checkedFixedFeeCalculs = $form->get('fixedFeeCalculChoices')->getData();
         $checkedVariableFees = $form->get('checkedVariableFees')->getData();
         $checkedSalaries = $form->get('checkedSalaries')->getData();
 
-        $calcul->addFixedFees($checkedFixedFees, $form->get('fixedFees')->getData());
+        $calcul->addFixedFees($checkedFixedFeeCalculs, $form->get('fixedFeeCalculs')->getData());
+
+
         $calcul->addVariableFees($checkedVariableFees, $form->get('variableFees')->getData());
         $calcul->addSalaries($checkedSalaries, $form->get('salaries')->getData());
     }
@@ -62,7 +66,8 @@ Class CalculService {
     /**
      * @throws Exception
      */
-    public function calculateDuration($startDate, $endDate) {
+    public function calculateDuration($startDate, $endDate): string
+    {
         $start = new DateTimeImmutable($startDate);
         $end = new DateTimeImmutable($endDate);
         $interval = $end->diff($start);
@@ -76,7 +81,6 @@ Class CalculService {
             $calcul = $form->getData();
 
             $checkedFixedFees = $form->get('checkedFixedFees')->getData();
-            // il faut get les quantitiés et les fixedFees
             $checkedQuantities = $form->get('fixedFeeCalculsQuantity')->getdata();
 
             $createdFixedFees = $form->get('fixedFeeCalculs')->getData();
@@ -94,7 +98,7 @@ Class CalculService {
             $createdSalaries = $form->get('salaries')->getData();
 
 
-            $calcul->addFixedFees($checkedQuantities, $createdFixedFees);
+            $calcul->addFixedFees(new ArrayCollection($checkedQuantities), $createdFixedFees);
             $calcul->addVariableFees($checkedVariableFees, $createdVariableFees);
             $calcul->addSalaries($checkedSalaries, $createdSalaries);
             $calcul->addUser($user);
